@@ -17,7 +17,7 @@ Speed will determine the RPS range for the test and the warmup behavior and is c
 
 * very-slow
 * slow
-* normal
+* medium
 * fast
 * very-fast
 
