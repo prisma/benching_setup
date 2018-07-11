@@ -1,0 +1,21 @@
+Requests      [total, rate]            150000, 2376.93
+Duration      [total, attack, wait]    1m13.885060083s, 1m3.106490432s, 10.778569651s
+Latencies     [mean, 50, 95, 99, max]  6.876403119s, 5.928609218s, 20.774345018s, 21.441979457s, 28.128315169s
+Bytes In      [total, mean]            5974296, 39.83
+Bytes Out     [total, mean]            8441940, 56.28
+Success       [ratio]                  43.29%
+Status Codes  [code:count]             200:64938  0:85062  
+Error Set:
+Post http://localhost:4466: net/http: timeout awaiting response headers
+Post http://localhost:4466: dial tcp 0.0.0.0:0->127.0.0.1:4466: bind: address already in use
+Post http://localhost:4466: read tcp 127.0.0.1:57761->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: EOF
+Post http://localhost:4466: http: server closed idle connection
+Post http://localhost:4466: dial tcp 0.0.0.0:0->127.0.0.1:4466: i/o timeout
+Post http://localhost:4466: dial tcp 0.0.0.0:0->127.0.0.1:4466: context deadline exceeded
+Post http://localhost:4466: dial tcp: i/o timeout
+Post http://localhost:4466: read tcp 127.0.0.1:40928->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:41072->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56222->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:41477->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:41637->127.0.0.1:4466: read: connection reset by peer

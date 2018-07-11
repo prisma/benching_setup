@@ -1,0 +1,84 @@
+Requests      [total, rate]            180000, 2606.46
+Duration      [total, attack, wait]    1m23.001041841s, 1m9.059168992s, 13.941872849s
+Latencies     [mean, 50, 95, 99, max]  7.381052835s, 6.836545512s, 13.087524342s, 17.681363632s, 26.754676185s
+Bytes In      [total, mean]            3149528, 17.50
+Bytes Out     [total, mean]            4450420, 24.72
+Success       [ratio]                  19.02%
+Status Codes  [code:count]             200:34234  0:145766  
+Error Set:
+Post http://localhost:4466: read tcp 127.0.0.1:38797->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: dial tcp 0.0.0.0:0->127.0.0.1:4466: bind: address already in use
+Post http://localhost:4466: read tcp 127.0.0.1:54951->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:38801->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55345->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:39705->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57783->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:54953->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:54959->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56353->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59255->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59451->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: EOF
+Post http://localhost:4466: read tcp 127.0.0.1:39751->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59457->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56479->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55191->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57451->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56541->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55389->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55161->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56415->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56327->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59257->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:38650->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55719->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55711->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56627->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: net/http: timeout awaiting response headers
+Post http://localhost:4466: read tcp 127.0.0.1:56629->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57467->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56143->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57461->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:60761->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57331->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56539->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59253->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:33914->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56349->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:58353->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57585->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:33084->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:58861->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57115->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55849->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55613->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57305->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56407->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56039->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57859->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57899->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:58529->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59025->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:58287->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59591->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:58822->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59147->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59149->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59123->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:59564->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56963->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:56643->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:58035->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:55915->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:33468->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:37661->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:36911->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:57811->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:38534->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: http: server closed idle connection
+Post http://localhost:4466: dial tcp 0.0.0.0:0->127.0.0.1:4466: i/o timeout
+Post http://localhost:4466: read tcp 127.0.0.1:32906->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: read tcp 127.0.0.1:48220->127.0.0.1:4466: read: connection reset by peer
+Post http://localhost:4466: dial tcp 0.0.0.0:0->127.0.0.1:4466: context deadline exceeded
+Post http://localhost:4466: dial tcp: i/o timeout
+Post http://localhost:4466: read tcp 127.0.0.1:57176->127.0.0.1:4466: read: connection reset by peer

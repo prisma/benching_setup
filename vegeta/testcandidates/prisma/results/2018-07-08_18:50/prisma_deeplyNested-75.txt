@@ -1,0 +1,9 @@
+Requests      [total, rate]            4500, 75.02
+Duration      [total, attack, wait]    1m4.987904637s, 59.98666497s, 5.001239667s
+Latencies     [mean, 50, 95, 99, max]  4.673947868s, 5.00070158s, 5.001011674s, 5.001905048s, 5.999698602s
+Bytes In      [total, mean]            143380, 31.86
+Bytes Out     [total, mean]            109568, 24.35
+Success       [ratio]                  9.51%
+Status Codes  [code:count]             0:4072  200:428  
+Error Set:
+Post http://localhost:4466: net/http: timeout awaiting response headers
