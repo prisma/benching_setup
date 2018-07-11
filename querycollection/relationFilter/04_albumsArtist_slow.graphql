@@ -1,0 +1,10 @@
+query {
+  albums(where: { Artist:{ Name: "artist545"}}) {
+    AlbumId
+    Title
+    Tracks{
+      TrackId
+      Name
+    }
+  }
+}

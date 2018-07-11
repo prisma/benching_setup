@@ -1,0 +1,6 @@
+query {
+  artists(where: { Name_not_contains: "1"}) {
+    ArtistId
+    Name
+  }
+}

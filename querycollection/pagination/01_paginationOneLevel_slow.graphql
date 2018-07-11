@@ -1,0 +1,12 @@
+query {
+  artists (first:100){
+    Albums{
+      AlbumId
+      Title
+      Tracks{
+        TrackId
+        Name
+      }
+    }
+  }
+}

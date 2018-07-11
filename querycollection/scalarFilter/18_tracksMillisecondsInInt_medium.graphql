@@ -1,0 +1,6 @@
+query {
+  tracks(where: { Milliseconds_in: [234234,456456,192347,899242] }) {
+    TrackId
+    Name
+  }
+}

@@ -1,0 +1,10 @@
+query {
+  artists(where: { Albums_every:{ Title_contains: "album125"}}) {
+    ArtistId
+    Name
+    Albums{
+      AlbumId
+      Title
+    }
+  }
+}

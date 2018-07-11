@@ -1,0 +1,6 @@
+query {
+  artists(where: { Name_lt: "artist100"}) {
+    ArtistId
+    Name
+  }
+}

@@ -1,0 +1,6 @@
+query equalString {
+  artists(where: { Name: "artist950"}) {
+    ArtistId
+    Name
+  }
+}

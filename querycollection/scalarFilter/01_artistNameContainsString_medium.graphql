@@ -1,0 +1,6 @@
+query {
+  artists(where: { Name_contains: "55"}) {
+    ArtistId
+    Name
+  }
+}

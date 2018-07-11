@@ -1,0 +1,6 @@
+query {
+  artists(where: { Name_not_in: ["artist5", "artist999", "artist499"] }) {
+    ArtistId
+    Name
+  }
+}

@@ -1,0 +1,7 @@
+
+query {
+  artists(where: { Name_starts_with: "artist1"}) {
+    ArtistId
+    Name
+  }
+}

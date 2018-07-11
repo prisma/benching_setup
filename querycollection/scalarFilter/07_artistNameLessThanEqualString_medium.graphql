@@ -1,0 +1,6 @@
+query lessThanEqualString {
+  artists(where: { Name_lte: "artist50"}) {
+    ArtistId
+    Name
+  }
+}

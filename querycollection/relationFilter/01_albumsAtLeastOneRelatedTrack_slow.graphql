@@ -1,0 +1,10 @@
+query {
+  albums(where: { Tracks_some:{ Name_ends_with: "5112"}}) {
+    AlbumId
+    Title
+    Tracks{
+      TrackId
+      Name
+    }
+  }
+}
