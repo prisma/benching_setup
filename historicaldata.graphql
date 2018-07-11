@@ -1,0 +1,41 @@
+type TestResult {
+  id: ID! @unique
+  Version: Float!
+  DataBase: DataBase!
+  createdAt: DateTime!
+  commitHash: String
+  deploy: DeployResult!
+  queries: [QueryResult!]!
+  mutations: [MutationResult!]!
+  export: ExportResult!
+  import: ImportResult!
+}
+
+
+
+
+
+
+
+
+type ExportResult {
+  id: ID! @unique
+  testResult: TestResult
+  DataBase: DataBase!
+  createdAt: DateTime!
+  commitHash: String
+  deploy: DeployResult!
+  queries: [QueryResult!]!
+  mutations: [MutationResult!]!
+  export: ExportResult!
+  import: ImportResult!
+}
+
+
+enum DataBase {
+  Postgres
+  MySql
+}
+
+
+

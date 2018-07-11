@@ -1,0 +1,37 @@
+
+
+# Postgres Results
+
+
+#1.11 DB Size 177mb
+    Count    Concurrency  BatchSize   Time Overall   
+    1000     1            1           406s             
+    1000     4            1           129s               
+    1000     10           1           114s               
+    1000     20           1           105s           
+    1000     30           1           107s   
+
+#1.12-beta DB Size 155mb
+    Count    Concurrency  BatchSize   Time Overall   
+    1000     1            1           526s           
+    1000     4            1           158s 
+    1000     10           1           120s              
+    1000     20           1           116s             
+    1000     30           1           112s     
+
+
+#1.12-beta
+    1000     1            4           268s              
+    1000     1            20          224s              
+    1000     5            4           121s  
+    5000     10           1           633s 
+
+#1.12-beta export / import 
+Count   Nodes    Relations   Nodes       Relations
+1000    10       10          13          34
+5000    75       111   
+
+
+# MySql Results
+Count   Nodes    Relations   Nodes       Relations
+1000    13       12          136         200
