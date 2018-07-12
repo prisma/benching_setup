@@ -25,6 +25,7 @@
     1000     1            20          224s              
     1000     5            4           121s  
     5000     10           1           633s 
+    10000    10           1           1497s (docker was constrained to 1Gb of memory for this)     
 
 #1.12-beta export / import 
 Count   Nodes    Relations   Nodes       Relations
