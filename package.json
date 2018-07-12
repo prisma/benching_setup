@@ -9,7 +9,9 @@
     "graphql-request": "^1.6.0",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
-    "p-map": "^1.2.0"
+    "p-map": "^1.2.0",
+    "walk": "2.3.14",
+    "sleep": "5.1.1"
   },
   "devDependencies": {
     "@types/node": "^10.5.2",
