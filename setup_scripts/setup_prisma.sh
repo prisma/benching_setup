@@ -6,3 +6,4 @@ cp datamodel.graphql ./perf-test/
 cp prisma.yml ./perf-test/
 cd perf-test
 prisma deploy
+prisma import --data ../import_data/1000import.zip
