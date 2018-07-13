@@ -110,17 +110,15 @@ function runVegeta(url, graphqlQueryAsString, rps, duration){
     var graphqlQuery = {
         query: graphqlQueryAsString
     }
-    const spawnSync = require('child_process').spawnSync;
+    // const spawnSync = require('child_process').spawnSync;
     const execSync = require('child_process').execSync;
-    // todo: implement
     var attack = `
       POST ${url}
       Content-Type: application/json
       ${JSON.stringify(graphqlQuery)}
     `
     attack = "GET http://localhost:80"
-    var result = execSync(`vegeta attack -rate=${rps} -duration="${duration}s" -timeout="10s" | vegeta report`, { input : attack }).toString()
+    var result = execSync(`vegeta attack -rate=${rps} -duration="${duration}s" -timeout="10s" | vegeta report -reporter=json`, { input : attack }).toString()
     console.log(result)
-    // vegeta attack -rate=$RPS -duration=""$DURATION"s" -timeout=""$TIMEOUT"s" -targets=./temp/temptargets.txt | vegeta report > "$BENCH_STATS_FILE"
 }
 
