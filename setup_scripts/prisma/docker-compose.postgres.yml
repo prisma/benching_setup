@@ -11,12 +11,12 @@ services:
         databases:
           default:
             connector: postgres
-            host: postgres
+            host: db
             port: 5432
             user: prisma
             password: prisma
             migrations: true
-  postgres:
+  db:
     image: postgres
     restart: always
     environment:

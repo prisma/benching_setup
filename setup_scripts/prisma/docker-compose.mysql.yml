@@ -1,7 +1,7 @@
 version: '3'
 services:
   prisma:
-    image: prismagraphql/prisma:${PRISMA_VERSION}
+    image: prismagraphql/prisma:j
     restart: always
     ports:
     - "4466:4466"
@@ -16,7 +16,7 @@ services:
             user: prisma
             password: prisma
             migrations: true
-  postgres:
+  db:
     image: mysql:5.7
     restart: always
     command: mysqld
