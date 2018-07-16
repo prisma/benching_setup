@@ -9,4 +9,4 @@ cd perf-test-service
 yarn install
 yarn prisma deploy
 echo "Importing the test data"
-yarn prisma import --data import_data/1000import.zip
+yarn prisma import --data ../import_data/1000import.zip
