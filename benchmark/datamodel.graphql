@@ -1,0 +1,28 @@
+enum Connector {
+  Postgres
+  MySQL
+  MongoDB
+}
+
+type PerformanceTest {
+  name: String # e.g. CreateFlat, CreateNested
+  query: String
+  runs: [TestRun!]!
+}
+
+type TestRun {
+  latencies: [Latency!]!
+  date: DateTime
+  database: Connector
+  version: String # how to find out?
+  commit: String
+}
+
+type Latency {
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
+}

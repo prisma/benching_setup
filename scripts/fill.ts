@@ -1,134 +1,134 @@
-import { random, range, groupBy } from 'lodash'
-import * as pMap from 'p-map'
-import fetch from 'node-fetch'
+import { random, range, groupBy } from "lodash";
+import * as pMap from "p-map";
+import fetch from "node-fetch";
 
 interface Options {
-  endpoint: string
-  totalCount: number
-  batchSize?: number
-  concurrency?: number
-  genreCount?: number
-  mediaCount?: number
+  endpoint: string;
+  totalCount: number;
+  batchSize?: number;
+  concurrency?: number;
+  genreCount?: number;
+  mediaCount?: number;
 }
 
 class Client {
-  endpoint: string
+  endpoint: string;
   constructor(endpoint: string) {
-    this.endpoint = endpoint
+    this.endpoint = endpoint;
   }
   async request(queries: string[] | string) {
-    const q = Array.isArray(queries) ? queries : [queries]
+    const q = Array.isArray(queries) ? queries : [queries];
     await fetch(this.endpoint, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(q.map(query => ({ query }))),
-    }).then(res => res.json())
+      body: JSON.stringify(q.map(query => ({ query })))
+    }).then(res => res.json());
   }
 }
 
 export async function fill(options: Options) {
-  options = {
+  const mergedOptions = {
     genreCount: 100,
     mediaCount: 100,
     concurrency: 1,
     batchSize: 1,
-    ...options,
-  }
+    ...options
+  };
   const {
     endpoint,
     genreCount,
     mediaCount,
     totalCount,
     concurrency,
-    batchSize,
-  } = options
+    batchSize
+  } = mergedOptions;
 
-  const client = new Client(endpoint)
+  const client = new Client(endpoint);
 
-  console.log(`Creating ${genreCount} genres`)
-  await createGenres(client, genreCount)
+  console.log(`Creating ${genreCount} genres`);
+  await createGenres(client, genreCount);
 
-  console.log(`Creating ${mediaCount} mediaTypes`)
-  await createMediaTypes(client, mediaCount)
+  console.log(`Creating ${mediaCount} mediaTypes`);
+  await createMediaTypes(client, mediaCount);
 
-  console.log(`Creating ${totalCount} content`)
+  console.log(`Creating ${totalCount} content`);
   await createContent({
     client,
     mediaCount,
     totalCount,
     genreCount,
     concurrency,
-    batchSize,
-  })
+    batchSize
+  });
 }
 
 function createGenres(client: Client, n = 1) {
-  let query = `mutation createGenres {`
+  let query = `mutation createGenres {`;
 
   for (let i = 1; i <= n; i++) {
-    query += `\n  _${i}: createGenre(data: { GenreId: ${i}, Name: "genre${i}"}) { id }`
+    query += `\n  _${i}: createGenre(data: { GenreId: ${i}, Name: "genre${i}"}) { id }`;
   }
 
-  query += '\n}'
+  query += "\n}";
 
-  return client.request(query)
+  return client.request(query);
 }
 
 function createMediaTypes(client: Client, n = 1) {
-  let query = `mutation createMediaTypes {`
+  let query = `mutation createMediaTypes {`;
 
   for (let i = 1; i <= n; i++) {
-    query += `\n  _${i}: createMediaType(data: { MediaTypeId: ${i}, Name: "mediaType${i}"}) { id }`
+    query += `\n  _${i}: createMediaType(data: { MediaTypeId: ${i}, Name: "mediaType${i}"}) { id }`;
   }
 
-  query += '\n}'
+  query += "\n}";
 
-  return client.request(query)
+  return client.request(query);
 }
 
-let trackCounter = 1
+let trackCounter = 1;
 
 interface ContentOptions {
-  client: Client
-  mediaCount: number
-  genreCount: number
-  totalCount: number
-  concurrency: number
-  batchSize: number
+  client: Client;
+  mediaCount: number;
+  genreCount: number;
+  totalCount: number;
+  concurrency: number;
+  batchSize: number;
 }
 
-let albumCounter = 1
+let albumCounter = 1;
 async function createContent({
   client,
   mediaCount,
   totalCount,
   genreCount,
   concurrency,
-  batchSize,
+  batchSize
 }: ContentOptions) {
   const items = groupBy(
     range(1, totalCount + 1),
-    a => a % Math.ceil(totalCount / batchSize),
-  )
+    a => a % Math.ceil(totalCount / batchSize)
+  );
   await pMap(
     Object.keys(items),
     async i => {
-      let before = Date.now()
+      let before = Date.now();
       const queries = items[i].map(batch => {
-        const mediaId = random(1, mediaCount)
-        const genreId = random(1, genreCount)
+        const mediaId = random(1, mediaCount);
+        const genreId = random(1, genreCount);
         const albums = range(5)
           .map(_ =>
             makeAlbum({
               genreId,
               mediaId,
               albumId: albumCounter++,
-              artistId: batch,
-            }),
+              artistId: batch
+            })
           )
-          .join(',')
+          .join(",");
         return `
       mutation createContent {
         createArtist(
@@ -145,16 +145,16 @@ async function createContent({
         id
       } 
     }
-    `
-      })
+    `;
+      });
 
-      await client.request(queries)
+      await client.request(queries);
       console.log(
-        `Done with content ${items[i].join(', ')} in ${Date.now() - before}ms`,
-      )
+        `Done with content ${items[i].join(", ")} in ${Date.now() - before}ms`
+      );
     },
-    { concurrency },
-  )
+    { concurrency }
+  );
 }
 
 function makeAlbum({ genreId, mediaId, albumId, artistId }) {
@@ -170,9 +170,9 @@ function makeAlbum({ genreId, mediaId, albumId, artistId }) {
                   UnitPrice: ${parseFloat(random(0.5, 5).toFixed(2))}
                   Genre: { connect: { GenreId: ${genreId} } }
                   MediaType: { connect: { MediaTypeId: ${mediaId} } }
-                }`,
+                }`
     )
-    .join(',\n')
+    .join(",\n");
 
   return `{
             AlbumId: ${albumId}
@@ -182,5 +182,5 @@ function makeAlbum({ genreId, mediaId, albumId, artistId }) {
                 ${tracks}
               ]
             }
-          }`
+          }`;
 }

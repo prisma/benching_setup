@@ -1,0 +1,793 @@
+# source: https://eu1.prisma.sh/mavilein-089a7b/result_storage/dev
+# timestamp: Mon Jul 16 2018 15:59:59 GMT+0200 (CEST)
+
+type AggregateLatency {
+  count: Int!
+}
+
+type AggregatePerformanceTest {
+  count: Int!
+}
+
+type AggregateTestRun {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+enum Connector {
+  Postgres
+  MySQL
+  MongoDB
+}
+
+scalar DateTime
+
+type Latency {
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
+}
+
+"""A connection to a list of items."""
+type LatencyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LatencyEdge]!
+  aggregate: AggregateLatency!
+}
+
+input LatencyCreateInput {
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
+}
+
+input LatencyCreateManyInput {
+  create: [LatencyCreateInput!]
+}
+
+"""An edge in a connection."""
+type LatencyEdge {
+  """The item at the end of the edge."""
+  node: Latency!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LatencyOrderByInput {
+  rps_ASC
+  rps_DESC
+  median_ASC
+  median_DESC
+  p95_ASC
+  p95_DESC
+  p99_ASC
+  p99_DESC
+  successes_ASC
+  successes_DESC
+  failures_ASC
+  failures_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LatencyPreviousValues {
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
+}
+
+type LatencySubscriptionPayload {
+  mutation: MutationType!
+  node: Latency
+  updatedFields: [String!]
+  previousValues: LatencyPreviousValues
+}
+
+input LatencySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LatencySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LatencySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LatencySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LatencyWhereInput
+}
+
+input LatencyUpdateInput {
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
+}
+
+input LatencyUpdateManyInput {
+  create: [LatencyCreateInput!]
+}
+
+input LatencyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LatencyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LatencyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LatencyWhereInput!]
+  rps: Int
+
+  """All values that are not equal to given value."""
+  rps_not: Int
+
+  """All values that are contained in given list."""
+  rps_in: [Int!]
+
+  """All values that are not contained in given list."""
+  rps_not_in: [Int!]
+
+  """All values less than the given value."""
+  rps_lt: Int
+
+  """All values less than or equal the given value."""
+  rps_lte: Int
+
+  """All values greater than the given value."""
+  rps_gt: Int
+
+  """All values greater than or equal the given value."""
+  rps_gte: Int
+  median: Int
+
+  """All values that are not equal to given value."""
+  median_not: Int
+
+  """All values that are contained in given list."""
+  median_in: [Int!]
+
+  """All values that are not contained in given list."""
+  median_not_in: [Int!]
+
+  """All values less than the given value."""
+  median_lt: Int
+
+  """All values less than or equal the given value."""
+  median_lte: Int
+
+  """All values greater than the given value."""
+  median_gt: Int
+
+  """All values greater than or equal the given value."""
+  median_gte: Int
+  p95: Int
+
+  """All values that are not equal to given value."""
+  p95_not: Int
+
+  """All values that are contained in given list."""
+  p95_in: [Int!]
+
+  """All values that are not contained in given list."""
+  p95_not_in: [Int!]
+
+  """All values less than the given value."""
+  p95_lt: Int
+
+  """All values less than or equal the given value."""
+  p95_lte: Int
+
+  """All values greater than the given value."""
+  p95_gt: Int
+
+  """All values greater than or equal the given value."""
+  p95_gte: Int
+  p99: Int
+
+  """All values that are not equal to given value."""
+  p99_not: Int
+
+  """All values that are contained in given list."""
+  p99_in: [Int!]
+
+  """All values that are not contained in given list."""
+  p99_not_in: [Int!]
+
+  """All values less than the given value."""
+  p99_lt: Int
+
+  """All values less than or equal the given value."""
+  p99_lte: Int
+
+  """All values greater than the given value."""
+  p99_gt: Int
+
+  """All values greater than or equal the given value."""
+  p99_gte: Int
+  successes: Int
+
+  """All values that are not equal to given value."""
+  successes_not: Int
+
+  """All values that are contained in given list."""
+  successes_in: [Int!]
+
+  """All values that are not contained in given list."""
+  successes_not_in: [Int!]
+
+  """All values less than the given value."""
+  successes_lt: Int
+
+  """All values less than or equal the given value."""
+  successes_lte: Int
+
+  """All values greater than the given value."""
+  successes_gt: Int
+
+  """All values greater than or equal the given value."""
+  successes_gte: Int
+  failures: Int
+
+  """All values that are not equal to given value."""
+  failures_not: Int
+
+  """All values that are contained in given list."""
+  failures_in: [Int!]
+
+  """All values that are not contained in given list."""
+  failures_not_in: [Int!]
+
+  """All values less than the given value."""
+  failures_lt: Int
+
+  """All values less than or equal the given value."""
+  failures_lte: Int
+
+  """All values greater than the given value."""
+  failures_gt: Int
+
+  """All values greater than or equal the given value."""
+  failures_gte: Int
+  _MagicalBackRelation_LatencyToTestRun_every: TestRunWhereInput
+  _MagicalBackRelation_LatencyToTestRun_some: TestRunWhereInput
+  _MagicalBackRelation_LatencyToTestRun_none: TestRunWhereInput
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createPerformanceTest(data: PerformanceTestCreateInput!): PerformanceTest!
+  createLatency(data: LatencyCreateInput!): Latency!
+  createTestRun(data: TestRunCreateInput!): TestRun!
+  updateManyPerformanceTests(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereInput): BatchPayload!
+  updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
+  updateManyTestRuns(data: TestRunUpdateInput!, where: TestRunWhereInput): BatchPayload!
+  deleteManyPerformanceTests(where: PerformanceTestWhereInput): BatchPayload!
+  deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
+  deleteManyTestRuns(where: TestRunWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type PerformanceTest {
+  name: String
+  query: String
+  runs(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun!]
+}
+
+"""A connection to a list of items."""
+type PerformanceTestConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PerformanceTestEdge]!
+  aggregate: AggregatePerformanceTest!
+}
+
+input PerformanceTestCreateInput {
+  name: String
+  query: String
+  runs: TestRunCreateManyInput
+}
+
+"""An edge in a connection."""
+type PerformanceTestEdge {
+  """The item at the end of the edge."""
+  node: PerformanceTest!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PerformanceTestOrderByInput {
+  name_ASC
+  name_DESC
+  query_ASC
+  query_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PerformanceTestPreviousValues {
+  name: String
+  query: String
+}
+
+type PerformanceTestSubscriptionPayload {
+  mutation: MutationType!
+  node: PerformanceTest
+  updatedFields: [String!]
+  previousValues: PerformanceTestPreviousValues
+}
+
+input PerformanceTestSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PerformanceTestWhereInput
+}
+
+input PerformanceTestUpdateInput {
+  name: String
+  query: String
+  runs: TestRunUpdateManyInput
+}
+
+input PerformanceTestWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestWhereInput!]
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  query: String
+
+  """All values that are not equal to given value."""
+  query_not: String
+
+  """All values that are contained in given list."""
+  query_in: [String!]
+
+  """All values that are not contained in given list."""
+  query_not_in: [String!]
+
+  """All values less than the given value."""
+  query_lt: String
+
+  """All values less than or equal the given value."""
+  query_lte: String
+
+  """All values greater than the given value."""
+  query_gt: String
+
+  """All values greater than or equal the given value."""
+  query_gte: String
+
+  """All values containing the given string."""
+  query_contains: String
+
+  """All values not containing the given string."""
+  query_not_contains: String
+
+  """All values starting with the given string."""
+  query_starts_with: String
+
+  """All values not starting with the given string."""
+  query_not_starts_with: String
+
+  """All values ending with the given string."""
+  query_ends_with: String
+
+  """All values not ending with the given string."""
+  query_not_ends_with: String
+  runs_every: TestRunWhereInput
+  runs_some: TestRunWhereInput
+  runs_none: TestRunWhereInput
+}
+
+type Query {
+  performanceTests(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTest]!
+  latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
+  testRuns(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun]!
+  performanceTestsConnection(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestConnection!
+  latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
+  testRunsConnection(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestRunConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  performanceTest(where: PerformanceTestSubscriptionWhereInput): PerformanceTestSubscriptionPayload
+  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
+  testRun(where: TestRunSubscriptionWhereInput): TestRunSubscriptionPayload
+}
+
+type TestRun {
+  latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
+  date: DateTime
+  database: Connector
+  version: String
+  commit: String
+}
+
+"""A connection to a list of items."""
+type TestRunConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TestRunEdge]!
+  aggregate: AggregateTestRun!
+}
+
+input TestRunCreateInput {
+  date: DateTime
+  database: Connector
+  version: String
+  commit: String
+  latencies: LatencyCreateManyInput
+}
+
+input TestRunCreateManyInput {
+  create: [TestRunCreateInput!]
+}
+
+"""An edge in a connection."""
+type TestRunEdge {
+  """The item at the end of the edge."""
+  node: TestRun!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TestRunOrderByInput {
+  date_ASC
+  date_DESC
+  database_ASC
+  database_DESC
+  version_ASC
+  version_DESC
+  commit_ASC
+  commit_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TestRunPreviousValues {
+  date: DateTime
+  database: Connector
+  version: String
+  commit: String
+}
+
+type TestRunSubscriptionPayload {
+  mutation: MutationType!
+  node: TestRun
+  updatedFields: [String!]
+  previousValues: TestRunPreviousValues
+}
+
+input TestRunSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TestRunSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TestRunSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TestRunSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TestRunWhereInput
+}
+
+input TestRunUpdateInput {
+  date: DateTime
+  database: Connector
+  version: String
+  commit: String
+  latencies: LatencyUpdateManyInput
+}
+
+input TestRunUpdateManyInput {
+  create: [TestRunCreateInput!]
+}
+
+input TestRunWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TestRunWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TestRunWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TestRunWhereInput!]
+  date: DateTime
+
+  """All values that are not equal to given value."""
+  date_not: DateTime
+
+  """All values that are contained in given list."""
+  date_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  date_lt: DateTime
+
+  """All values less than or equal the given value."""
+  date_lte: DateTime
+
+  """All values greater than the given value."""
+  date_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  date_gte: DateTime
+  database: Connector
+
+  """All values that are not equal to given value."""
+  database_not: Connector
+
+  """All values that are contained in given list."""
+  database_in: [Connector!]
+
+  """All values that are not contained in given list."""
+  database_not_in: [Connector!]
+  version: String
+
+  """All values that are not equal to given value."""
+  version_not: String
+
+  """All values that are contained in given list."""
+  version_in: [String!]
+
+  """All values that are not contained in given list."""
+  version_not_in: [String!]
+
+  """All values less than the given value."""
+  version_lt: String
+
+  """All values less than or equal the given value."""
+  version_lte: String
+
+  """All values greater than the given value."""
+  version_gt: String
+
+  """All values greater than or equal the given value."""
+  version_gte: String
+
+  """All values containing the given string."""
+  version_contains: String
+
+  """All values not containing the given string."""
+  version_not_contains: String
+
+  """All values starting with the given string."""
+  version_starts_with: String
+
+  """All values not starting with the given string."""
+  version_not_starts_with: String
+
+  """All values ending with the given string."""
+  version_ends_with: String
+
+  """All values not ending with the given string."""
+  version_not_ends_with: String
+  commit: String
+
+  """All values that are not equal to given value."""
+  commit_not: String
+
+  """All values that are contained in given list."""
+  commit_in: [String!]
+
+  """All values that are not contained in given list."""
+  commit_not_in: [String!]
+
+  """All values less than the given value."""
+  commit_lt: String
+
+  """All values less than or equal the given value."""
+  commit_lte: String
+
+  """All values greater than the given value."""
+  commit_gt: String
+
+  """All values greater than or equal the given value."""
+  commit_gte: String
+
+  """All values containing the given string."""
+  commit_contains: String
+
+  """All values not containing the given string."""
+  commit_not_contains: String
+
+  """All values starting with the given string."""
+  commit_starts_with: String
+
+  """All values not starting with the given string."""
+  commit_not_starts_with: String
+
+  """All values ending with the given string."""
+  commit_ends_with: String
+
+  """All values not ending with the given string."""
+  commit_not_ends_with: String
+  latencies_every: LatencyWhereInput
+  latencies_some: LatencyWhereInput
+  latencies_none: LatencyWhereInput
+  _MagicalBackRelation_PerformanceTestToTestRun_every: PerformanceTestWhereInput
+  _MagicalBackRelation_PerformanceTestToTestRun_some: PerformanceTestWhereInput
+  _MagicalBackRelation_PerformanceTestToTestRun_none: PerformanceTestWhereInput
+}

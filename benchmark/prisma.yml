@@ -1,0 +1,6 @@
+datamodel: datamodel.graphql
+hooks:
+  post-deploy:
+    - graphql get-schema
+    - graphql codegen
+endpoint: https://eu1.prisma.sh/mavilein-089a7b/result_storage/dev

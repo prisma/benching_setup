@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "rootDir": "src",
-    "target": "es6",
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
     "sourceMap": true,
-    "outDir": "dist",
-    "lib": ["esnext", "dom"]
-  },
-  "exclude": ["node_modules"]
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "lib": ["dom", "esnext"],
+    "outDir": "target"
+  }
 }

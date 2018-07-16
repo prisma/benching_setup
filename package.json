@@ -10,15 +10,21 @@
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
     "p-map": "^1.2.0",
-    "walk": "2.3.14",
-    "sleep": "5.1.1"
+    "prisma-binding": "^2.1.0",
+    "sleep": "5.1.1",
+    "walk": "2.3.14"
   },
   "devDependencies": {
     "@types/node": "^10.5.2",
+    "graphql-cli": "^2.16.4",
+    "inspect-process": "^0.5.0",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2"
   },
   "scripts": {
-    "fill": "ts-node scripts/bin.ts"
+    "fill": "ts-node scripts/bin.ts",
+    "bench": "ts-node benchmark/bench.ts",
+    "bench-debug": "inspect -r ts-node/register benchmark/bench.ts",
+    "compile": "tsc"
   }
 }
