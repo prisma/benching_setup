@@ -13,5 +13,9 @@ echo "ID is $ID"
 IP=`doctl compute droplet get $ID --no-header --format="PublicIPv4"`
 echo "IP is $IP"
 
-echo "Starting Prisma with the connector $CONNECTOR"
-ssh root@$IP "cd setup_scripts && ./setup_prisma.sh $CONNECTOR"
+if [ -z "${PRISMA_VERSION}" ]; then
+    echo "No Prisma version provided. Will fetch latest alpha from Dockerhub."
+    PRISMA_VERSION=`curl -sS 'https://registry.hub.docker.com/v2/repositories/prismagraphql/prisma/tags/' | jq '."results"[]["name"]' --raw-output | grep -v heroku | grep alpha | head -n 1`
+fi
+echo "Starting Prisma version $PRISMA_VERSION with the connector $CONNECTOR"
+ssh root@$IP "cd setup_scripts/prisma && ./setup.sh $CONNECTOR $PRISMA_VERSION"

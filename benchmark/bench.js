@@ -1,4 +1,4 @@
-const testFolder = '../querycollection';
+const testFolder = './querycollection';
 
 var benchmarkConfigs = {
     "very-slow": {
