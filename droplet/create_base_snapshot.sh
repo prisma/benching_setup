@@ -9,7 +9,7 @@ echo "ID is $ID"
 IP=`doctl compute droplet get $ID --no-header --format="PublicIPv4"`
 echo "IP is $IP"
 echo "Uploading the repo"
-rsync -av --progress . root@$IP:benching_setup --exclude node_modules --exclude .git
+rsync -av --progress .. root@$IP:. --exclude node_modules --exclude .git
 echo "Installing the Tools"
 ssh root@$IP 'cd setup_scripts/tools && ./setup.sh'
 echo "Deleting old snapshot" # we are looping because there might be none and we do not want to error in this case
