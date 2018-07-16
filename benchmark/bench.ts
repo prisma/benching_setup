@@ -142,6 +142,7 @@ function runVegeta(url, graphqlQueryAsString, rps, duration): void {
   const prisma = new Prisma({
     endpoint: "https://eu1.prisma.sh/mavilein-089a7b/result_storage/dev"
   });
+  console.log(prisma);
 
-  prisma.mutation.updateManyPerformanceTests();
+  // prisma.mutation.upsert();
 }
