@@ -18,4 +18,4 @@ if [ -z "${PRISMA_VERSION}" ]; then
     PRISMA_VERSION=`curl -sS 'https://registry.hub.docker.com/v2/repositories/prismagraphql/prisma/tags/' | jq '."results"[]["name"]' --raw-output | grep -v heroku | grep alpha | head -n 1`
 fi
 echo "Starting Prisma version $PRISMA_VERSION with the connector $CONNECTOR"
-ssh -o ConnectionAttempts=10 root@$IP "cd setup_scripts/prisma && ./setup.sh $CONNECTOR $PRISMA_VERSION"
+ssh root@$IP "cd setup_scripts/prisma && ./setup.sh $CONNECTOR $PRISMA_VERSION"

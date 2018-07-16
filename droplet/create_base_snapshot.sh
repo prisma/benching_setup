@@ -9,7 +9,7 @@ echo "ID is $ID"
 IP=`doctl compute droplet get $ID --no-header --format="PublicIPv4"`
 echo "IP is $IP"
 echo "Uploading the setup scripts"
-scp -rp -o ConnectionAttempts=10 ../setup_scripts root@$IP:/root/ # sometimes the droplet does not accept ssh connections yet
+scp -rp ../setup_scripts root@$IP:/root/ # sometimes the droplet does not accept ssh connections yet
 echo "Uploading the benchmark script"
 scp -rp ../benchmark root@$IP:/root/
 echo "Installing the Tools"
