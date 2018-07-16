@@ -11,8 +11,6 @@ echo "IP is $IP"
 # sleep 20 # sometimes the droplet does not accept ssh connections yet
 echo "Uploading the setup scripts"
 scp -rp ../setup_scripts root@$IP:/root/
-echo "Uploading the queries to be tested"
-scp -rp ../querycollection root@$IP:/root/
 echo "Uploading the benchmark script"
 scp -rp ../benchmark root@$IP:/root/
 echo "Installing the Tools"
