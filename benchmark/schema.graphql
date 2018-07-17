@@ -1,5 +1,5 @@
-# source: https://eu1.prisma.sh/mavilein-089a7b/result_storage/dev
-# timestamp: Tue Jul 17 2018 11:13:48 GMT+0200 (CEST)
+# source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
+# timestamp: Tue Jul 17 2018 15:29:41 GMT+0200 (CEST)
 
 type AggregateLatency {
   count: Int!
@@ -28,12 +28,12 @@ scalar DateTime
 
 type Latency implements Node {
   id: ID!
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
+  rps: Int!
+  median: Int!
+  p95: Int!
+  p99: Int!
+  successes: Int!
+  failures: Int!
 }
 
 """A connection to a list of items."""
@@ -47,12 +47,12 @@ type LatencyConnection {
 }
 
 input LatencyCreateInput {
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
+  rps: Int!
+  median: Int!
+  p95: Int!
+  p99: Int!
+  successes: Int!
+  failures: Int!
 }
 
 input LatencyCreateManyInput {
@@ -92,12 +92,12 @@ enum LatencyOrderByInput {
 
 type LatencyPreviousValues {
   id: ID!
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
+  rps: Int!
+  median: Int!
+  p95: Int!
+  p99: Int!
+  successes: Int!
+  failures: Int!
 }
 
 type LatencySubscriptionPayload {
@@ -358,9 +358,6 @@ input LatencyWhereInput {
 
   """All values greater than or equal the given value."""
   failures_gte: Int
-  _MagicalBackRelation_LatencyToTestRun_every: TestRunWhereInput
-  _MagicalBackRelation_LatencyToTestRun_some: TestRunWhereInput
-  _MagicalBackRelation_LatencyToTestRun_none: TestRunWhereInput
 }
 
 input LatencyWhereUniqueInput {
@@ -423,8 +420,8 @@ type PageInfo {
 
 type PerformanceTest implements Node {
   id: ID!
-  name: String
-  query: String
+  name: String!
+  query: String!
   runs(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun!]
 }
 
@@ -439,8 +436,8 @@ type PerformanceTestConnection {
 }
 
 input PerformanceTestCreateInput {
-  name: String
-  query: String
+  name: String!
+  query: String!
   runs: TestRunCreateManyInput
 }
 
@@ -468,8 +465,8 @@ enum PerformanceTestOrderByInput {
 
 type PerformanceTestPreviousValues {
   id: ID!
-  name: String
-  query: String
+  name: String!
+  query: String!
 }
 
 type PerformanceTestSubscriptionPayload {
@@ -684,7 +681,7 @@ type TestRun implements Node {
   id: ID!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
 }
@@ -701,7 +698,7 @@ type TestRunConnection {
 
 input TestRunCreateInput {
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
   latencies: LatencyCreateManyInput
@@ -726,8 +723,8 @@ enum TestRunOrderByInput {
   id_DESC
   date_ASC
   date_DESC
-  database_ASC
-  database_DESC
+  connector_ASC
+  connector_DESC
   version_ASC
   version_DESC
   commit_ASC
@@ -741,7 +738,7 @@ enum TestRunOrderByInput {
 type TestRunPreviousValues {
   id: ID!
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
 }
@@ -787,7 +784,7 @@ input TestRunSubscriptionWhereInput {
 
 input TestRunUpdateDataInput {
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
   latencies: LatencyUpdateManyInput
@@ -795,7 +792,7 @@ input TestRunUpdateDataInput {
 
 input TestRunUpdateInput {
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
   latencies: LatencyUpdateManyInput
@@ -892,16 +889,16 @@ input TestRunWhereInput {
 
   """All values greater than or equal the given value."""
   date_gte: DateTime
-  database: Connector
+  connector: Connector
 
   """All values that are not equal to given value."""
-  database_not: Connector
+  connector_not: Connector
 
   """All values that are contained in given list."""
-  database_in: [Connector!]
+  connector_in: [Connector!]
 
   """All values that are not contained in given list."""
-  database_not_in: [Connector!]
+  connector_not_in: [Connector!]
   version: String
 
   """All values that are not equal to given value."""
@@ -985,9 +982,6 @@ input TestRunWhereInput {
   latencies_every: LatencyWhereInput
   latencies_some: LatencyWhereInput
   latencies_none: LatencyWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_every: PerformanceTestWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_some: PerformanceTestWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_none: PerformanceTestWhereInput
 }
 
 input TestRunWhereUniqueInput {

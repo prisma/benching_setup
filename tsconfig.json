@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // "noUnusedParameters": true,
     "strictNullChecks": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,

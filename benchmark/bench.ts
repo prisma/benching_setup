@@ -3,10 +3,14 @@ import { readFileSync, writeFileSync } from "fs";
 import { walkSync } from "walk";
 import { basename } from "path";
 import { execSync } from "child_process";
-import { Prisma } from "./binding";
+import {
+  Prisma,
+  TestRunUpdateManyInput,
+  TestRunCreateManyInput
+} from "./binding";
 
 const resultStorageEndpoint =
-  "https://eu1.prisma.sh/mavilein-089a7b/result_storage/dev";
+  "https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev";
 const benchmarkConfigs = {
   "very-slow": {
     warmup_rps: 20,
@@ -152,7 +156,7 @@ async function benchMarkQuery(query): Promise<void> {
 
 interface VegetaResult {
   latencies: VegetaLantencies;
-  statusCodes: Map<string, number>;
+  status_codes: Map<string, number>;
 }
 
 interface VegetaLantencies {
@@ -197,10 +201,10 @@ async function storeBenchmarkResults(
     endpoint: resultStorageEndpoint
   });
   const latencies = results.map(result => {
-    const failures = Object.keys(result.vegetaResult.statusCodes).reduce(
+    const failures = Object.keys(result.vegetaResult.status_codes).reduce(
       (accumulator, statusCode) => {
         if (statusCode != "200") {
-          let value = result.vegetaResult.statusCodes[statusCode];
+          let value = result.vegetaResult.status_codes[statusCode];
           return value + accumulator;
         } else {
           return accumulator;
@@ -214,21 +218,21 @@ async function storeBenchmarkResults(
       p95: result.vegetaResult.latencies["95th"],
       p99: result.vegetaResult.latencies["99th"],
       failures: failures,
-      successes: result.vegetaResult.statusCodes["200"]
+      successes: result.vegetaResult.status_codes["200"]
     };
   });
-  const nestedCreateRun = {
-    database: connector,
-    date: new Date(),
+  const nestedCreateRun: TestRunUpdateManyInput | TestRunCreateManyInput = {
     create: [
       {
+        connector: "Postgres",
+        date: new Date(),
         latencies: {
           create: latencies
         }
       }
     ]
   };
-  await prisma.mutation.upsertPerformanceTest({
+  const data = {
     where: { name: queryName },
     update: {
       runs: nestedCreateRun
@@ -238,5 +242,7 @@ async function storeBenchmarkResults(
       query: query,
       runs: nestedCreateRun
     }
-  });
+  };
+  // console.log(JSON.stringify(data, null, 2));
+  await prisma.mutation.upsertPerformanceTest(data);
 }

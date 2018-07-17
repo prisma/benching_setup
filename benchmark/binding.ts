@@ -98,12 +98,12 @@ scalar DateTime
 
 type Latency implements Node {
   id: ID!
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
+  rps: Int!
+  median: Int!
+  p95: Int!
+  p99: Int!
+  successes: Int!
+  failures: Int!
 }
 
 """A connection to a list of items."""
@@ -117,12 +117,12 @@ type LatencyConnection {
 }
 
 input LatencyCreateInput {
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
+  rps: Int!
+  median: Int!
+  p95: Int!
+  p99: Int!
+  successes: Int!
+  failures: Int!
 }
 
 input LatencyCreateManyInput {
@@ -162,12 +162,12 @@ enum LatencyOrderByInput {
 
 type LatencyPreviousValues {
   id: ID!
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
+  rps: Int!
+  median: Int!
+  p95: Int!
+  p99: Int!
+  successes: Int!
+  failures: Int!
 }
 
 type LatencySubscriptionPayload {
@@ -428,9 +428,6 @@ input LatencyWhereInput {
 
   """All values greater than or equal the given value."""
   failures_gte: Int
-  _MagicalBackRelation_LatencyToTestRun_every: TestRunWhereInput
-  _MagicalBackRelation_LatencyToTestRun_some: TestRunWhereInput
-  _MagicalBackRelation_LatencyToTestRun_none: TestRunWhereInput
 }
 
 input LatencyWhereUniqueInput {
@@ -493,8 +490,8 @@ type PageInfo {
 
 type PerformanceTest implements Node {
   id: ID!
-  name: String
-  query: String
+  name: String!
+  query: String!
   runs(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun!]
 }
 
@@ -509,8 +506,8 @@ type PerformanceTestConnection {
 }
 
 input PerformanceTestCreateInput {
-  name: String
-  query: String
+  name: String!
+  query: String!
   runs: TestRunCreateManyInput
 }
 
@@ -538,8 +535,8 @@ enum PerformanceTestOrderByInput {
 
 type PerformanceTestPreviousValues {
   id: ID!
-  name: String
-  query: String
+  name: String!
+  query: String!
 }
 
 type PerformanceTestSubscriptionPayload {
@@ -754,7 +751,7 @@ type TestRun implements Node {
   id: ID!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
 }
@@ -771,7 +768,7 @@ type TestRunConnection {
 
 input TestRunCreateInput {
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
   latencies: LatencyCreateManyInput
@@ -796,8 +793,8 @@ enum TestRunOrderByInput {
   id_DESC
   date_ASC
   date_DESC
-  database_ASC
-  database_DESC
+  connector_ASC
+  connector_DESC
   version_ASC
   version_DESC
   commit_ASC
@@ -811,7 +808,7 @@ enum TestRunOrderByInput {
 type TestRunPreviousValues {
   id: ID!
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
 }
@@ -857,7 +854,7 @@ input TestRunSubscriptionWhereInput {
 
 input TestRunUpdateDataInput {
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
   latencies: LatencyUpdateManyInput
@@ -865,7 +862,7 @@ input TestRunUpdateDataInput {
 
 input TestRunUpdateInput {
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String
   commit: String
   latencies: LatencyUpdateManyInput
@@ -962,16 +959,16 @@ input TestRunWhereInput {
 
   """All values greater than or equal the given value."""
   date_gte: DateTime
-  database: Connector
+  connector: Connector
 
   """All values that are not equal to given value."""
-  database_not: Connector
+  connector_not: Connector
 
   """All values that are contained in given list."""
-  database_in: [Connector!]
+  connector_in: [Connector!]
 
   """All values that are not contained in given list."""
-  database_not_in: [Connector!]
+  connector_not_in: [Connector!]
   version: String
 
   """All values that are not equal to given value."""
@@ -1055,9 +1052,6 @@ input TestRunWhereInput {
   latencies_every: LatencyWhereInput
   latencies_some: LatencyWhereInput
   latencies_none: LatencyWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_every: PerformanceTestWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_some: PerformanceTestWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_none: PerformanceTestWhereInput
 }
 
 input TestRunWhereUniqueInput {
@@ -1094,8 +1088,8 @@ export type TestRunOrderByInput =   'id_ASC' |
   'id_DESC' |
   'date_ASC' |
   'date_DESC' |
-  'database_ASC' |
-  'database_DESC' |
+  'connector_ASC' |
+  'connector_DESC' |
   'version_ASC' |
   'version_DESC' |
   'commit_ASC' |
@@ -1130,7 +1124,7 @@ export interface LatencyWhereUniqueInput {
 
 export interface TestRunCreateInput {
   date?: DateTime
-  database?: Connector
+  connector?: Connector
   version?: String
   commit?: String
   latencies?: LatencyCreateManyInput
@@ -1267,9 +1261,6 @@ export interface LatencyWhereInput {
   failures_lte?: Int
   failures_gt?: Int
   failures_gte?: Int
-  _MagicalBackRelation_LatencyToTestRun_every?: TestRunWhereInput
-  _MagicalBackRelation_LatencyToTestRun_some?: TestRunWhereInput
-  _MagicalBackRelation_LatencyToTestRun_none?: TestRunWhereInput
 }
 
 export interface LatencyUpdateManyInput {
@@ -1283,7 +1274,7 @@ export interface LatencyUpdateManyInput {
 
 export interface TestRunUpdateInput {
   date?: DateTime
-  database?: Connector
+  connector?: Connector
   version?: String
   commit?: String
   latencies?: LatencyUpdateManyInput
@@ -1291,7 +1282,7 @@ export interface TestRunUpdateInput {
 
 export interface TestRunUpdateDataInput {
   date?: DateTime
-  database?: Connector
+  connector?: Connector
   version?: String
   commit?: String
   latencies?: LatencyUpdateManyInput
@@ -1360,8 +1351,8 @@ export interface TestRunCreateManyInput {
 }
 
 export interface PerformanceTestCreateInput {
-  name?: String
-  query?: String
+  name: String
+  query: String
   runs?: TestRunCreateManyInput
 }
 
@@ -1371,12 +1362,12 @@ export interface LatencyCreateManyInput {
 }
 
 export interface LatencyCreateInput {
-  rps?: Int
-  median?: Int
-  p95?: Int
-  p99?: Int
-  successes?: Int
-  failures?: Int
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
 }
 
 export interface LatencySubscriptionWhereInput {
@@ -1431,10 +1422,10 @@ export interface TestRunWhereInput {
   date_lte?: DateTime
   date_gt?: DateTime
   date_gte?: DateTime
-  database?: Connector
-  database_not?: Connector
-  database_in?: Connector[] | Connector
-  database_not_in?: Connector[] | Connector
+  connector?: Connector
+  connector_not?: Connector
+  connector_in?: Connector[] | Connector
+  connector_not_in?: Connector[] | Connector
   version?: String
   version_not?: String
   version_in?: String[] | String
@@ -1466,9 +1457,6 @@ export interface TestRunWhereInput {
   latencies_every?: LatencyWhereInput
   latencies_some?: LatencyWhereInput
   latencies_none?: LatencyWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_every?: PerformanceTestWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_some?: PerformanceTestWhereInput
-  _MagicalBackRelation_PerformanceTestToTestRun_none?: PerformanceTestWhereInput
 }
 
 /*
@@ -1487,7 +1475,7 @@ export interface TestRun extends Node {
   id: ID_Output
   latencies?: Latency[]
   date?: DateTime
-  database?: Connector
+  connector?: Connector
   version?: String
   commit?: String
 }
@@ -1495,7 +1483,7 @@ export interface TestRun extends Node {
 export interface TestRunPreviousValues {
   id: ID_Output
   date?: DateTime
-  database?: Connector
+  connector?: Connector
   version?: String
   commit?: String
 }
@@ -1575,8 +1563,8 @@ export interface PageInfo {
 
 export interface PerformanceTestPreviousValues {
   id: ID_Output
-  name?: String
-  query?: String
+  name: String
+  query: String
 }
 
 export interface PerformanceTestSubscriptionPayload {
@@ -1588,18 +1576,18 @@ export interface PerformanceTestSubscriptionPayload {
 
 export interface LatencyPreviousValues {
   id: ID_Output
-  rps?: Int
-  median?: Int
-  p95?: Int
-  p99?: Int
-  successes?: Int
-  failures?: Int
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
 }
 
 export interface PerformanceTest extends Node {
   id: ID_Output
-  name?: String
-  query?: String
+  name: String
+  query: String
   runs?: TestRun[]
 }
 
@@ -1626,12 +1614,12 @@ export interface AggregatePerformanceTest {
 
 export interface Latency extends Node {
   id: ID_Output
-  rps?: Int
-  median?: Int
-  p95?: Int
-  p99?: Int
-  successes?: Int
-  failures?: Int
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
 }
 
 /*
