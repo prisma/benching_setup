@@ -99,7 +99,9 @@ async function getServerInfo(): Promise<PrismaServerInfo> {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ query: query })
-  }).then(res => res.json());
+  })
+    .then(res => res.json())
+    .then(json => json["data"]["serverInfo"]);
 }
 
 interface QueryFile {
