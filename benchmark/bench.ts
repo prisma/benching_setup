@@ -1,11 +1,12 @@
-const testFolder = "./querycollection";
-import sleep from "sleep";
-import fs from "fs";
-import walk from "walk";
-import path from "path";
+const testFolder = "./benchmark/querycollection";
+import { readFileSync, writeFileSync } from "fs";
+import { walkSync } from "walk";
+import { basename } from "path";
 import { execSync } from "child_process";
 import { Prisma } from "./binding";
 
+const resultStorageEndpoint =
+  "https://eu1.prisma.sh/mavilein-089a7b/result_storage/dev";
 const benchmarkConfigs = {
   "very-slow": {
     warmup_rps: 20,
@@ -20,7 +21,8 @@ const benchmarkConfigs = {
   medium: {
     warmup_rps: 100,
     warmup_duration: 3,
-    rps: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+    // rps: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+    rps: [100, 200]
   },
   fast: {
     warmup_rps: 150,
@@ -33,19 +35,23 @@ const benchmarkConfigs = {
     rps: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
   }
 };
-debugger;
 
-const args = process.argv.slice(2);
-const queryFiles = getQueryFiles();
-if (args.length == 0) {
-  console.log("running all tests");
-  for (const queryFile of queryFiles) {
-    benchMarkQuery(queryFile);
+main().catch(console.error);
+
+async function main() {
+  const args = process.argv.slice(2);
+  const queryFiles = getQueryFiles();
+  console.log(queryFiles);
+  if (args.length == 0) {
+    console.log("running all tests");
+    for (const queryFile of queryFiles) {
+      await benchMarkQuery(queryFile);
+    }
+  } else {
+    console.log("running one test");
+    const queryFile = getQueryFileForName(args[0]);
+    await benchMarkQuery(queryFile);
   }
-} else {
-  console.log("running one test");
-  const queryFile = getQueryFileForName(args[0]);
-  benchMarkQuery(queryFile);
 }
 
 function getQueryFileForName(name) {
@@ -73,10 +79,11 @@ function getQueryFiles(): QueryFile[] {
   const options = {
     listeners: {
       file: function(root, fileStats, next) {
+        // console.log(fileStats.name);
         if (fileStats.name.endsWith(".graphql")) {
           // console.log(root)
-          // console.log(fileStats.name)
-          const fileName = path.basename(fileStats.name, ".graphql");
+          // console.log(fileStats.name);
+          const fileName = basename(fileStats.name, ".graphql");
           const parts = fileName.split("_");
           const query = {
             name: parts[parts.length - 2],
@@ -88,20 +95,27 @@ function getQueryFiles(): QueryFile[] {
         next();
       },
       errors: function(_0, _1, next) {
+        console.log("error");
+        console.log(_1);
         next();
       }
     }
   };
 
-  walk.walkSync(testFolder, options);
+  walkSync(testFolder, options);
   return queryFiles;
 }
 
-function benchMarkQuery(query): void {
+interface BenchmarkResult {
+  rps: number;
+  vegetaResult: VegetaResult;
+}
+
+async function benchMarkQuery(query): Promise<void> {
   const config = benchmarkConfigs[query.speed];
 
   const url = "http://localhost:4466";
-  const graphqlQuery = fs.readFileSync(query.filePath, { encoding: "utf-8" });
+  const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
 
   console.log("");
   console.log("");
@@ -114,35 +128,115 @@ function benchMarkQuery(query): void {
   console.log(graphqlQuery);
   runVegeta(url, graphqlQuery, config.warmup_rps, config.warmup_duration);
 
-  sleep.sleep(15); // give the service a bit of time to recover
+  await new Promise(r => setTimeout(r, 1000));
+  // sleep.sleep(15); // give the service a bit of time to recover
 
-  console.log("----------------- Benching: $BENCH_NAME -----------------");
+  const results: BenchmarkResult[] = [];
+  console.log(`----------------- Benching: ${query.name} -----------------`);
   for (const rps of config.rps) {
     console.log(`${rps} req/s`);
-    runVegeta(url, graphqlQuery, rps, 60);
+    const vegetaResult = runVegeta(url, graphqlQuery, rps, 60);
+    results.push({
+      rps: rps,
+      vegetaResult: vegetaResult
+    });
   }
+
+  await storeBenchmarkResults(
+    "dummyConnector",
+    query.name,
+    graphqlQuery,
+    results
+  );
 }
 
-function runVegeta(url, graphqlQueryAsString, rps, duration): void {
+interface VegetaResult {
+  latencies: VegetaLantencies;
+  statusCodes: Map<string, number>;
+}
+
+interface VegetaLantencies {
+  total: number;
+  mean: number;
+  "50th": number;
+  "95th": number;
+  "99th": number;
+  max: number;
+}
+
+function runVegeta(url, graphqlQueryAsString, rps, duration): VegetaResult {
   const graphqlQuery = {
     query: graphqlQueryAsString
   };
+
+  writeFileSync("body.json", JSON.stringify(graphqlQuery));
   const attack = `
       POST ${url}
       Content-Type: application/json
-      ${JSON.stringify(graphqlQuery)}
+      @body.json
     `;
+  console.log(attack);
   const result = execSync(
     `vegeta attack -rate=${rps} -duration="${duration}s" -timeout="10s" | vegeta report -reporter=json`,
     { input: attack }
   ).toString();
-  //   const json = JSON.parse(result);
-  console.log(result);
+  const vegetaResult: VegetaResult = JSON.parse(result);
+  console.log(vegetaResult);
 
+  return vegetaResult;
+}
+
+async function storeBenchmarkResults(
+  connector: string,
+  queryName: string,
+  query: string,
+  results: BenchmarkResult[]
+): Promise<void> {
+  console.log(`storing ${results.length} results`);
   const prisma = new Prisma({
-    endpoint: "https://eu1.prisma.sh/mavilein-089a7b/result_storage/dev"
+    endpoint: resultStorageEndpoint
   });
-  console.log(prisma);
-
-  // prisma.mutation.upsert();
+  const latencies = results.map(result => {
+    const failures = Object.keys(result.vegetaResult.statusCodes).reduce(
+      (accumulator, statusCode) => {
+        if (statusCode != "200") {
+          let value = result.vegetaResult.statusCodes[statusCode];
+          return value + accumulator;
+        } else {
+          return accumulator;
+        }
+      },
+      0
+    );
+    return {
+      rps: result.rps,
+      median: result.vegetaResult.latencies.mean,
+      p95: result.vegetaResult.latencies["95th"],
+      p99: result.vegetaResult.latencies["99th"],
+      failures: failures,
+      successes: result.vegetaResult.statusCodes["200"]
+    };
+  });
+  const nestedCreateRun = {
+    database: connector,
+    date: new Date(),
+    create: [
+      {
+        latencies: {
+          create: latencies
+        }
+      }
+    ]
+  };
+  await prisma.mutation.upsertPerformanceTest({
+    where: { name: queryName },
+    update: {
+      runs: nestedCreateRun
+    },
+    create: {
+      name: queryName,
+      query: query,
+      runs: nestedCreateRun
+    }
+  });
 }

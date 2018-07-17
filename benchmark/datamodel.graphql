@@ -6,8 +6,8 @@ enum Connector {
 
 type PerformanceTest {
   id: ID! @unique
-  name: String # e.g. CreateFlat, CreateNested
-  query: String
+  name: String! @unique # e.g. CreateFlat, CreateNested
+  query: String!
   runs: [TestRun!]!
 }
 
@@ -15,17 +15,17 @@ type TestRun {
   id: ID! @unique
   latencies: [Latency!]!
   date: DateTime
-  database: Connector
+  connector: Connector
   version: String # how to find out?
   commit: String
 }
 
 type Latency {
   id: ID! @unique
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
+  rps: Int!
+  median: Int!
+  p95: Int!
+  p99: Int!
+  successes: Int!
+  failures: Int!
 }

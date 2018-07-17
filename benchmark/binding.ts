@@ -723,6 +723,7 @@ input PerformanceTestWhereInput {
 
 input PerformanceTestWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type Query {
@@ -1401,6 +1402,7 @@ export interface TestRunWhereUniqueInput {
 
 export interface PerformanceTestWhereUniqueInput {
   id?: ID_Input
+  name?: String
 }
 
 export interface TestRunWhereInput {

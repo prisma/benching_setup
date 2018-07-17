@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/mavilein-089a7b/result_storage/dev
-# timestamp: Mon Jul 16 2018 18:07:08 GMT+0200 (CEST)
+# timestamp: Tue Jul 17 2018 11:13:48 GMT+0200 (CEST)
 
 type AggregateLatency {
   count: Int!
@@ -653,6 +653,7 @@ input PerformanceTestWhereInput {
 
 input PerformanceTestWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type Query {
