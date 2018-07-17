@@ -10,6 +10,6 @@ IP=`doctl compute droplet get $ID --no-header --format="PublicIPv4"`
 echo "IP is $IP"
 
 if [ -n "${IMPORT_FILE}" ]; then
-    ssh root@$IP "cd benchmark && ./reset_test_data.sh" $IMPORT_FILE 
+    ssh root@$IP "docker run --net=host prismagraphql/benchmarks:latest reset-server $IMPORT_FILE"  
 fi
-ssh root@$IP "cd benchmark && ./bench.sh"
+ssh root@$IP "docker run --net=host prismagraphql/benchmarks:latest bench-server $CONNECTOR"  

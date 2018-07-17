@@ -1919,10 +1919,6 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nan@>=2.5.1:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
-
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
@@ -2627,12 +2623,6 @@ simple-errors@^1.0.1:
   resolved "https://registry.yarnpkg.com/simple-errors/-/simple-errors-1.0.1.tgz#b0bbecac1f1082f13b3962894b4a9e88f3a0c9ef"
   dependencies:
     errno "^0.1.1"
-
-sleep@5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/sleep/-/sleep-5.1.1.tgz#878fa1d44d08eeb0f26fb2018ef8629eb1a3ab94"
-  dependencies:
-    nan ">=2.5.1"
 
 snake-case@^2.1.0:
   version "2.1.0"

@@ -54,7 +54,7 @@ async function main() {
     console.log("You must provide the connector as the first argument");
     process.exit();
   }
-  if (testToRun == null) {
+  if (testToRun == null || testToRun === "all") {
     console.log("running all tests");
     for (const queryFile of queryFiles) {
       await benchMarkQuery(connector, queryFile);

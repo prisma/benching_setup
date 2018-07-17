@@ -22,8 +22,12 @@
   },
   "scripts": {
     "fill": "ts-node scripts/bin.ts",
-    "bench": "ts-node benchmark/bench.ts",
     "bench-debug": "inspect -r ts-node/register benchmark/bench.ts",
-    "compile": "tsc"
+    "compile": "tsc",
+    "docker": "docker build -t prismagraphql/benchmarks:latest .",
+    "docker-push": "docker push prismagraphql/benchmarks:latest",
+    "start-server": "cd setup_scripts/prisma-server && ./start.sh",
+    "reset-server": "cd setup_scripts/prisma-service && ./reset_test_data.sh",
+    "bench-server": "ts-node benchmark/bench.ts"
   }
 }
