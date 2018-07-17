@@ -8,16 +8,16 @@ type PerformanceTest {
   id: ID! @unique
   name: String! @unique # e.g. CreateFlat, CreateNested
   query: String!
-  runs: [TestRun!]!
+  runs: [TestRun!]! @relation(name: "TestToRun", onDelete: CASCADE)
 }
 
 type TestRun {
   id: ID! @unique
-  latencies: [Latency!]!
-  date: DateTime
-  connector: Connector
-  version: String # how to find out?
-  commit: String
+  latencies: [Latency!]! @relation(name: "RunToLatency", onDelete: CASCADE)
+  date: DateTime!
+  connector: Connector!
+  version: String!
+  commit: String!
 }
 
 type Latency {

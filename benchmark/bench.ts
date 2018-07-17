@@ -6,11 +6,14 @@ import { execSync } from "child_process";
 import {
   Prisma,
   TestRunUpdateManyInput,
-  TestRunCreateManyInput
+  TestRunCreateManyInput,
+  Connector
 } from "./binding";
 
-const resultStorageEndpoint =
-  "https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev";
+const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
+const resultStorageEndpoint = prismaServer + "/benchmark/dev";
+const benchmarkedServer = "http://localhost:4466";
+
 const benchmarkConfigs = {
   "very-slow": {
     warmup_rps: 20,
@@ -45,16 +48,21 @@ main().catch(console.error);
 async function main() {
   const args = process.argv.slice(2);
   const queryFiles = getQueryFiles();
-  console.log(queryFiles);
-  if (args.length == 0) {
+  const connector = args[0];
+  const testToRun = args[1];
+  if (connector == null) {
+    console.log("You must provide the connector as the first argument");
+    process.exit();
+  }
+  if (testToRun == null) {
     console.log("running all tests");
     for (const queryFile of queryFiles) {
-      await benchMarkQuery(queryFile);
+      await benchMarkQuery(connector, queryFile);
     }
   } else {
     console.log("running one test");
     const queryFile = getQueryFileForName(args[0]);
-    await benchMarkQuery(queryFile);
+    await benchMarkQuery(connector, queryFile);
   }
 }
 
@@ -69,6 +77,29 @@ function getQueryFileForName(name) {
     );
   }
   return queryFiles[0];
+}
+
+interface PrismaServerInfo {
+  version: string;
+  commit: string;
+}
+async function getServerInfo(): Promise<PrismaServerInfo> {
+  const query = `
+  {
+    serverInfo {
+      version
+      commit
+    }
+  }
+  `;
+  const managementEndpoint = benchmarkedServer + "/management";
+  return await fetch(managementEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ query: query })
+  }).then(res => res.json());
 }
 
 interface QueryFile {
@@ -115,31 +146,33 @@ interface BenchmarkResult {
   vegetaResult: VegetaResult;
 }
 
-async function benchMarkQuery(query): Promise<void> {
+async function benchMarkQuery(
+  connector: string,
+  query: QueryFile
+): Promise<void> {
   const config = benchmarkConfigs[query.speed];
-
-  const url = "http://localhost:4466";
   const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
+  const url = benchmarkedServer;
 
   console.log("");
   console.log("");
   console.log(
-    `----------------- Warmup: ${query.name} $PROGRAM_DIR ${url} ${
-      config.warmup_rps
-    }Req/s ${config.warmup_duration}s -----------------`
+    `----------------- Warmup: ${query.name} ${url} ${config.warmup_rps}Req/s ${
+      config.warmup_duration
+    }s -----------------`
   );
   console.log("");
   console.log(graphqlQuery);
   runVegeta(url, graphqlQuery, config.warmup_rps, config.warmup_duration);
 
-  await new Promise(r => setTimeout(r, 1000));
-  // sleep.sleep(15); // give the service a bit of time to recover
+  const serverInfo = await getServerInfo();
+  await new Promise(r => setTimeout(r, 10000)); // give the service a bit of time to recover
 
   const results: BenchmarkResult[] = [];
   console.log(`----------------- Benching: ${query.name} -----------------`);
   for (const rps of config.rps) {
     console.log(`${rps} req/s`);
-    const vegetaResult = runVegeta(url, graphqlQuery, rps, 60);
+    const vegetaResult = runVegeta(url, graphqlQuery, rps, 3);
     results.push({
       rps: rps,
       vegetaResult: vegetaResult
@@ -147,7 +180,9 @@ async function benchMarkQuery(query): Promise<void> {
   }
 
   await storeBenchmarkResults(
-    "dummyConnector",
+    connector,
+    serverInfo.version,
+    serverInfo.commit,
     query.name,
     graphqlQuery,
     results
@@ -179,19 +214,20 @@ function runVegeta(url, graphqlQueryAsString, rps, duration): VegetaResult {
       Content-Type: application/json
       @body.json
     `;
-  console.log(attack);
   const result = execSync(
     `vegeta attack -rate=${rps} -duration="${duration}s" -timeout="10s" | vegeta report -reporter=json`,
     { input: attack }
   ).toString();
   const vegetaResult: VegetaResult = JSON.parse(result);
-  console.log(vegetaResult);
+  // console.log(vegetaResult);
 
   return vegetaResult;
 }
 
 async function storeBenchmarkResults(
   connector: string,
+  version: string,
+  commit: string,
   queryName: string,
   query: string,
   results: BenchmarkResult[]
@@ -224,8 +260,10 @@ async function storeBenchmarkResults(
   const nestedCreateRun: TestRunUpdateManyInput | TestRunCreateManyInput = {
     create: [
       {
-        connector: "Postgres",
+        connector: connector as Connector,
         date: new Date(),
+        version: version,
+        commit: commit,
         latencies: {
           create: latencies
         }

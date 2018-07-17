@@ -1,5 +1,5 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Tue Jul 17 2018 15:29:41 GMT+0200 (CEST)
+# timestamp: Tue Jul 17 2018 16:46:30 GMT+0200 (CEST)
 
 type AggregateLatency {
   count: Int!
@@ -372,23 +372,23 @@ scalar Long
 
 type Mutation {
   createPerformanceTest(data: PerformanceTestCreateInput!): PerformanceTest!
-  createLatency(data: LatencyCreateInput!): Latency!
   createTestRun(data: TestRunCreateInput!): TestRun!
+  createLatency(data: LatencyCreateInput!): Latency!
   updatePerformanceTest(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  updateLatency(data: LatencyUpdateInput!, where: LatencyWhereUniqueInput!): Latency
   updateTestRun(data: TestRunUpdateInput!, where: TestRunWhereUniqueInput!): TestRun
+  updateLatency(data: LatencyUpdateInput!, where: LatencyWhereUniqueInput!): Latency
   deletePerformanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  deleteLatency(where: LatencyWhereUniqueInput!): Latency
   deleteTestRun(where: TestRunWhereUniqueInput!): TestRun
+  deleteLatency(where: LatencyWhereUniqueInput!): Latency
   upsertPerformanceTest(where: PerformanceTestWhereUniqueInput!, create: PerformanceTestCreateInput!, update: PerformanceTestUpdateInput!): PerformanceTest!
-  upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
   upsertTestRun(where: TestRunWhereUniqueInput!, create: TestRunCreateInput!, update: TestRunUpdateInput!): TestRun!
+  upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
   updateManyPerformanceTests(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereInput): BatchPayload!
-  updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
   updateManyTestRuns(data: TestRunUpdateInput!, where: TestRunWhereInput): BatchPayload!
+  updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
   deleteManyPerformanceTests(where: PerformanceTestWhereInput): BatchPayload!
-  deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
   deleteManyTestRuns(where: TestRunWhereInput): BatchPayload!
+  deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -655,14 +655,14 @@ input PerformanceTestWhereUniqueInput {
 
 type Query {
   performanceTests(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTest]!
-  latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
   testRuns(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun]!
+  latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
   performanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  latency(where: LatencyWhereUniqueInput!): Latency
   testRun(where: TestRunWhereUniqueInput!): TestRun
+  latency(where: LatencyWhereUniqueInput!): Latency
   performanceTestsConnection(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestConnection!
-  latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
   testRunsConnection(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestRunConnection!
+  latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -673,17 +673,17 @@ type Query {
 
 type Subscription {
   performanceTest(where: PerformanceTestSubscriptionWhereInput): PerformanceTestSubscriptionPayload
-  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
   testRun(where: TestRunSubscriptionWhereInput): TestRunSubscriptionPayload
+  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
 }
 
 type TestRun implements Node {
   id: ID!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
-  date: DateTime
-  connector: Connector
-  version: String
-  commit: String
+  date: DateTime!
+  connector: Connector!
+  version: String!
+  commit: String!
 }
 
 """A connection to a list of items."""
@@ -697,10 +697,10 @@ type TestRunConnection {
 }
 
 input TestRunCreateInput {
-  date: DateTime
-  connector: Connector
-  version: String
-  commit: String
+  date: DateTime!
+  connector: Connector!
+  version: String!
+  commit: String!
   latencies: LatencyCreateManyInput
 }
 
@@ -737,10 +737,10 @@ enum TestRunOrderByInput {
 
 type TestRunPreviousValues {
   id: ID!
-  date: DateTime
-  connector: Connector
-  version: String
-  commit: String
+  date: DateTime!
+  connector: Connector!
+  version: String!
+  commit: String!
 }
 
 type TestRunSubscriptionPayload {

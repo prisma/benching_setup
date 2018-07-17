@@ -5,48 +5,48 @@ import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 
 export interface Query {
     performanceTests: <T = PerformanceTest[]>(args: { where?: PerformanceTestWhereInput, orderBy?: PerformanceTestOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    latencies: <T = Latency[]>(args: { where?: LatencyWhereInput, orderBy?: LatencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     testRuns: <T = TestRun[]>(args: { where?: TestRunWhereInput, orderBy?: TestRunOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    latencies: <T = Latency[]>(args: { where?: LatencyWhereInput, orderBy?: LatencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     performanceTest: <T = PerformanceTest | null>(args: { where: PerformanceTestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    latency: <T = Latency | null>(args: { where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     testRun: <T = TestRun | null>(args: { where: TestRunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    latency: <T = Latency | null>(args: { where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     performanceTestsConnection: <T = PerformanceTestConnection>(args: { where?: PerformanceTestWhereInput, orderBy?: PerformanceTestOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    latenciesConnection: <T = LatencyConnection>(args: { where?: LatencyWhereInput, orderBy?: LatencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     testRunsConnection: <T = TestRunConnection>(args: { where?: TestRunWhereInput, orderBy?: TestRunOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    latenciesConnection: <T = LatencyConnection>(args: { where?: LatencyWhereInput, orderBy?: LatencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Mutation {
     createPerformanceTest: <T = PerformanceTest>(args: { data: PerformanceTestCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createLatency: <T = Latency>(args: { data: LatencyCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createTestRun: <T = TestRun>(args: { data: TestRunCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createLatency: <T = Latency>(args: { data: LatencyCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updatePerformanceTest: <T = PerformanceTest | null>(args: { data: PerformanceTestUpdateInput, where: PerformanceTestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateLatency: <T = Latency | null>(args: { data: LatencyUpdateInput, where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateTestRun: <T = TestRun | null>(args: { data: TestRunUpdateInput, where: TestRunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateLatency: <T = Latency | null>(args: { data: LatencyUpdateInput, where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deletePerformanceTest: <T = PerformanceTest | null>(args: { where: PerformanceTestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteLatency: <T = Latency | null>(args: { where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteTestRun: <T = TestRun | null>(args: { where: TestRunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteLatency: <T = Latency | null>(args: { where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertPerformanceTest: <T = PerformanceTest>(args: { where: PerformanceTestWhereUniqueInput, create: PerformanceTestCreateInput, update: PerformanceTestUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertLatency: <T = Latency>(args: { where: LatencyWhereUniqueInput, create: LatencyCreateInput, update: LatencyUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertTestRun: <T = TestRun>(args: { where: TestRunWhereUniqueInput, create: TestRunCreateInput, update: TestRunUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertLatency: <T = Latency>(args: { where: LatencyWhereUniqueInput, create: LatencyCreateInput, update: LatencyUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyPerformanceTests: <T = BatchPayload>(args: { data: PerformanceTestUpdateInput, where?: PerformanceTestWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyLatencies: <T = BatchPayload>(args: { data: LatencyUpdateInput, where?: LatencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyTestRuns: <T = BatchPayload>(args: { data: TestRunUpdateInput, where?: TestRunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyLatencies: <T = BatchPayload>(args: { data: LatencyUpdateInput, where?: LatencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyPerformanceTests: <T = BatchPayload>(args: { where?: PerformanceTestWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyLatencies: <T = BatchPayload>(args: { where?: LatencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyTestRuns: <T = BatchPayload>(args: { where?: TestRunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
+    deleteManyTestRuns: <T = BatchPayload>(args: { where?: TestRunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyLatencies: <T = BatchPayload>(args: { where?: LatencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Subscription {
     performanceTest: <T = PerformanceTestSubscriptionPayload | null>(args: { where?: PerformanceTestSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    latency: <T = LatencySubscriptionPayload | null>(args: { where?: LatencySubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    testRun: <T = TestRunSubscriptionPayload | null>(args: { where?: TestRunSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
+    testRun: <T = TestRunSubscriptionPayload | null>(args: { where?: TestRunSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    latency: <T = LatencySubscriptionPayload | null>(args: { where?: LatencySubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
   }
 
 export interface Exists {
   PerformanceTest: (where?: PerformanceTestWhereInput) => Promise<boolean>
-  Latency: (where?: LatencyWhereInput) => Promise<boolean>
   TestRun: (where?: TestRunWhereInput) => Promise<boolean>
+  Latency: (where?: LatencyWhereInput) => Promise<boolean>
 }
 
 export interface Prisma {
@@ -442,23 +442,23 @@ scalar Long
 
 type Mutation {
   createPerformanceTest(data: PerformanceTestCreateInput!): PerformanceTest!
-  createLatency(data: LatencyCreateInput!): Latency!
   createTestRun(data: TestRunCreateInput!): TestRun!
+  createLatency(data: LatencyCreateInput!): Latency!
   updatePerformanceTest(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  updateLatency(data: LatencyUpdateInput!, where: LatencyWhereUniqueInput!): Latency
   updateTestRun(data: TestRunUpdateInput!, where: TestRunWhereUniqueInput!): TestRun
+  updateLatency(data: LatencyUpdateInput!, where: LatencyWhereUniqueInput!): Latency
   deletePerformanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  deleteLatency(where: LatencyWhereUniqueInput!): Latency
   deleteTestRun(where: TestRunWhereUniqueInput!): TestRun
+  deleteLatency(where: LatencyWhereUniqueInput!): Latency
   upsertPerformanceTest(where: PerformanceTestWhereUniqueInput!, create: PerformanceTestCreateInput!, update: PerformanceTestUpdateInput!): PerformanceTest!
-  upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
   upsertTestRun(where: TestRunWhereUniqueInput!, create: TestRunCreateInput!, update: TestRunUpdateInput!): TestRun!
+  upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
   updateManyPerformanceTests(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereInput): BatchPayload!
-  updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
   updateManyTestRuns(data: TestRunUpdateInput!, where: TestRunWhereInput): BatchPayload!
+  updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
   deleteManyPerformanceTests(where: PerformanceTestWhereInput): BatchPayload!
-  deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
   deleteManyTestRuns(where: TestRunWhereInput): BatchPayload!
+  deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -725,14 +725,14 @@ input PerformanceTestWhereUniqueInput {
 
 type Query {
   performanceTests(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTest]!
-  latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
   testRuns(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun]!
+  latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
   performanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  latency(where: LatencyWhereUniqueInput!): Latency
   testRun(where: TestRunWhereUniqueInput!): TestRun
+  latency(where: LatencyWhereUniqueInput!): Latency
   performanceTestsConnection(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestConnection!
-  latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
   testRunsConnection(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestRunConnection!
+  latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -743,17 +743,17 @@ type Query {
 
 type Subscription {
   performanceTest(where: PerformanceTestSubscriptionWhereInput): PerformanceTestSubscriptionPayload
-  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
   testRun(where: TestRunSubscriptionWhereInput): TestRunSubscriptionPayload
+  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
 }
 
 type TestRun implements Node {
   id: ID!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
-  date: DateTime
-  connector: Connector
-  version: String
-  commit: String
+  date: DateTime!
+  connector: Connector!
+  version: String!
+  commit: String!
 }
 
 """A connection to a list of items."""
@@ -767,10 +767,10 @@ type TestRunConnection {
 }
 
 input TestRunCreateInput {
-  date: DateTime
-  connector: Connector
-  version: String
-  commit: String
+  date: DateTime!
+  connector: Connector!
+  version: String!
+  commit: String!
   latencies: LatencyCreateManyInput
 }
 
@@ -807,10 +807,10 @@ enum TestRunOrderByInput {
 
 type TestRunPreviousValues {
   id: ID!
-  date: DateTime
-  connector: Connector
-  version: String
-  commit: String
+  date: DateTime!
+  connector: Connector!
+  version: String!
+  commit: String!
 }
 
 type TestRunSubscriptionPayload {
@@ -1118,15 +1118,15 @@ export type LatencyOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export interface LatencyWhereUniqueInput {
+export interface TestRunWhereUniqueInput {
   id?: ID_Input
 }
 
 export interface TestRunCreateInput {
-  date?: DateTime
-  connector?: Connector
-  version?: String
-  commit?: String
+  date: DateTime
+  connector: Connector
+  version: String
+  commit: String
   latencies?: LatencyCreateManyInput
 }
 
@@ -1272,12 +1272,13 @@ export interface LatencyUpdateManyInput {
   upsert?: LatencyUpsertWithWhereUniqueNestedInput[] | LatencyUpsertWithWhereUniqueNestedInput
 }
 
-export interface TestRunUpdateInput {
-  date?: DateTime
-  connector?: Connector
-  version?: String
-  commit?: String
-  latencies?: LatencyUpdateManyInput
+export interface LatencyUpdateInput {
+  rps?: Int
+  median?: Int
+  p95?: Int
+  p99?: Int
+  successes?: Int
+  failures?: Int
 }
 
 export interface TestRunUpdateDataInput {
@@ -1288,13 +1289,12 @@ export interface TestRunUpdateDataInput {
   latencies?: LatencyUpdateManyInput
 }
 
-export interface LatencyUpdateInput {
-  rps?: Int
-  median?: Int
-  p95?: Int
-  p99?: Int
-  successes?: Int
-  failures?: Int
+export interface TestRunUpdateInput {
+  date?: DateTime
+  connector?: Connector
+  version?: String
+  commit?: String
+  latencies?: LatencyUpdateManyInput
 }
 
 export interface TestRunUpdateWithWhereUniqueNestedInput {
@@ -1302,15 +1302,15 @@ export interface TestRunUpdateWithWhereUniqueNestedInput {
   data: TestRunUpdateDataInput
 }
 
-export interface TestRunSubscriptionWhereInput {
-  AND?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
-  OR?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
-  NOT?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
+export interface LatencySubscriptionWhereInput {
+  AND?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  OR?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  NOT?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
   mutation_in?: MutationType[] | MutationType
   updatedFields_contains?: String
   updatedFields_contains_every?: String[] | String
   updatedFields_contains_some?: String[] | String
-  node?: TestRunWhereInput
+  node?: LatencyWhereInput
 }
 
 export interface TestRunUpdateManyInput {
@@ -1370,15 +1370,15 @@ export interface LatencyCreateInput {
   failures: Int
 }
 
-export interface LatencySubscriptionWhereInput {
-  AND?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  OR?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  NOT?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+export interface TestRunSubscriptionWhereInput {
+  AND?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
+  OR?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
+  NOT?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
   mutation_in?: MutationType[] | MutationType
   updatedFields_contains?: String
   updatedFields_contains_every?: String[] | String
   updatedFields_contains_some?: String[] | String
-  node?: LatencyWhereInput
+  node?: TestRunWhereInput
 }
 
 export interface LatencyUpsertWithWhereUniqueNestedInput {
@@ -1387,7 +1387,7 @@ export interface LatencyUpsertWithWhereUniqueNestedInput {
   create: LatencyCreateInput
 }
 
-export interface TestRunWhereUniqueInput {
+export interface LatencyWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -1467,25 +1467,27 @@ export interface Node {
   id: ID_Output
 }
 
-export interface AggregateTestRun {
+export interface AggregateLatency {
   count: Int
 }
 
 export interface TestRun extends Node {
   id: ID_Output
   latencies?: Latency[]
-  date?: DateTime
-  connector?: Connector
-  version?: String
-  commit?: String
+  date: DateTime
+  connector: Connector
+  version: String
+  commit: String
 }
 
-export interface TestRunPreviousValues {
+export interface LatencyPreviousValues {
   id: ID_Output
-  date?: DateTime
-  connector?: Connector
-  version?: String
-  commit?: String
+  rps: Int
+  median: Int
+  p95: Int
+  p99: Int
+  successes: Int
+  failures: Int
 }
 
 export interface BatchPayload {
@@ -1496,30 +1498,10 @@ export interface BatchPayload {
  * A connection to a list of items.
 
  */
-export interface TestRunConnection {
+export interface LatencyConnection {
   pageInfo: PageInfo
-  edges: TestRunEdge[]
-  aggregate: AggregateTestRun
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface TestRunEdge {
-  node: TestRun
-  cursor: String
-}
-
-export interface LatencySubscriptionPayload {
-  mutation: MutationType
-  node?: Latency
-  updatedFields?: String[]
-  previousValues?: LatencyPreviousValues
-}
-
-export interface AggregateLatency {
-  count: Int
+  edges: LatencyEdge[]
+  aggregate: AggregateLatency
 }
 
 /*
@@ -1531,14 +1513,34 @@ export interface LatencyEdge {
   cursor: String
 }
 
+export interface TestRunSubscriptionPayload {
+  mutation: MutationType
+  node?: TestRun
+  updatedFields?: String[]
+  previousValues?: TestRunPreviousValues
+}
+
+export interface AggregateTestRun {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface TestRunEdge {
+  node: TestRun
+  cursor: String
+}
+
 /*
  * A connection to a list of items.
 
  */
-export interface LatencyConnection {
+export interface TestRunConnection {
   pageInfo: PageInfo
-  edges: LatencyEdge[]
-  aggregate: AggregateLatency
+  edges: TestRunEdge[]
+  aggregate: AggregateTestRun
 }
 
 /*
@@ -1574,14 +1576,12 @@ export interface PerformanceTestSubscriptionPayload {
   previousValues?: PerformanceTestPreviousValues
 }
 
-export interface LatencyPreviousValues {
+export interface TestRunPreviousValues {
   id: ID_Output
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
+  date: DateTime
+  connector: Connector
+  version: String
+  commit: String
 }
 
 export interface PerformanceTest extends Node {
@@ -1601,11 +1601,11 @@ export interface PerformanceTestConnection {
   aggregate: AggregatePerformanceTest
 }
 
-export interface TestRunSubscriptionPayload {
+export interface LatencySubscriptionPayload {
   mutation: MutationType
-  node?: TestRun
+  node?: Latency
   updatedFields?: String[]
-  previousValues?: TestRunPreviousValues
+  previousValues?: LatencyPreviousValues
 }
 
 export interface AggregatePerformanceTest {
