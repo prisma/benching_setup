@@ -2,8 +2,8 @@
 
 ## Requirements
 
-- Digital Ocean CLI is installed and set up. The API Token can be found in 1Password.
-- The SSH Key `prisma_digital_ocean` is in your `~/.ssh` folder. This is also in 1Password.
+- Digital Ocean CLI is installed and set up. An API Token can be created [here](https://cloud.digitalocean.com/settings/api/tokens).
+- The SSH Key `prisma_digital_ocean` is in your `~/.ssh` folder. This can be found in 1Password.
 
 ## Usage
 
