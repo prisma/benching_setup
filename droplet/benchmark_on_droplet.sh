@@ -17,7 +17,7 @@ do
   echo "The Droplet does not accept SSH connections yet. Will try again in 1 second."
   sleep 1;
 done
-echo "Uploading the required setup script"
+echo "Uploading the required setup scripts"
 # rsync -i $HOME/.ssh/prisma_digital_ocean -av --progress ../setup_scripts/prisma-server root@$IP:.
 scp -r -i $HOME/.ssh/prisma_digital_ocean ../setup_scripts/prisma-server root@$IP:.
 echo "Starting the Prisma Server"
