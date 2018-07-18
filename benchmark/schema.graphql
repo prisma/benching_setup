@@ -1,5 +1,5 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Tue Jul 17 2018 16:46:30 GMT+0200 (CEST)
+# timestamp: Wed Jul 18 2018 10:24:12 GMT+0200 (CEST)
 
 type AggregateLatency {
   count: Int!
@@ -29,9 +29,10 @@ scalar DateTime
 type Latency implements Node {
   id: ID!
   rps: Int!
-  median: Int!
-  p95: Int!
-  p99: Int!
+  avg: Float!
+  p50: Float!
+  p95: Float!
+  p99: Float!
   successes: Int!
   failures: Int!
 }
@@ -48,9 +49,10 @@ type LatencyConnection {
 
 input LatencyCreateInput {
   rps: Int!
-  median: Int!
-  p95: Int!
-  p99: Int!
+  avg: Float!
+  p50: Float!
+  p95: Float!
+  p99: Float!
   successes: Int!
   failures: Int!
 }
@@ -74,8 +76,10 @@ enum LatencyOrderByInput {
   id_DESC
   rps_ASC
   rps_DESC
-  median_ASC
-  median_DESC
+  avg_ASC
+  avg_DESC
+  p50_ASC
+  p50_DESC
   p95_ASC
   p95_DESC
   p99_ASC
@@ -93,9 +97,10 @@ enum LatencyOrderByInput {
 type LatencyPreviousValues {
   id: ID!
   rps: Int!
-  median: Int!
-  p95: Int!
-  p99: Int!
+  avg: Float!
+  p50: Float!
+  p95: Float!
+  p99: Float!
   successes: Int!
   failures: Int!
 }
@@ -141,18 +146,20 @@ input LatencySubscriptionWhereInput {
 
 input LatencyUpdateDataInput {
   rps: Int
-  median: Int
-  p95: Int
-  p99: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
   successes: Int
   failures: Int
 }
 
 input LatencyUpdateInput {
   rps: Int
-  median: Int
-  p95: Int
-  p99: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
   successes: Int
   failures: Int
 }
@@ -248,72 +255,94 @@ input LatencyWhereInput {
 
   """All values greater than or equal the given value."""
   rps_gte: Int
-  median: Int
+  avg: Float
 
   """All values that are not equal to given value."""
-  median_not: Int
+  avg_not: Float
 
   """All values that are contained in given list."""
-  median_in: [Int!]
+  avg_in: [Float!]
 
   """All values that are not contained in given list."""
-  median_not_in: [Int!]
+  avg_not_in: [Float!]
 
   """All values less than the given value."""
-  median_lt: Int
+  avg_lt: Float
 
   """All values less than or equal the given value."""
-  median_lte: Int
+  avg_lte: Float
 
   """All values greater than the given value."""
-  median_gt: Int
+  avg_gt: Float
 
   """All values greater than or equal the given value."""
-  median_gte: Int
-  p95: Int
+  avg_gte: Float
+  p50: Float
 
   """All values that are not equal to given value."""
-  p95_not: Int
+  p50_not: Float
 
   """All values that are contained in given list."""
-  p95_in: [Int!]
+  p50_in: [Float!]
 
   """All values that are not contained in given list."""
-  p95_not_in: [Int!]
+  p50_not_in: [Float!]
 
   """All values less than the given value."""
-  p95_lt: Int
+  p50_lt: Float
 
   """All values less than or equal the given value."""
-  p95_lte: Int
+  p50_lte: Float
 
   """All values greater than the given value."""
-  p95_gt: Int
+  p50_gt: Float
 
   """All values greater than or equal the given value."""
-  p95_gte: Int
-  p99: Int
+  p50_gte: Float
+  p95: Float
 
   """All values that are not equal to given value."""
-  p99_not: Int
+  p95_not: Float
 
   """All values that are contained in given list."""
-  p99_in: [Int!]
+  p95_in: [Float!]
 
   """All values that are not contained in given list."""
-  p99_not_in: [Int!]
+  p95_not_in: [Float!]
 
   """All values less than the given value."""
-  p99_lt: Int
+  p95_lt: Float
 
   """All values less than or equal the given value."""
-  p99_lte: Int
+  p95_lte: Float
 
   """All values greater than the given value."""
-  p99_gt: Int
+  p95_gt: Float
 
   """All values greater than or equal the given value."""
-  p99_gte: Int
+  p95_gte: Float
+  p99: Float
+
+  """All values that are not equal to given value."""
+  p99_not: Float
+
+  """All values that are contained in given list."""
+  p99_in: [Float!]
+
+  """All values that are not contained in given list."""
+  p99_not_in: [Float!]
+
+  """All values less than the given value."""
+  p99_lt: Float
+
+  """All values less than or equal the given value."""
+  p99_lte: Float
+
+  """All values greater than the given value."""
+  p99_gt: Float
+
+  """All values greater than or equal the given value."""
+  p99_gte: Float
   successes: Int
 
   """All values that are not equal to given value."""

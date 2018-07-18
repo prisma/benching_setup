@@ -221,7 +221,12 @@ function runVegeta(url, graphqlQueryAsString, rps, duration): VegetaResult {
     { input: attack }
   ).toString();
   const vegetaResult: VegetaResult = JSON.parse(result);
-  // console.log(vegetaResult);
+
+  // vegeta is measuring in nano seconds
+  for (const key of ["mean", "50th", "95th", "99th", "max"]) {
+    vegetaResult.latencies[key] /= 1000000;
+  }
+  console.log(vegetaResult);
 
   return vegetaResult;
 }
@@ -252,13 +257,15 @@ async function storeBenchmarkResults(
     );
     return {
       rps: result.rps,
-      median: result.vegetaResult.latencies.mean,
+      avg: result.vegetaResult.latencies.mean,
+      p50: result.vegetaResult.latencies["50th"],
       p95: result.vegetaResult.latencies["95th"],
       p99: result.vegetaResult.latencies["99th"],
       failures: failures,
       successes: result.vegetaResult.status_codes["200"]
     };
   });
+
   const nestedCreateRun: TestRunUpdateManyInput | TestRunCreateManyInput = {
     create: [
       {

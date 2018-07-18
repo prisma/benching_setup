@@ -99,9 +99,10 @@ scalar DateTime
 type Latency implements Node {
   id: ID!
   rps: Int!
-  median: Int!
-  p95: Int!
-  p99: Int!
+  avg: Float!
+  p50: Float!
+  p95: Float!
+  p99: Float!
   successes: Int!
   failures: Int!
 }
@@ -118,9 +119,10 @@ type LatencyConnection {
 
 input LatencyCreateInput {
   rps: Int!
-  median: Int!
-  p95: Int!
-  p99: Int!
+  avg: Float!
+  p50: Float!
+  p95: Float!
+  p99: Float!
   successes: Int!
   failures: Int!
 }
@@ -144,8 +146,10 @@ enum LatencyOrderByInput {
   id_DESC
   rps_ASC
   rps_DESC
-  median_ASC
-  median_DESC
+  avg_ASC
+  avg_DESC
+  p50_ASC
+  p50_DESC
   p95_ASC
   p95_DESC
   p99_ASC
@@ -163,9 +167,10 @@ enum LatencyOrderByInput {
 type LatencyPreviousValues {
   id: ID!
   rps: Int!
-  median: Int!
-  p95: Int!
-  p99: Int!
+  avg: Float!
+  p50: Float!
+  p95: Float!
+  p99: Float!
   successes: Int!
   failures: Int!
 }
@@ -211,18 +216,20 @@ input LatencySubscriptionWhereInput {
 
 input LatencyUpdateDataInput {
   rps: Int
-  median: Int
-  p95: Int
-  p99: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
   successes: Int
   failures: Int
 }
 
 input LatencyUpdateInput {
   rps: Int
-  median: Int
-  p95: Int
-  p99: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
   successes: Int
   failures: Int
 }
@@ -318,72 +325,94 @@ input LatencyWhereInput {
 
   """All values greater than or equal the given value."""
   rps_gte: Int
-  median: Int
+  avg: Float
 
   """All values that are not equal to given value."""
-  median_not: Int
+  avg_not: Float
 
   """All values that are contained in given list."""
-  median_in: [Int!]
+  avg_in: [Float!]
 
   """All values that are not contained in given list."""
-  median_not_in: [Int!]
+  avg_not_in: [Float!]
 
   """All values less than the given value."""
-  median_lt: Int
+  avg_lt: Float
 
   """All values less than or equal the given value."""
-  median_lte: Int
+  avg_lte: Float
 
   """All values greater than the given value."""
-  median_gt: Int
+  avg_gt: Float
 
   """All values greater than or equal the given value."""
-  median_gte: Int
-  p95: Int
+  avg_gte: Float
+  p50: Float
 
   """All values that are not equal to given value."""
-  p95_not: Int
+  p50_not: Float
 
   """All values that are contained in given list."""
-  p95_in: [Int!]
+  p50_in: [Float!]
 
   """All values that are not contained in given list."""
-  p95_not_in: [Int!]
+  p50_not_in: [Float!]
 
   """All values less than the given value."""
-  p95_lt: Int
+  p50_lt: Float
 
   """All values less than or equal the given value."""
-  p95_lte: Int
+  p50_lte: Float
 
   """All values greater than the given value."""
-  p95_gt: Int
+  p50_gt: Float
 
   """All values greater than or equal the given value."""
-  p95_gte: Int
-  p99: Int
+  p50_gte: Float
+  p95: Float
 
   """All values that are not equal to given value."""
-  p99_not: Int
+  p95_not: Float
 
   """All values that are contained in given list."""
-  p99_in: [Int!]
+  p95_in: [Float!]
 
   """All values that are not contained in given list."""
-  p99_not_in: [Int!]
+  p95_not_in: [Float!]
 
   """All values less than the given value."""
-  p99_lt: Int
+  p95_lt: Float
 
   """All values less than or equal the given value."""
-  p99_lte: Int
+  p95_lte: Float
 
   """All values greater than the given value."""
-  p99_gt: Int
+  p95_gt: Float
 
   """All values greater than or equal the given value."""
-  p99_gte: Int
+  p95_gte: Float
+  p99: Float
+
+  """All values that are not equal to given value."""
+  p99_not: Float
+
+  """All values that are contained in given list."""
+  p99_in: [Float!]
+
+  """All values that are not contained in given list."""
+  p99_not_in: [Float!]
+
+  """All values less than the given value."""
+  p99_lt: Float
+
+  """All values less than or equal the given value."""
+  p99_lte: Float
+
+  """All values greater than the given value."""
+  p99_gt: Float
+
+  """All values greater than or equal the given value."""
+  p99_gte: Float
   successes: Int
 
   """All values that are not equal to given value."""
@@ -1103,8 +1132,10 @@ export type LatencyOrderByInput =   'id_ASC' |
   'id_DESC' |
   'rps_ASC' |
   'rps_DESC' |
-  'median_ASC' |
-  'median_DESC' |
+  'avg_ASC' |
+  'avg_DESC' |
+  'p50_ASC' |
+  'p50_DESC' |
   'p95_ASC' |
   'p95_DESC' |
   'p99_ASC' |
@@ -1118,23 +1149,22 @@ export type LatencyOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export interface TestRunWhereUniqueInput {
+export interface PerformanceTestWhereUniqueInput {
   id?: ID_Input
+  name?: String
 }
 
-export interface TestRunCreateInput {
-  date: DateTime
-  connector: Connector
-  version: String
-  commit: String
-  latencies?: LatencyCreateManyInput
+export interface TestRunCreateManyInput {
+  create?: TestRunCreateInput[] | TestRunCreateInput
+  connect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
 }
 
 export interface LatencyUpdateDataInput {
   rps?: Int
-  median?: Int
-  p95?: Int
-  p99?: Int
+  avg?: Float
+  p50?: Float
+  p95?: Float
+  p99?: Float
   successes?: Int
   failures?: Int
 }
@@ -1195,72 +1225,15 @@ export interface LatencyUpdateWithWhereUniqueNestedInput {
   data: LatencyUpdateDataInput
 }
 
-export interface LatencyWhereInput {
-  AND?: LatencyWhereInput[] | LatencyWhereInput
-  OR?: LatencyWhereInput[] | LatencyWhereInput
-  NOT?: LatencyWhereInput[] | LatencyWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  rps?: Int
-  rps_not?: Int
-  rps_in?: Int[] | Int
-  rps_not_in?: Int[] | Int
-  rps_lt?: Int
-  rps_lte?: Int
-  rps_gt?: Int
-  rps_gte?: Int
-  median?: Int
-  median_not?: Int
-  median_in?: Int[] | Int
-  median_not_in?: Int[] | Int
-  median_lt?: Int
-  median_lte?: Int
-  median_gt?: Int
-  median_gte?: Int
-  p95?: Int
-  p95_not?: Int
-  p95_in?: Int[] | Int
-  p95_not_in?: Int[] | Int
-  p95_lt?: Int
-  p95_lte?: Int
-  p95_gt?: Int
-  p95_gte?: Int
-  p99?: Int
-  p99_not?: Int
-  p99_in?: Int[] | Int
-  p99_not_in?: Int[] | Int
-  p99_lt?: Int
-  p99_lte?: Int
-  p99_gt?: Int
-  p99_gte?: Int
-  successes?: Int
-  successes_not?: Int
-  successes_in?: Int[] | Int
-  successes_not_in?: Int[] | Int
-  successes_lt?: Int
-  successes_lte?: Int
-  successes_gt?: Int
-  successes_gte?: Int
-  failures?: Int
-  failures_not?: Int
-  failures_in?: Int[] | Int
-  failures_not_in?: Int[] | Int
-  failures_lt?: Int
-  failures_lte?: Int
-  failures_gt?: Int
-  failures_gte?: Int
+export interface PerformanceTestSubscriptionWhereInput {
+  AND?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
+  OR?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
+  NOT?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: PerformanceTestWhereInput
 }
 
 export interface LatencyUpdateManyInput {
@@ -1274,9 +1247,10 @@ export interface LatencyUpdateManyInput {
 
 export interface LatencyUpdateInput {
   rps?: Int
-  median?: Int
-  p95?: Int
-  p99?: Int
+  avg?: Float
+  p50?: Float
+  p95?: Float
+  p99?: Float
   successes?: Int
   failures?: Int
 }
@@ -1287,87 +1261,6 @@ export interface TestRunUpdateDataInput {
   version?: String
   commit?: String
   latencies?: LatencyUpdateManyInput
-}
-
-export interface TestRunUpdateInput {
-  date?: DateTime
-  connector?: Connector
-  version?: String
-  commit?: String
-  latencies?: LatencyUpdateManyInput
-}
-
-export interface TestRunUpdateWithWhereUniqueNestedInput {
-  where: TestRunWhereUniqueInput
-  data: TestRunUpdateDataInput
-}
-
-export interface LatencySubscriptionWhereInput {
-  AND?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  OR?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  NOT?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: LatencyWhereInput
-}
-
-export interface TestRunUpdateManyInput {
-  create?: TestRunCreateInput[] | TestRunCreateInput
-  connect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
-  disconnect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
-  delete?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
-  update?: TestRunUpdateWithWhereUniqueNestedInput[] | TestRunUpdateWithWhereUniqueNestedInput
-  upsert?: TestRunUpsertWithWhereUniqueNestedInput[] | TestRunUpsertWithWhereUniqueNestedInput
-}
-
-export interface TestRunUpsertWithWhereUniqueNestedInput {
-  where: TestRunWhereUniqueInput
-  update: TestRunUpdateDataInput
-  create: TestRunCreateInput
-}
-
-export interface PerformanceTestUpdateInput {
-  name?: String
-  query?: String
-  runs?: TestRunUpdateManyInput
-}
-
-export interface PerformanceTestSubscriptionWhereInput {
-  AND?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
-  OR?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
-  NOT?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: PerformanceTestWhereInput
-}
-
-export interface TestRunCreateManyInput {
-  create?: TestRunCreateInput[] | TestRunCreateInput
-  connect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
-}
-
-export interface PerformanceTestCreateInput {
-  name: String
-  query: String
-  runs?: TestRunCreateManyInput
-}
-
-export interface LatencyCreateManyInput {
-  create?: LatencyCreateInput[] | LatencyCreateInput
-  connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
-}
-
-export interface LatencyCreateInput {
-  rps: Int
-  median: Int
-  p95: Int
-  p99: Int
-  successes: Int
-  failures: Int
 }
 
 export interface TestRunSubscriptionWhereInput {
@@ -1381,19 +1274,9 @@ export interface TestRunSubscriptionWhereInput {
   node?: TestRunWhereInput
 }
 
-export interface LatencyUpsertWithWhereUniqueNestedInput {
-  where: LatencyWhereUniqueInput
-  update: LatencyUpdateDataInput
-  create: LatencyCreateInput
-}
-
-export interface LatencyWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface PerformanceTestWhereUniqueInput {
-  id?: ID_Input
-  name?: String
+export interface TestRunUpdateWithWhereUniqueNestedInput {
+  where: TestRunWhereUniqueInput
+  data: TestRunUpdateDataInput
 }
 
 export interface TestRunWhereInput {
@@ -1459,6 +1342,165 @@ export interface TestRunWhereInput {
   latencies_none?: LatencyWhereInput
 }
 
+export interface TestRunUpdateManyInput {
+  create?: TestRunCreateInput[] | TestRunCreateInput
+  connect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
+  disconnect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
+  delete?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
+  update?: TestRunUpdateWithWhereUniqueNestedInput[] | TestRunUpdateWithWhereUniqueNestedInput
+  upsert?: TestRunUpsertWithWhereUniqueNestedInput[] | TestRunUpsertWithWhereUniqueNestedInput
+}
+
+export interface LatencySubscriptionWhereInput {
+  AND?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  OR?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  NOT?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: LatencyWhereInput
+}
+
+export interface PerformanceTestUpdateInput {
+  name?: String
+  query?: String
+  runs?: TestRunUpdateManyInput
+}
+
+export interface LatencyWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface LatencyWhereInput {
+  AND?: LatencyWhereInput[] | LatencyWhereInput
+  OR?: LatencyWhereInput[] | LatencyWhereInput
+  NOT?: LatencyWhereInput[] | LatencyWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  rps?: Int
+  rps_not?: Int
+  rps_in?: Int[] | Int
+  rps_not_in?: Int[] | Int
+  rps_lt?: Int
+  rps_lte?: Int
+  rps_gt?: Int
+  rps_gte?: Int
+  avg?: Float
+  avg_not?: Float
+  avg_in?: Float[] | Float
+  avg_not_in?: Float[] | Float
+  avg_lt?: Float
+  avg_lte?: Float
+  avg_gt?: Float
+  avg_gte?: Float
+  p50?: Float
+  p50_not?: Float
+  p50_in?: Float[] | Float
+  p50_not_in?: Float[] | Float
+  p50_lt?: Float
+  p50_lte?: Float
+  p50_gt?: Float
+  p50_gte?: Float
+  p95?: Float
+  p95_not?: Float
+  p95_in?: Float[] | Float
+  p95_not_in?: Float[] | Float
+  p95_lt?: Float
+  p95_lte?: Float
+  p95_gt?: Float
+  p95_gte?: Float
+  p99?: Float
+  p99_not?: Float
+  p99_in?: Float[] | Float
+  p99_not_in?: Float[] | Float
+  p99_lt?: Float
+  p99_lte?: Float
+  p99_gt?: Float
+  p99_gte?: Float
+  successes?: Int
+  successes_not?: Int
+  successes_in?: Int[] | Int
+  successes_not_in?: Int[] | Int
+  successes_lt?: Int
+  successes_lte?: Int
+  successes_gt?: Int
+  successes_gte?: Int
+  failures?: Int
+  failures_not?: Int
+  failures_in?: Int[] | Int
+  failures_not_in?: Int[] | Int
+  failures_lt?: Int
+  failures_lte?: Int
+  failures_gt?: Int
+  failures_gte?: Int
+}
+
+export interface PerformanceTestCreateInput {
+  name: String
+  query: String
+  runs?: TestRunCreateManyInput
+}
+
+export interface TestRunCreateInput {
+  date: DateTime
+  connector: Connector
+  version: String
+  commit: String
+  latencies?: LatencyCreateManyInput
+}
+
+export interface LatencyCreateManyInput {
+  create?: LatencyCreateInput[] | LatencyCreateInput
+  connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+}
+
+export interface LatencyCreateInput {
+  rps: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
+  successes: Int
+  failures: Int
+}
+
+export interface LatencyUpsertWithWhereUniqueNestedInput {
+  where: LatencyWhereUniqueInput
+  update: LatencyUpdateDataInput
+  create: LatencyCreateInput
+}
+
+export interface TestRunWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TestRunUpsertWithWhereUniqueNestedInput {
+  where: TestRunWhereUniqueInput
+  update: TestRunUpdateDataInput
+  create: TestRunCreateInput
+}
+
+export interface TestRunUpdateInput {
+  date?: DateTime
+  connector?: Connector
+  version?: String
+  commit?: String
+  latencies?: LatencyUpdateManyInput
+}
+
 /*
  * An object with an ID
 
@@ -1471,21 +1513,20 @@ export interface AggregateLatency {
   count: Int
 }
 
-export interface TestRun extends Node {
+export interface PerformanceTest extends Node {
   id: ID_Output
-  latencies?: Latency[]
-  date: DateTime
-  connector: Connector
-  version: String
-  commit: String
+  name: String
+  query: String
+  runs?: TestRun[]
 }
 
 export interface LatencyPreviousValues {
   id: ID_Output
   rps: Int
-  median: Int
-  p95: Int
-  p99: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
   successes: Int
   failures: Int
 }
@@ -1504,6 +1545,21 @@ export interface LatencyConnection {
   aggregate: AggregateLatency
 }
 
+export interface TestRun extends Node {
+  id: ID_Output
+  latencies?: Latency[]
+  date: DateTime
+  connector: Connector
+  version: String
+  commit: String
+}
+
+export interface PerformanceTestPreviousValues {
+  id: ID_Output
+  name: String
+  query: String
+}
+
 /*
  * An edge in a connection.
 
@@ -1511,17 +1567,6 @@ export interface LatencyConnection {
 export interface LatencyEdge {
   node: Latency
   cursor: String
-}
-
-export interface TestRunSubscriptionPayload {
-  mutation: MutationType
-  node?: TestRun
-  updatedFields?: String[]
-  previousValues?: TestRunPreviousValues
-}
-
-export interface AggregateTestRun {
-  count: Int
 }
 
 /*
@@ -1533,14 +1578,8 @@ export interface TestRunEdge {
   cursor: String
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface TestRunConnection {
-  pageInfo: PageInfo
-  edges: TestRunEdge[]
-  aggregate: AggregateTestRun
+export interface AggregateTestRun {
+  count: Int
 }
 
 /*
@@ -1563,17 +1602,18 @@ export interface PageInfo {
   endCursor?: String
 }
 
-export interface PerformanceTestPreviousValues {
-  id: ID_Output
-  name: String
-  query: String
-}
-
 export interface PerformanceTestSubscriptionPayload {
   mutation: MutationType
   node?: PerformanceTest
   updatedFields?: String[]
   previousValues?: PerformanceTestPreviousValues
+}
+
+export interface TestRunSubscriptionPayload {
+  mutation: MutationType
+  node?: TestRun
+  updatedFields?: String[]
+  previousValues?: TestRunPreviousValues
 }
 
 export interface TestRunPreviousValues {
@@ -1584,11 +1624,14 @@ export interface TestRunPreviousValues {
   commit: String
 }
 
-export interface PerformanceTest extends Node {
-  id: ID_Output
-  name: String
-  query: String
-  runs?: TestRun[]
+/*
+ * A connection to a list of items.
+
+ */
+export interface TestRunConnection {
+  pageInfo: PageInfo
+  edges: TestRunEdge[]
+  aggregate: AggregateTestRun
 }
 
 /*
@@ -1615,9 +1658,10 @@ export interface AggregatePerformanceTest {
 export interface Latency extends Node {
   id: ID_Output
   rps: Int
-  median: Int
-  p95: Int
-  p99: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
   successes: Int
   failures: Int
 }
@@ -1643,6 +1687,11 @@ export type Boolean = boolean
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 

@@ -23,9 +23,10 @@ type TestRun {
 type Latency {
   id: ID! @unique
   rps: Int!
-  median: Int!
-  p95: Int!
-  p99: Int!
+  avg: Float!
+  p50: Float!
+  p95: Float!
+  p99: Float!
   successes: Int!
   failures: Int!
 }
