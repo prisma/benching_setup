@@ -6,7 +6,7 @@ PRISMA_VERSION="${2:?Provide the Prisma version you want to use for this test ru
 ID=$3
 if [ -z "${ID}" ]; then
     echo "No Droplet ID provided. Will create a new Droplet."
-    ID=`doctl compute droplet create perf-test-base-snapshot --no-header --format "ID" --wait --size 1gb --region fra1 --image 30970148 --ssh-keys f9:60:c8:4e:27:83:ec:59:b9:bb:a6:20:9f:2e:2d:3b`
+    ID=`doctl compute droplet create perf-test-$CONNECTOR --no-header --format "ID" --wait --size 1gb --region fra1 --image 30970148 --ssh-keys f9:60:c8:4e:27:83:ec:59:b9:bb:a6:20:9f:2e:2d:3b`
 fi
 echo "ID is $ID"
 IP=`doctl compute droplet get $ID --no-header --format="PublicIPv4"`
