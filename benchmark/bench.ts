@@ -27,9 +27,10 @@ const benchmarkConfigs = {
   },
   medium: {
     warmup_rps: 100,
-    warmup_duration: 3,
-    // rps: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
-    rps: [100, 200]
+    warmup_duration: 300,
+    rps: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+    // warmup_duration: 3,
+    // rps: [100, 200]
   },
   fast: {
     warmup_rps: 150,
@@ -48,12 +49,13 @@ main().catch(console.error);
 async function main() {
   const args = process.argv.slice(2);
   const queryFiles = getQueryFiles();
-  const connector = args[0];
+  const connectorArg = args[0];
   const testToRun = args[1];
-  if (connector == null) {
+  if (connectorArg == null) {
     console.log("You must provide the connector as the first argument");
     process.exit();
   }
+  const connector = getConnectorForArg(connectorArg);
   if (testToRun == null || testToRun === "all") {
     console.log("running all tests");
     for (const queryFile of queryFiles) {
@@ -63,6 +65,17 @@ async function main() {
     console.log("running one test");
     const queryFile = getQueryFileForName(args[0]);
     await benchMarkQuery(connector, queryFile);
+  }
+}
+
+function getConnectorForArg(connectorArg: string): Connector {
+  switch (connectorArg) {
+    case "postgres":
+      return "Postgres";
+    case "mysql":
+      return "MySQL";
+    default:
+      throw new Error(`${connectorArg} is not supported`);
   }
 }
 
@@ -174,7 +187,7 @@ async function benchMarkQuery(
   console.log(`----------------- Benching: ${query.name} -----------------`);
   for (const rps of config.rps) {
     console.log(`${rps} req/s`);
-    const vegetaResult = runVegeta(url, graphqlQuery, rps, 3);
+    const vegetaResult = runVegeta(url, graphqlQuery, rps, 60);
     results.push({
       rps: rps,
       vegetaResult: vegetaResult
