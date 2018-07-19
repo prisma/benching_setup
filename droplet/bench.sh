@@ -15,5 +15,6 @@ docker run --net=host prismagraphql/benchmarks:latest reset-server $IMPORT_FILE
 docker run --net=host prismagraphql/benchmarks:latest bench-server $CONNECTOR artistNameContainsString
 
 if [ -n "${API_TOKEN}" ]; then
+  pwd
   ./delete_this_droplet.sh $API_TOKEN
 fi
