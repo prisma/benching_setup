@@ -10,7 +10,7 @@ IMPORT_FILE=`getValue import`
 VERSION=`getValue version | tr _ .`
 API_TOKEN=`getValue api_token`
 echo "Starting benchmark for Connector $CONNECTOR with version $VERSION based on import file $IMPORT_FILE"
-cd ../setup_scripts/prisma-server && ./start.sh $CONNECTOR $VERSION
+cd ../setup_scripts/prisma-server && ./start.sh $CONNECTOR $VERSION && cd -
 docker run --net=host prismagraphql/benchmarks:latest reset-server $IMPORT_FILE
 docker run --net=host prismagraphql/benchmarks:latest bench-server $CONNECTOR artistNameContainsString
 
