@@ -1,11 +1,8 @@
 #!/bin/bash
-curl http://169.254.169.254/metadata/v1/tags/ > tags.txt
-# CONNECTOR=`cat tags.txt | head -1 | tail -1`
-# VERSION=`cat tags.txt | head -2 | tail -1` | tr : .
-# IMPORT_FILE=`cat tags.txt | head -3 | tail -1`
+curl http://169.254.169.254/metadata/v1/tags/ > metadata
 function getValue {
     KEY=$1
-    LINE=`cat tags.txt | grep $KEY`
+    LINE=`cat metadata | grep $KEY`
     echo ${LINE#$KEY:}
 }
 CONNECTOR=`getValue connector`
