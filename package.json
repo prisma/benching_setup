@@ -6,6 +6,7 @@
   "author": "timsuchanek <tim.suchanek@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "dots-wrapper": "https://github.com/prismagraphql/dots.git#add-dist",
     "graphql-request": "^1.6.0",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
@@ -28,6 +29,7 @@
     "docker-push": "docker push prismagraphql/benchmarks:latest",
     "start-server": "cd setup_scripts/prisma-server && ./start.sh",
     "reset-server": "cd setup_scripts/prisma-service && ./reset_test_data.sh",
-    "bench-server": "ts-node benchmark/bench.ts"
+    "bench-server": "ts-node benchmark/bench.ts",
+    "start-droplet": "ts-node benchmark/createBenchmarkDroplet.ts"
   }
 }
