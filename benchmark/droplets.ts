@@ -24,7 +24,7 @@ export async function createBenchmarkDroplet(
   importFile: number,
   test: string
 ): Promise<IDroplet> {
-  const cloudConfig = readFileSync("./droplet/cloud_config", { encoding: "utf-8" });
+  const cloudConfig = readFileSync("./droplet/benchmark_cloud_config", { encoding: "utf-8" });
   const sshKey = await getSSHKey();
   const droplet = await digitalOcean.Droplet.create({
     name: `benchmark-${connector}-${version}-${importFile}-${test}`,
