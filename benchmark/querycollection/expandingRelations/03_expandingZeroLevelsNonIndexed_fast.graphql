@@ -1,0 +1,5 @@
+query {
+  artists (where:{Name: "artist55"}){
+    id
+  }
+}

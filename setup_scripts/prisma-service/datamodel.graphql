@@ -2,6 +2,7 @@ type Artist {
   id: ID! @unique
   ArtistId: Int! @unique
   Name: String!
+  # NameUnique: String! @unique
   Albums: [Album!]!
 }
 
@@ -9,6 +10,7 @@ type Album {
   id: ID! @unique
   AlbumId: Int! @unique
   Title: String!
+  # TitleUnique: String! @unique
   Artist: Artist!
   Tracks: [Track!]!
 }
@@ -17,6 +19,7 @@ type Genre {
   id: ID! @unique
   GenreId: Int! @unique
   Name: String!
+  # NameUnique: String! @unique
   Tracks: [Track!]!
 }
 
@@ -24,6 +27,7 @@ type MediaType {
   id: ID! @unique
   MediaTypeId: Int! @unique
   Name: String!
+  # NameUnique: String! @unique
   Tracks: [Track!]!
 }
 
@@ -31,6 +35,7 @@ type Track {
   id: ID! @unique
   TrackId: Int! @unique
   Name: String!
+  # NameUnique: String! @unique
   Album: Album!
   MediaType: MediaType!
   Genre: Genre!

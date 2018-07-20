@@ -1,0 +1,9 @@
+query {
+  artists (where:{ArtistId: 55}){
+    Albums{
+      Tracks{
+        Name
+      }
+    }
+  }
+}
