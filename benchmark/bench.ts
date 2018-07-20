@@ -57,22 +57,23 @@ async function main() {
   const connector = getConnectorForArg(connectorArg);
   const serverInfo = await getServerInfo();
   const importFileSize = await getImportFileSize();
-  const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
 
   if (testToRun == null || testToRun === "all") {
     console.log("running all tests");
     for (const queryFile of queryFiles) {
+      const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
       await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
       await incrementQueriesRun(benchmarkingSession.id);
+      await markSessionAsFinished(benchmarkingSession.id);
     }
   } else {
     console.log("running one test");
     const queryFile = getQueryFileForName(args[0]);
+    const benchmarkingSession = await createBenchmarkingSession(1);
     await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
     await incrementQueriesRun(benchmarkingSession.id);
+    await markSessionAsFinished(benchmarkingSession.id);
   }
-
-  await markSessionAsFinished(benchmarkingSession.id);
 }
 
 function getConnectorForArg(connectorArg: string): Connector {
