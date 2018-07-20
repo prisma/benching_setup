@@ -13,8 +13,8 @@ TEST=`getValue test`
 echo "Starting benchmark for Connector $CONNECTOR with version $VERSION based on import file $IMPORT_FILE"
 CURRENT_DIR=`pwd`
 cd ../setup_scripts/prisma-server && ./start.sh $CONNECTOR $VERSION && cd -
-docker run -it --net=host prismagraphql/benchmarks:latest reset-server $IMPORT_FILE
-docker run -it --net=host prismagraphql/benchmarks:latest bench-server $CONNECTOR $TEST
+docker run --net=host prismagraphql/benchmarks:latest reset-server $IMPORT_FILE
+docker run --net=host prismagraphql/benchmarks:latest bench-server $CONNECTOR $TEST
 
 if [ -n "${API_TOKEN}" ]; then
   pwd
