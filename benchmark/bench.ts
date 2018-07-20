@@ -8,6 +8,7 @@ import { Prisma, TestRunUpdateManyInput, TestRunCreateManyInput, Connector } fro
 const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
 const resultStorageEndpoint = prismaServer + "/benchmark/dev";
 const benchmarkedServer = "http://localhost:4466";
+const benchmarkDuration = 60;
 
 const benchmarkConfigs = {
   "very-slow": {
@@ -175,7 +176,7 @@ async function benchMarkQuery(connector: string, query: QueryFile): Promise<void
   console.log(`----------------- Benching: ${query.name} -----------------`);
   for (const rps of config.rps) {
     console.log(`${rps} req/s`);
-    const vegetaResult = runVegeta(url, graphqlQuery, rps, 60);
+    const vegetaResult = runVegeta(url, graphqlQuery, rps, benchmarkDuration);
     results.push({
       rps: rps,
       vegetaResult: vegetaResult
