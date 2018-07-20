@@ -3,5 +3,5 @@ runcmd:
   - echo "hello world!" >> /root/hello_world
   - cd /root
   - git clone https://github.com/prismagraphql/benching_setup.git
-  - cd benching_setup/droplet/tools && ./setup.sh
-  - cd benching_setup/droplet && ./bench.sh
+  - cd /root/benching_setup/droplet/tools && ./setup.sh
+  - cd /root/benching_setup/droplet && ./bench.sh
