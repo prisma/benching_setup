@@ -32,7 +32,7 @@
     "reset-server": "cd setup_scripts/prisma-service && ./reset_test_data.sh",
     "bench-server": "ts-node benchmark/bench.ts",
     "start-cron": "ts-node benchmark/cron.ts",
-    "start-benchmark-droplet": "ts-node benchmark/createBenchmarkDroplet.ts",
-    "start-cron-droplet": "ts-node benchmark/createCronDroplet.ts"
+    "create-benchmark-droplet": "ts-node benchmark/createBenchmarkDroplet.ts",
+    "create-cron-droplet": "ts-node benchmark/createCronDroplet.ts"
   }
 }
