@@ -44,6 +44,21 @@ export async function createBenchmarkDroplet(
   return droplet;
 }
 
+export async function createCronDroplet(): Promise<IDroplet> {
+  const cloudConfig = readFileSync("./droplet/cron_cloud_config", { encoding: "utf-8" });
+  const sshKey = await getSSHKey();
+  const droplet = await digitalOcean.Droplet.create({
+    name: `benchmark-cronjob`,
+    tags: [`api_token:${token}`],
+    size: "1gb",
+    region: "fra1",
+    image: "ubuntu",
+    ssh_keys: [sshKey.fingerprint],
+    user_data: cloudConfig
+  }).toPromise();
+  return droplet;
+}
+
 async function getSSHKey() {
   const keys = await digitalOcean.SSHKey.list(0).toPromise();
   return keys.items[0];

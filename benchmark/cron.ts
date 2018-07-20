@@ -9,6 +9,10 @@ main().catch(console.error);
 
 async function main() {
   console.log("cron started");
+  if (process.env["DIGITAL_OCEAN_ACCESS_TOKEN"] == undefined) {
+    console.log("env var DIGITAL_OCEAN_ACCESS_TOKEN must bet set");
+    process.exit(1);
+  }
   cron.start();
 }
 

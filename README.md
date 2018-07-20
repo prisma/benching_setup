@@ -15,7 +15,7 @@
 
 ### Benchmarking on a Droplet
 
-Run `yarn start-droplet` to boot a droplet that automatically starts a server with the given connector and version. Then the test service is set up and test data is imported. Afterwards all benchmarks are performed. The droplet then deletes itself.
+Run `yarn start-benchmark-droplet` to boot a droplet that automatically starts a server with the given connector and version. Then the test service is set up and test data is imported. Afterwards all benchmarks are performed. The droplet then deletes itself.
 
 ### Generating Test Data
 
