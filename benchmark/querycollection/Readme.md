@@ -1,3 +1,6 @@
+# Query Conventions
+
+
 # Folders per category
 
 Queries are grouped by category. 
@@ -5,6 +8,7 @@ Queries are grouped by category.
 * Scalar filters
 * Relation filters
 * Pagination 
+* Expanding Relations
 
 
 # Naming convention
