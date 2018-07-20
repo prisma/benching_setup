@@ -12,7 +12,8 @@
     "node-fetch": "^2.1.2",
     "p-map": "^1.2.0",
     "prisma-binding": "^2.1.0",
-    "walk": "2.3.14"
+    "walk": "2.3.14",
+    "cron": "1.3.0"
   },
   "devDependencies": {
     "@types/node": "^10.5.2",
@@ -30,6 +31,7 @@
     "start-server": "cd setup_scripts/prisma-server && ./start.sh",
     "reset-server": "cd setup_scripts/prisma-service && ./reset_test_data.sh",
     "bench-server": "ts-node benchmark/bench.ts",
-    "start-droplet": "ts-node benchmark/createBenchmarkDroplet.ts"
+    "start-droplet": "ts-node benchmark/createBenchmarkDroplet.ts",
+    "start-cron": "ts-node benchmark/cron.ts"
   }
 }
