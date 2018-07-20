@@ -1,3 +1,4 @@
+#!/bin/bash
 curl http://169.254.169.254/metadata/v1/tags/ > metadata
 function getValue {
     KEY=$1
