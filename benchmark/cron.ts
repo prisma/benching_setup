@@ -1,8 +1,8 @@
 import { createBenchmarkDroplets } from "./droplets";
 import { CronJob } from "cron";
 const fetch = require("node-fetch");
-// Runs Monday to Saturday at 20:00:00
-const cron = new CronJob("00 00 20 * * 1-6", createBenchmarkDroplets, null, false, "Europe/Berlin");
+// Runs Monday to Saturday at 19:00:00
+const cron = new CronJob("00 00 19 * * 1-6", createBenchmarkDroplets, null, false, "Europe/Berlin");
 // const cron = new CronJob("00 40 13 * * 1-6", trigger, null, false, "Europe/Berlin");
 
 main().catch(console.error);
