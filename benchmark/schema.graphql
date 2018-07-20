@@ -1,11 +1,15 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Wed Jul 18 2018 10:24:12 GMT+0200 (CEST)
+# timestamp: Fri Jul 20 2018 15:15:04 GMT+0200 (CEST)
 
 type AggregateLatency {
   count: Int!
 }
 
 type AggregatePerformanceTest {
+  count: Int!
+}
+
+type AggregateRun2 {
   count: Int!
 }
 
@@ -400,6 +404,7 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createRun2(data: Run2CreateInput!): Run2!
   createPerformanceTest(data: PerformanceTestCreateInput!): PerformanceTest!
   createTestRun(data: TestRunCreateInput!): TestRun!
   createLatency(data: LatencyCreateInput!): Latency!
@@ -412,9 +417,11 @@ type Mutation {
   upsertPerformanceTest(where: PerformanceTestWhereUniqueInput!, create: PerformanceTestCreateInput!, update: PerformanceTestUpdateInput!): PerformanceTest!
   upsertTestRun(where: TestRunWhereUniqueInput!, create: TestRunCreateInput!, update: TestRunUpdateInput!): TestRun!
   upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
+  updateManyRun2s(data: Run2UpdateInput!, where: Run2WhereInput): BatchPayload!
   updateManyPerformanceTests(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereInput): BatchPayload!
   updateManyTestRuns(data: TestRunUpdateInput!, where: TestRunWhereInput): BatchPayload!
   updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
+  deleteManyRun2s(where: Run2WhereInput): BatchPayload!
   deleteManyPerformanceTests(where: PerformanceTestWhereInput): BatchPayload!
   deleteManyTestRuns(where: TestRunWhereInput): BatchPayload!
   deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
@@ -683,12 +690,14 @@ input PerformanceTestWhereUniqueInput {
 }
 
 type Query {
+  run2s(where: Run2WhereInput, orderBy: Run2OrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run2]!
   performanceTests(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTest]!
   testRuns(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun]!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
   performanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
   testRun(where: TestRunWhereUniqueInput!): TestRun
   latency(where: LatencyWhereUniqueInput!): Latency
+  run2sConnection(where: Run2WhereInput, orderBy: Run2OrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Run2Connection!
   performanceTestsConnection(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestConnection!
   testRunsConnection(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestRunConnection!
   latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
@@ -700,7 +709,188 @@ type Query {
   ): Node
 }
 
+type Run2 {
+  queriesToRun: Int!
+  started: DateTime
+  finished: DateTime
+  runs(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun!]
+}
+
+"""A connection to a list of items."""
+type Run2Connection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [Run2Edge]!
+  aggregate: AggregateRun2!
+}
+
+input Run2CreateInput {
+  queriesToRun: Int!
+  started: DateTime
+  finished: DateTime
+  runs: TestRunCreateManyInput
+}
+
+"""An edge in a connection."""
+type Run2Edge {
+  """The item at the end of the edge."""
+  node: Run2!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum Run2OrderByInput {
+  queriesToRun_ASC
+  queriesToRun_DESC
+  started_ASC
+  started_DESC
+  finished_ASC
+  finished_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type Run2PreviousValues {
+  queriesToRun: Int!
+  started: DateTime
+  finished: DateTime
+}
+
+type Run2SubscriptionPayload {
+  mutation: MutationType!
+  node: Run2
+  updatedFields: [String!]
+  previousValues: Run2PreviousValues
+}
+
+input Run2SubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Run2SubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Run2SubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Run2SubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: Run2WhereInput
+}
+
+input Run2UpdateInput {
+  queriesToRun: Int
+  started: DateTime
+  finished: DateTime
+  runs: TestRunUpdateManyInput
+}
+
+input Run2WhereInput {
+  """Logical AND on all given filters."""
+  AND: [Run2WhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Run2WhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Run2WhereInput!]
+  queriesToRun: Int
+
+  """All values that are not equal to given value."""
+  queriesToRun_not: Int
+
+  """All values that are contained in given list."""
+  queriesToRun_in: [Int!]
+
+  """All values that are not contained in given list."""
+  queriesToRun_not_in: [Int!]
+
+  """All values less than the given value."""
+  queriesToRun_lt: Int
+
+  """All values less than or equal the given value."""
+  queriesToRun_lte: Int
+
+  """All values greater than the given value."""
+  queriesToRun_gt: Int
+
+  """All values greater than or equal the given value."""
+  queriesToRun_gte: Int
+  started: DateTime
+
+  """All values that are not equal to given value."""
+  started_not: DateTime
+
+  """All values that are contained in given list."""
+  started_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  started_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  started_lt: DateTime
+
+  """All values less than or equal the given value."""
+  started_lte: DateTime
+
+  """All values greater than the given value."""
+  started_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  started_gte: DateTime
+  finished: DateTime
+
+  """All values that are not equal to given value."""
+  finished_not: DateTime
+
+  """All values that are contained in given list."""
+  finished_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  finished_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  finished_lt: DateTime
+
+  """All values less than or equal the given value."""
+  finished_lte: DateTime
+
+  """All values greater than the given value."""
+  finished_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  finished_gte: DateTime
+  runs_every: TestRunWhereInput
+  runs_some: TestRunWhereInput
+  runs_none: TestRunWhereInput
+}
+
 type Subscription {
+  run2(where: Run2SubscriptionWhereInput): Run2SubscriptionPayload
   performanceTest(where: PerformanceTestSubscriptionWhereInput): PerformanceTestSubscriptionPayload
   testRun(where: TestRunSubscriptionWhereInput): TestRunSubscriptionPayload
   latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
@@ -709,10 +899,12 @@ type Subscription {
 type TestRun implements Node {
   id: ID!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
-  date: DateTime!
   connector: Connector!
   version: String!
+  importFile: Int!
   commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -726,10 +918,12 @@ type TestRunConnection {
 }
 
 input TestRunCreateInput {
-  date: DateTime!
   connector: Connector!
   version: String!
+  importFile: Int!
   commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
   latencies: LatencyCreateManyInput
 }
 
@@ -750,14 +944,18 @@ type TestRunEdge {
 enum TestRunOrderByInput {
   id_ASC
   id_DESC
-  date_ASC
-  date_DESC
   connector_ASC
   connector_DESC
   version_ASC
   version_DESC
+  importFile_ASC
+  importFile_DESC
   commit_ASC
   commit_DESC
+  startedAt_ASC
+  startedAt_DESC
+  finishedAt_ASC
+  finishedAt_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -766,10 +964,12 @@ enum TestRunOrderByInput {
 
 type TestRunPreviousValues {
   id: ID!
-  date: DateTime!
   connector: Connector!
   version: String!
+  importFile: Int!
   commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
 }
 
 type TestRunSubscriptionPayload {
@@ -812,18 +1012,22 @@ input TestRunSubscriptionWhereInput {
 }
 
 input TestRunUpdateDataInput {
-  date: DateTime
   connector: Connector
   version: String
+  importFile: Int
   commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
   latencies: LatencyUpdateManyInput
 }
 
 input TestRunUpdateInput {
-  date: DateTime
   connector: Connector
   version: String
+  importFile: Int
   commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
   latencies: LatencyUpdateManyInput
 }
 
@@ -896,28 +1100,6 @@ input TestRunWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  date: DateTime
-
-  """All values that are not equal to given value."""
-  date_not: DateTime
-
-  """All values that are contained in given list."""
-  date_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  date_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  date_lt: DateTime
-
-  """All values less than or equal the given value."""
-  date_lte: DateTime
-
-  """All values greater than the given value."""
-  date_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  date_gte: DateTime
   connector: Connector
 
   """All values that are not equal to given value."""
@@ -968,6 +1150,28 @@ input TestRunWhereInput {
 
   """All values not ending with the given string."""
   version_not_ends_with: String
+  importFile: Int
+
+  """All values that are not equal to given value."""
+  importFile_not: Int
+
+  """All values that are contained in given list."""
+  importFile_in: [Int!]
+
+  """All values that are not contained in given list."""
+  importFile_not_in: [Int!]
+
+  """All values less than the given value."""
+  importFile_lt: Int
+
+  """All values less than or equal the given value."""
+  importFile_lte: Int
+
+  """All values greater than the given value."""
+  importFile_gt: Int
+
+  """All values greater than or equal the given value."""
+  importFile_gte: Int
   commit: String
 
   """All values that are not equal to given value."""
@@ -1008,6 +1212,50 @@ input TestRunWhereInput {
 
   """All values not ending with the given string."""
   commit_not_ends_with: String
+  startedAt: DateTime
+
+  """All values that are not equal to given value."""
+  startedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  startedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  startedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  startedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  startedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  startedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  startedAt_gte: DateTime
+  finishedAt: DateTime
+
+  """All values that are not equal to given value."""
+  finishedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  finishedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  finishedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  finishedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  finishedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  finishedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  finishedAt_gte: DateTime
   latencies_every: LatencyWhereInput
   latencies_some: LatencyWhereInput
   latencies_none: LatencyWhereInput

@@ -47,6 +47,8 @@ async function main() {
   const queryFiles = getQueryFiles();
   const connectorArg = args[0];
   const testToRun = args[1];
+  const serverInfo = await getServerInfo();
+  const importFileSize = await getImportFileSize();
   if (connectorArg == null) {
     console.log("You must provide the connector as the first argument");
     process.exit();
@@ -55,12 +57,12 @@ async function main() {
   if (testToRun == null || testToRun === "all") {
     console.log("running all tests");
     for (const queryFile of queryFiles) {
-      await benchMarkQuery(connector, queryFile);
+      await benchMarkQuery(connector, queryFile, serverInfo, importFileSize);
     }
   } else {
     console.log("running one test");
     const queryFile = getQueryFileForName(args[0]);
-    await benchMarkQuery(connector, queryFile);
+    await benchMarkQuery(connector, queryFile, serverInfo, importFileSize);
   }
 }
 
@@ -109,6 +111,27 @@ async function getServerInfo(): Promise<PrismaServerInfo> {
     .then(json => json["data"]["serverInfo"]);
 }
 
+async function getImportFileSize(): Promise<number> {
+  const query = `
+    {
+      artistsConnection {
+        aggregate {
+          count
+        }
+      }
+    }
+  `;
+  const response = await fetch(benchmarkedServer, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ query: query })
+  });
+  const json = await response.json();
+  return json["data"]["artistsConnection"]["aggregate"]["count"] as number;
+}
+
 interface QueryFile {
   name: string;
   speed: string;
@@ -153,11 +176,17 @@ interface BenchmarkResult {
   vegetaResult: VegetaResult;
 }
 
-async function benchMarkQuery(connector: string, query: QueryFile): Promise<void> {
+async function benchMarkQuery(
+  connector: string,
+  query: QueryFile,
+  serverInfo: PrismaServerInfo,
+  importFile: number
+): Promise<void> {
   const config = benchmarkConfigs[query.speed];
   const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
   const url = benchmarkedServer;
 
+  const startedAt = new Date();
   console.log("");
   console.log("");
   console.log(
@@ -169,21 +198,30 @@ async function benchMarkQuery(connector: string, query: QueryFile): Promise<void
   console.log(graphqlQuery);
   runVegeta(url, graphqlQuery, config.warmup_rps, config.warmup_duration);
 
-  const serverInfo = await getServerInfo();
   await new Promise(r => setTimeout(r, 10000)); // give the service a bit of time to recover
 
   const results: BenchmarkResult[] = [];
-  console.log(`----------------- Benching: ${query.name} -----------------`);
   for (const rps of config.rps) {
-    console.log(`${rps} req/s`);
+    console.log(`----------------- Benching: ${query.name} at ${rps} req/s -----------------`);
     const vegetaResult = runVegeta(url, graphqlQuery, rps, benchmarkDuration);
     results.push({
       rps: rps,
       vegetaResult: vegetaResult
     });
   }
+  const finishedAt = new Date();
 
-  await storeBenchmarkResults(connector, serverInfo.version, serverInfo.commit, query.name, graphqlQuery, results);
+  await storeBenchmarkResults(
+    connector,
+    serverInfo.version,
+    serverInfo.commit,
+    importFile,
+    query.name,
+    graphqlQuery,
+    results,
+    startedAt,
+    finishedAt
+  );
 }
 
 interface VegetaResult {
@@ -230,9 +268,12 @@ async function storeBenchmarkResults(
   connector: string,
   version: string,
   commit: string,
+  importFile: number,
   queryName: string,
   query: string,
-  results: BenchmarkResult[]
+  results: BenchmarkResult[],
+  startedAt: Date,
+  finishedAt: Date
 ): Promise<void> {
   console.log(`storing ${results.length} results`);
   const prisma = new Prisma({
@@ -262,9 +303,11 @@ async function storeBenchmarkResults(
     create: [
       {
         connector: connector as Connector,
-        date: new Date(),
+        startedAt: startedAt,
+        finishedAt: finishedAt,
         version: version,
         commit: commit,
+        importFile: importFile,
         latencies: {
           create: latencies
         }

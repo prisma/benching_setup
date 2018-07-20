@@ -14,10 +14,12 @@ type PerformanceTest {
 type TestRun {
   id: ID! @unique
   latencies: [Latency!]! @relation(name: "RunToLatency", onDelete: CASCADE)
-  date: DateTime!
   connector: Connector!
   version: String!
+  importFile: Int!
   commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
 }
 
 type Latency {
