@@ -17,5 +17,5 @@ docker run --net=host prismagraphql/benchmarks:latest bench-server $CONNECTOR $T
 
 if [ -n "${API_TOKEN}" ]; then
   pwd
-  ./delete_this_droplet.sh $API_TOKEN
+  $HOME/benching_setup/droplet/delete_this_droplet.sh $API_TOKEN
 fi
