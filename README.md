@@ -15,7 +15,7 @@
 
 ### Benchmarking on a Droplet
 
-Run `cd droplet && ./benchmark_on_droplet.sh <connector> <prisma-version> <nodecount>` to boot a droplet that automatically starts a server with the given connector and version. Then the test service is set up and test data is imported. Afterwards all benchmarks are performed.
+Run `yarn start-droplet` to boot a droplet that automatically starts a server with the given connector and version. Then the test service is set up and test data is imported. Afterwards all benchmarks are performed. The droplet then deletes itself.
 
 ### Generating Test Data
 
