@@ -1,25 +1,547 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Fri Jul 20 2018 15:15:04 GMT+0200 (CEST)
+# timestamp: Fri Jul 20 2018 16:18:16 GMT+0200 (CEST)
+
+type AggregateBenchmarkedQuery {
+  count: Int!
+}
+
+type AggregateBenchmarkingSession {
+  count: Int!
+}
 
 type AggregateLatency {
   count: Int!
 }
 
-type AggregatePerformanceTest {
-  count: Int!
-}
-
-type AggregateRun2 {
-  count: Int!
-}
-
-type AggregateTestRun {
+type AggregateRun {
   count: Int!
 }
 
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type BenchmarkedQuery implements Node {
+  id: ID!
+  name: String!
+  query: String!
+  runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run!]
+}
+
+"""A connection to a list of items."""
+type BenchmarkedQueryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BenchmarkedQueryEdge]!
+  aggregate: AggregateBenchmarkedQuery!
+}
+
+input BenchmarkedQueryCreateInput {
+  name: String!
+  query: String!
+  runs: RunCreateManyInput
+}
+
+"""An edge in a connection."""
+type BenchmarkedQueryEdge {
+  """The item at the end of the edge."""
+  node: BenchmarkedQuery!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BenchmarkedQueryOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  query_ASC
+  query_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type BenchmarkedQueryPreviousValues {
+  id: ID!
+  name: String!
+  query: String!
+}
+
+type BenchmarkedQuerySubscriptionPayload {
+  mutation: MutationType!
+  node: BenchmarkedQuery
+  updatedFields: [String!]
+  previousValues: BenchmarkedQueryPreviousValues
+}
+
+input BenchmarkedQuerySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BenchmarkedQuerySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BenchmarkedQuerySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BenchmarkedQuerySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BenchmarkedQueryWhereInput
+}
+
+input BenchmarkedQueryUpdateInput {
+  name: String
+  query: String
+  runs: RunUpdateManyInput
+}
+
+input BenchmarkedQueryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BenchmarkedQueryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BenchmarkedQueryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BenchmarkedQueryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  query: String
+
+  """All values that are not equal to given value."""
+  query_not: String
+
+  """All values that are contained in given list."""
+  query_in: [String!]
+
+  """All values that are not contained in given list."""
+  query_not_in: [String!]
+
+  """All values less than the given value."""
+  query_lt: String
+
+  """All values less than or equal the given value."""
+  query_lte: String
+
+  """All values greater than the given value."""
+  query_gt: String
+
+  """All values greater than or equal the given value."""
+  query_gte: String
+
+  """All values containing the given string."""
+  query_contains: String
+
+  """All values not containing the given string."""
+  query_not_contains: String
+
+  """All values starting with the given string."""
+  query_starts_with: String
+
+  """All values not starting with the given string."""
+  query_not_starts_with: String
+
+  """All values ending with the given string."""
+  query_ends_with: String
+
+  """All values not ending with the given string."""
+  query_not_ends_with: String
+  runs_every: RunWhereInput
+  runs_some: RunWhereInput
+  runs_none: RunWhereInput
+}
+
+input BenchmarkedQueryWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type BenchmarkingSession implements Node {
+  id: ID!
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+  runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run!]
+}
+
+"""A connection to a list of items."""
+type BenchmarkingSessionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BenchmarkingSessionEdge]!
+  aggregate: AggregateBenchmarkingSession!
+}
+
+input BenchmarkingSessionCreateInput {
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+  runs: RunCreateManyWithoutSessionInput
+}
+
+input BenchmarkingSessionCreateOneWithoutRunsInput {
+  create: BenchmarkingSessionCreateWithoutRunsInput
+  connect: BenchmarkingSessionWhereUniqueInput
+}
+
+input BenchmarkingSessionCreateWithoutRunsInput {
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+}
+
+"""An edge in a connection."""
+type BenchmarkingSessionEdge {
+  """The item at the end of the edge."""
+  node: BenchmarkingSession!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BenchmarkingSessionOrderByInput {
+  id_ASC
+  id_DESC
+  queriesToRun_ASC
+  queriesToRun_DESC
+  queriesRun_ASC
+  queriesRun_DESC
+  started_ASC
+  started_DESC
+  finished_ASC
+  finished_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type BenchmarkingSessionPreviousValues {
+  id: ID!
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+}
+
+type BenchmarkingSessionSubscriptionPayload {
+  mutation: MutationType!
+  node: BenchmarkingSession
+  updatedFields: [String!]
+  previousValues: BenchmarkingSessionPreviousValues
+}
+
+input BenchmarkingSessionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BenchmarkingSessionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BenchmarkingSessionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BenchmarkingSessionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BenchmarkingSessionWhereInput
+}
+
+input BenchmarkingSessionUpdateInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished: DateTime
+  runs: RunUpdateManyWithoutSessionInput
+}
+
+input BenchmarkingSessionUpdateOneWithoutRunsInput {
+  create: BenchmarkingSessionCreateWithoutRunsInput
+  connect: BenchmarkingSessionWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: BenchmarkingSessionUpdateWithoutRunsDataInput
+  upsert: BenchmarkingSessionUpsertWithoutRunsInput
+}
+
+input BenchmarkingSessionUpdateWithoutRunsDataInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished: DateTime
+}
+
+input BenchmarkingSessionUpsertWithoutRunsInput {
+  update: BenchmarkingSessionUpdateWithoutRunsDataInput!
+  create: BenchmarkingSessionCreateWithoutRunsInput!
+}
+
+input BenchmarkingSessionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BenchmarkingSessionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BenchmarkingSessionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BenchmarkingSessionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  queriesToRun: Int
+
+  """All values that are not equal to given value."""
+  queriesToRun_not: Int
+
+  """All values that are contained in given list."""
+  queriesToRun_in: [Int!]
+
+  """All values that are not contained in given list."""
+  queriesToRun_not_in: [Int!]
+
+  """All values less than the given value."""
+  queriesToRun_lt: Int
+
+  """All values less than or equal the given value."""
+  queriesToRun_lte: Int
+
+  """All values greater than the given value."""
+  queriesToRun_gt: Int
+
+  """All values greater than or equal the given value."""
+  queriesToRun_gte: Int
+  queriesRun: Int
+
+  """All values that are not equal to given value."""
+  queriesRun_not: Int
+
+  """All values that are contained in given list."""
+  queriesRun_in: [Int!]
+
+  """All values that are not contained in given list."""
+  queriesRun_not_in: [Int!]
+
+  """All values less than the given value."""
+  queriesRun_lt: Int
+
+  """All values less than or equal the given value."""
+  queriesRun_lte: Int
+
+  """All values greater than the given value."""
+  queriesRun_gt: Int
+
+  """All values greater than or equal the given value."""
+  queriesRun_gte: Int
+  started: DateTime
+
+  """All values that are not equal to given value."""
+  started_not: DateTime
+
+  """All values that are contained in given list."""
+  started_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  started_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  started_lt: DateTime
+
+  """All values less than or equal the given value."""
+  started_lte: DateTime
+
+  """All values greater than the given value."""
+  started_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  started_gte: DateTime
+  finished: DateTime
+
+  """All values that are not equal to given value."""
+  finished_not: DateTime
+
+  """All values that are contained in given list."""
+  finished_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  finished_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  finished_lt: DateTime
+
+  """All values less than or equal the given value."""
+  finished_lte: DateTime
+
+  """All values greater than the given value."""
+  finished_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  finished_gte: DateTime
+  runs_every: RunWhereInput
+  runs_some: RunWhereInput
+  runs_none: RunWhereInput
+}
+
+input BenchmarkingSessionWhereUniqueInput {
+  id: ID
 }
 
 enum Connector {
@@ -404,26 +926,29 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createRun2(data: Run2CreateInput!): Run2!
-  createPerformanceTest(data: PerformanceTestCreateInput!): PerformanceTest!
-  createTestRun(data: TestRunCreateInput!): TestRun!
+  createBenchmarkingSession(data: BenchmarkingSessionCreateInput!): BenchmarkingSession!
+  createBenchmarkedQuery(data: BenchmarkedQueryCreateInput!): BenchmarkedQuery!
+  createRun(data: RunCreateInput!): Run!
   createLatency(data: LatencyCreateInput!): Latency!
-  updatePerformanceTest(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  updateTestRun(data: TestRunUpdateInput!, where: TestRunWhereUniqueInput!): TestRun
+  updateBenchmarkingSession(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
+  updateBenchmarkedQuery(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
+  updateRun(data: RunUpdateInput!, where: RunWhereUniqueInput!): Run
   updateLatency(data: LatencyUpdateInput!, where: LatencyWhereUniqueInput!): Latency
-  deletePerformanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  deleteTestRun(where: TestRunWhereUniqueInput!): TestRun
+  deleteBenchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
+  deleteBenchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
+  deleteRun(where: RunWhereUniqueInput!): Run
   deleteLatency(where: LatencyWhereUniqueInput!): Latency
-  upsertPerformanceTest(where: PerformanceTestWhereUniqueInput!, create: PerformanceTestCreateInput!, update: PerformanceTestUpdateInput!): PerformanceTest!
-  upsertTestRun(where: TestRunWhereUniqueInput!, create: TestRunCreateInput!, update: TestRunUpdateInput!): TestRun!
+  upsertBenchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!, create: BenchmarkingSessionCreateInput!, update: BenchmarkingSessionUpdateInput!): BenchmarkingSession!
+  upsertBenchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!, create: BenchmarkedQueryCreateInput!, update: BenchmarkedQueryUpdateInput!): BenchmarkedQuery!
+  upsertRun(where: RunWhereUniqueInput!, create: RunCreateInput!, update: RunUpdateInput!): Run!
   upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
-  updateManyRun2s(data: Run2UpdateInput!, where: Run2WhereInput): BatchPayload!
-  updateManyPerformanceTests(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereInput): BatchPayload!
-  updateManyTestRuns(data: TestRunUpdateInput!, where: TestRunWhereInput): BatchPayload!
+  updateManyBenchmarkingSessions(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereInput): BatchPayload!
+  updateManyBenchmarkedQueries(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereInput): BatchPayload!
+  updateManyRuns(data: RunUpdateInput!, where: RunWhereInput): BatchPayload!
   updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
-  deleteManyRun2s(where: Run2WhereInput): BatchPayload!
-  deleteManyPerformanceTests(where: PerformanceTestWhereInput): BatchPayload!
-  deleteManyTestRuns(where: TestRunWhereInput): BatchPayload!
+  deleteManyBenchmarkingSessions(where: BenchmarkingSessionWhereInput): BatchPayload!
+  deleteManyBenchmarkedQueries(where: BenchmarkedQueryWhereInput): BatchPayload!
+  deleteManyRuns(where: RunWhereInput): BatchPayload!
   deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
 }
 
@@ -454,252 +979,18 @@ type PageInfo {
   endCursor: String
 }
 
-type PerformanceTest implements Node {
-  id: ID!
-  name: String!
-  query: String!
-  runs(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun!]
-}
-
-"""A connection to a list of items."""
-type PerformanceTestConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [PerformanceTestEdge]!
-  aggregate: AggregatePerformanceTest!
-}
-
-input PerformanceTestCreateInput {
-  name: String!
-  query: String!
-  runs: TestRunCreateManyInput
-}
-
-"""An edge in a connection."""
-type PerformanceTestEdge {
-  """The item at the end of the edge."""
-  node: PerformanceTest!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum PerformanceTestOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  query_ASC
-  query_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type PerformanceTestPreviousValues {
-  id: ID!
-  name: String!
-  query: String!
-}
-
-type PerformanceTestSubscriptionPayload {
-  mutation: MutationType!
-  node: PerformanceTest
-  updatedFields: [String!]
-  previousValues: PerformanceTestPreviousValues
-}
-
-input PerformanceTestSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PerformanceTestSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PerformanceTestSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PerformanceTestSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: PerformanceTestWhereInput
-}
-
-input PerformanceTestUpdateInput {
-  name: String
-  query: String
-  runs: TestRunUpdateManyInput
-}
-
-input PerformanceTestWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PerformanceTestWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PerformanceTestWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PerformanceTestWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  query: String
-
-  """All values that are not equal to given value."""
-  query_not: String
-
-  """All values that are contained in given list."""
-  query_in: [String!]
-
-  """All values that are not contained in given list."""
-  query_not_in: [String!]
-
-  """All values less than the given value."""
-  query_lt: String
-
-  """All values less than or equal the given value."""
-  query_lte: String
-
-  """All values greater than the given value."""
-  query_gt: String
-
-  """All values greater than or equal the given value."""
-  query_gte: String
-
-  """All values containing the given string."""
-  query_contains: String
-
-  """All values not containing the given string."""
-  query_not_contains: String
-
-  """All values starting with the given string."""
-  query_starts_with: String
-
-  """All values not starting with the given string."""
-  query_not_starts_with: String
-
-  """All values ending with the given string."""
-  query_ends_with: String
-
-  """All values not ending with the given string."""
-  query_not_ends_with: String
-  runs_every: TestRunWhereInput
-  runs_some: TestRunWhereInput
-  runs_none: TestRunWhereInput
-}
-
-input PerformanceTestWhereUniqueInput {
-  id: ID
-  name: String
-}
-
 type Query {
-  run2s(where: Run2WhereInput, orderBy: Run2OrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run2]!
-  performanceTests(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTest]!
-  testRuns(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun]!
+  benchmarkingSessions(where: BenchmarkingSessionWhereInput, orderBy: BenchmarkingSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BenchmarkingSession]!
+  benchmarkedQueries(where: BenchmarkedQueryWhereInput, orderBy: BenchmarkedQueryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BenchmarkedQuery]!
+  runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run]!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
-  performanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  testRun(where: TestRunWhereUniqueInput!): TestRun
+  benchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
+  benchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
+  run(where: RunWhereUniqueInput!): Run
   latency(where: LatencyWhereUniqueInput!): Latency
-  run2sConnection(where: Run2WhereInput, orderBy: Run2OrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Run2Connection!
-  performanceTestsConnection(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestConnection!
-  testRunsConnection(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestRunConnection!
+  benchmarkingSessionsConnection(where: BenchmarkingSessionWhereInput, orderBy: BenchmarkingSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BenchmarkingSessionConnection!
+  benchmarkedQueriesConnection(where: BenchmarkedQueryWhereInput, orderBy: BenchmarkedQueryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BenchmarkedQueryConnection!
+  runsConnection(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RunConnection!
   latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
 
   """Fetches an object given its ID"""
@@ -709,195 +1000,9 @@ type Query {
   ): Node
 }
 
-type Run2 {
-  queriesToRun: Int!
-  started: DateTime
-  finished: DateTime
-  runs(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun!]
-}
-
-"""A connection to a list of items."""
-type Run2Connection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [Run2Edge]!
-  aggregate: AggregateRun2!
-}
-
-input Run2CreateInput {
-  queriesToRun: Int!
-  started: DateTime
-  finished: DateTime
-  runs: TestRunCreateManyInput
-}
-
-"""An edge in a connection."""
-type Run2Edge {
-  """The item at the end of the edge."""
-  node: Run2!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum Run2OrderByInput {
-  queriesToRun_ASC
-  queriesToRun_DESC
-  started_ASC
-  started_DESC
-  finished_ASC
-  finished_DESC
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type Run2PreviousValues {
-  queriesToRun: Int!
-  started: DateTime
-  finished: DateTime
-}
-
-type Run2SubscriptionPayload {
-  mutation: MutationType!
-  node: Run2
-  updatedFields: [String!]
-  previousValues: Run2PreviousValues
-}
-
-input Run2SubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [Run2SubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [Run2SubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [Run2SubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: Run2WhereInput
-}
-
-input Run2UpdateInput {
-  queriesToRun: Int
-  started: DateTime
-  finished: DateTime
-  runs: TestRunUpdateManyInput
-}
-
-input Run2WhereInput {
-  """Logical AND on all given filters."""
-  AND: [Run2WhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [Run2WhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [Run2WhereInput!]
-  queriesToRun: Int
-
-  """All values that are not equal to given value."""
-  queriesToRun_not: Int
-
-  """All values that are contained in given list."""
-  queriesToRun_in: [Int!]
-
-  """All values that are not contained in given list."""
-  queriesToRun_not_in: [Int!]
-
-  """All values less than the given value."""
-  queriesToRun_lt: Int
-
-  """All values less than or equal the given value."""
-  queriesToRun_lte: Int
-
-  """All values greater than the given value."""
-  queriesToRun_gt: Int
-
-  """All values greater than or equal the given value."""
-  queriesToRun_gte: Int
-  started: DateTime
-
-  """All values that are not equal to given value."""
-  started_not: DateTime
-
-  """All values that are contained in given list."""
-  started_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  started_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  started_lt: DateTime
-
-  """All values less than or equal the given value."""
-  started_lte: DateTime
-
-  """All values greater than the given value."""
-  started_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  started_gte: DateTime
-  finished: DateTime
-
-  """All values that are not equal to given value."""
-  finished_not: DateTime
-
-  """All values that are contained in given list."""
-  finished_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  finished_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  finished_lt: DateTime
-
-  """All values less than or equal the given value."""
-  finished_lte: DateTime
-
-  """All values greater than the given value."""
-  finished_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  finished_gte: DateTime
-  runs_every: TestRunWhereInput
-  runs_some: TestRunWhereInput
-  runs_none: TestRunWhereInput
-}
-
-type Subscription {
-  run2(where: Run2SubscriptionWhereInput): Run2SubscriptionPayload
-  performanceTest(where: PerformanceTestSubscriptionWhereInput): PerformanceTestSubscriptionPayload
-  testRun(where: TestRunSubscriptionWhereInput): TestRunSubscriptionPayload
-  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
-}
-
-type TestRun implements Node {
+type Run implements Node {
   id: ID!
+  session(where: BenchmarkingSessionWhereInput): BenchmarkingSession
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
   version: String!
@@ -908,16 +1013,37 @@ type TestRun implements Node {
 }
 
 """A connection to a list of items."""
-type TestRunConnection {
+type RunConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [TestRunEdge]!
-  aggregate: AggregateTestRun!
+  edges: [RunEdge]!
+  aggregate: AggregateRun!
 }
 
-input TestRunCreateInput {
+input RunCreateInput {
+  connector: Connector!
+  version: String!
+  importFile: Int!
+  commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
+  session: BenchmarkingSessionCreateOneWithoutRunsInput
+  latencies: LatencyCreateManyInput
+}
+
+input RunCreateManyInput {
+  create: [RunCreateInput!]
+  connect: [RunWhereUniqueInput!]
+}
+
+input RunCreateManyWithoutSessionInput {
+  create: [RunCreateWithoutSessionInput!]
+  connect: [RunWhereUniqueInput!]
+}
+
+input RunCreateWithoutSessionInput {
   connector: Connector!
   version: String!
   importFile: Int!
@@ -927,21 +1053,16 @@ input TestRunCreateInput {
   latencies: LatencyCreateManyInput
 }
 
-input TestRunCreateManyInput {
-  create: [TestRunCreateInput!]
-  connect: [TestRunWhereUniqueInput!]
-}
-
 """An edge in a connection."""
-type TestRunEdge {
+type RunEdge {
   """The item at the end of the edge."""
-  node: TestRun!
+  node: Run!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum TestRunOrderByInput {
+enum RunOrderByInput {
   id_ASC
   id_DESC
   connector_ASC
@@ -962,7 +1083,7 @@ enum TestRunOrderByInput {
   createdAt_DESC
 }
 
-type TestRunPreviousValues {
+type RunPreviousValues {
   id: ID!
   connector: Connector!
   version: String!
@@ -972,22 +1093,22 @@ type TestRunPreviousValues {
   finishedAt: DateTime!
 }
 
-type TestRunSubscriptionPayload {
+type RunSubscriptionPayload {
   mutation: MutationType!
-  node: TestRun
+  node: Run
   updatedFields: [String!]
-  previousValues: TestRunPreviousValues
+  previousValues: RunPreviousValues
 }
 
-input TestRunSubscriptionWhereInput {
+input RunSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [TestRunSubscriptionWhereInput!]
+  AND: [RunSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [TestRunSubscriptionWhereInput!]
+  OR: [RunSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [TestRunSubscriptionWhereInput!]
+  NOT: [RunSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1008,10 +1129,50 @@ input TestRunSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: TestRunWhereInput
+  node: RunWhereInput
 }
 
-input TestRunUpdateDataInput {
+input RunUpdateDataInput {
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session: BenchmarkingSessionUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyInput
+}
+
+input RunUpdateInput {
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session: BenchmarkingSessionUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyInput
+}
+
+input RunUpdateManyInput {
+  create: [RunCreateInput!]
+  connect: [RunWhereUniqueInput!]
+  disconnect: [RunWhereUniqueInput!]
+  delete: [RunWhereUniqueInput!]
+  update: [RunUpdateWithWhereUniqueNestedInput!]
+  upsert: [RunUpsertWithWhereUniqueNestedInput!]
+}
+
+input RunUpdateManyWithoutSessionInput {
+  create: [RunCreateWithoutSessionInput!]
+  connect: [RunWhereUniqueInput!]
+  disconnect: [RunWhereUniqueInput!]
+  delete: [RunWhereUniqueInput!]
+  update: [RunUpdateWithWhereUniqueWithoutSessionInput!]
+  upsert: [RunUpsertWithWhereUniqueWithoutSessionInput!]
+}
+
+input RunUpdateWithoutSessionDataInput {
   connector: Connector
   version: String
   importFile: Int
@@ -1021,45 +1182,37 @@ input TestRunUpdateDataInput {
   latencies: LatencyUpdateManyInput
 }
 
-input TestRunUpdateInput {
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
-  latencies: LatencyUpdateManyInput
+input RunUpdateWithWhereUniqueNestedInput {
+  where: RunWhereUniqueInput!
+  data: RunUpdateDataInput!
 }
 
-input TestRunUpdateManyInput {
-  create: [TestRunCreateInput!]
-  connect: [TestRunWhereUniqueInput!]
-  disconnect: [TestRunWhereUniqueInput!]
-  delete: [TestRunWhereUniqueInput!]
-  update: [TestRunUpdateWithWhereUniqueNestedInput!]
-  upsert: [TestRunUpsertWithWhereUniqueNestedInput!]
+input RunUpdateWithWhereUniqueWithoutSessionInput {
+  where: RunWhereUniqueInput!
+  data: RunUpdateWithoutSessionDataInput!
 }
 
-input TestRunUpdateWithWhereUniqueNestedInput {
-  where: TestRunWhereUniqueInput!
-  data: TestRunUpdateDataInput!
+input RunUpsertWithWhereUniqueNestedInput {
+  where: RunWhereUniqueInput!
+  update: RunUpdateDataInput!
+  create: RunCreateInput!
 }
 
-input TestRunUpsertWithWhereUniqueNestedInput {
-  where: TestRunWhereUniqueInput!
-  update: TestRunUpdateDataInput!
-  create: TestRunCreateInput!
+input RunUpsertWithWhereUniqueWithoutSessionInput {
+  where: RunWhereUniqueInput!
+  update: RunUpdateWithoutSessionDataInput!
+  create: RunCreateWithoutSessionInput!
 }
 
-input TestRunWhereInput {
+input RunWhereInput {
   """Logical AND on all given filters."""
-  AND: [TestRunWhereInput!]
+  AND: [RunWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [TestRunWhereInput!]
+  OR: [RunWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [TestRunWhereInput!]
+  NOT: [RunWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1256,11 +1409,19 @@ input TestRunWhereInput {
 
   """All values greater than or equal the given value."""
   finishedAt_gte: DateTime
+  session: BenchmarkingSessionWhereInput
   latencies_every: LatencyWhereInput
   latencies_some: LatencyWhereInput
   latencies_none: LatencyWhereInput
 }
 
-input TestRunWhereUniqueInput {
+input RunWhereUniqueInput {
   id: ID
+}
+
+type Subscription {
+  benchmarkingSession(where: BenchmarkingSessionSubscriptionWhereInput): BenchmarkingSessionSubscriptionPayload
+  benchmarkedQuery(where: BenchmarkedQuerySubscriptionWhereInput): BenchmarkedQuerySubscriptionPayload
+  run(where: RunSubscriptionWhereInput): RunSubscriptionPayload
+  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
 }

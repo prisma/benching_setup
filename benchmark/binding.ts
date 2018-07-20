@@ -4,55 +4,59 @@ import { Options } from 'graphql-binding'
 import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 
 export interface Query {
-    run2s: <T = Run2[]>(args: { where?: Run2WhereInput, orderBy?: Run2OrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    performanceTests: <T = PerformanceTest[]>(args: { where?: PerformanceTestWhereInput, orderBy?: PerformanceTestOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    testRuns: <T = TestRun[]>(args: { where?: TestRunWhereInput, orderBy?: TestRunOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    benchmarkingSessions: <T = BenchmarkingSession[]>(args: { where?: BenchmarkingSessionWhereInput, orderBy?: BenchmarkingSessionOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    benchmarkedQueries: <T = BenchmarkedQuery[]>(args: { where?: BenchmarkedQueryWhereInput, orderBy?: BenchmarkedQueryOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    runs: <T = Run[]>(args: { where?: RunWhereInput, orderBy?: RunOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     latencies: <T = Latency[]>(args: { where?: LatencyWhereInput, orderBy?: LatencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    performanceTest: <T = PerformanceTest | null>(args: { where: PerformanceTestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    testRun: <T = TestRun | null>(args: { where: TestRunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    benchmarkingSession: <T = BenchmarkingSession | null>(args: { where: BenchmarkingSessionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    benchmarkedQuery: <T = BenchmarkedQuery | null>(args: { where: BenchmarkedQueryWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    run: <T = Run | null>(args: { where: RunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     latency: <T = Latency | null>(args: { where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    run2sConnection: <T = Run2Connection>(args: { where?: Run2WhereInput, orderBy?: Run2OrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    performanceTestsConnection: <T = PerformanceTestConnection>(args: { where?: PerformanceTestWhereInput, orderBy?: PerformanceTestOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    testRunsConnection: <T = TestRunConnection>(args: { where?: TestRunWhereInput, orderBy?: TestRunOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    benchmarkingSessionsConnection: <T = BenchmarkingSessionConnection>(args: { where?: BenchmarkingSessionWhereInput, orderBy?: BenchmarkingSessionOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    benchmarkedQueriesConnection: <T = BenchmarkedQueryConnection>(args: { where?: BenchmarkedQueryWhereInput, orderBy?: BenchmarkedQueryOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    runsConnection: <T = RunConnection>(args: { where?: RunWhereInput, orderBy?: RunOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     latenciesConnection: <T = LatencyConnection>(args: { where?: LatencyWhereInput, orderBy?: LatencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Mutation {
-    createRun2: <T = Run2>(args: { data: Run2CreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createPerformanceTest: <T = PerformanceTest>(args: { data: PerformanceTestCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createTestRun: <T = TestRun>(args: { data: TestRunCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createBenchmarkingSession: <T = BenchmarkingSession>(args: { data: BenchmarkingSessionCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createBenchmarkedQuery: <T = BenchmarkedQuery>(args: { data: BenchmarkedQueryCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createRun: <T = Run>(args: { data: RunCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createLatency: <T = Latency>(args: { data: LatencyCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updatePerformanceTest: <T = PerformanceTest | null>(args: { data: PerformanceTestUpdateInput, where: PerformanceTestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateTestRun: <T = TestRun | null>(args: { data: TestRunUpdateInput, where: TestRunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateBenchmarkingSession: <T = BenchmarkingSession | null>(args: { data: BenchmarkingSessionUpdateInput, where: BenchmarkingSessionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateBenchmarkedQuery: <T = BenchmarkedQuery | null>(args: { data: BenchmarkedQueryUpdateInput, where: BenchmarkedQueryWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateRun: <T = Run | null>(args: { data: RunUpdateInput, where: RunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateLatency: <T = Latency | null>(args: { data: LatencyUpdateInput, where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deletePerformanceTest: <T = PerformanceTest | null>(args: { where: PerformanceTestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteTestRun: <T = TestRun | null>(args: { where: TestRunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteBenchmarkingSession: <T = BenchmarkingSession | null>(args: { where: BenchmarkingSessionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteBenchmarkedQuery: <T = BenchmarkedQuery | null>(args: { where: BenchmarkedQueryWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteRun: <T = Run | null>(args: { where: RunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteLatency: <T = Latency | null>(args: { where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertPerformanceTest: <T = PerformanceTest>(args: { where: PerformanceTestWhereUniqueInput, create: PerformanceTestCreateInput, update: PerformanceTestUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertTestRun: <T = TestRun>(args: { where: TestRunWhereUniqueInput, create: TestRunCreateInput, update: TestRunUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertBenchmarkingSession: <T = BenchmarkingSession>(args: { where: BenchmarkingSessionWhereUniqueInput, create: BenchmarkingSessionCreateInput, update: BenchmarkingSessionUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertBenchmarkedQuery: <T = BenchmarkedQuery>(args: { where: BenchmarkedQueryWhereUniqueInput, create: BenchmarkedQueryCreateInput, update: BenchmarkedQueryUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertRun: <T = Run>(args: { where: RunWhereUniqueInput, create: RunCreateInput, update: RunUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertLatency: <T = Latency>(args: { where: LatencyWhereUniqueInput, create: LatencyCreateInput, update: LatencyUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyRun2s: <T = BatchPayload>(args: { data: Run2UpdateInput, where?: Run2WhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyPerformanceTests: <T = BatchPayload>(args: { data: PerformanceTestUpdateInput, where?: PerformanceTestWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyTestRuns: <T = BatchPayload>(args: { data: TestRunUpdateInput, where?: TestRunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyBenchmarkingSessions: <T = BatchPayload>(args: { data: BenchmarkingSessionUpdateInput, where?: BenchmarkingSessionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyBenchmarkedQueries: <T = BatchPayload>(args: { data: BenchmarkedQueryUpdateInput, where?: BenchmarkedQueryWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyRuns: <T = BatchPayload>(args: { data: RunUpdateInput, where?: RunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyLatencies: <T = BatchPayload>(args: { data: LatencyUpdateInput, where?: LatencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyRun2s: <T = BatchPayload>(args: { where?: Run2WhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyPerformanceTests: <T = BatchPayload>(args: { where?: PerformanceTestWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyTestRuns: <T = BatchPayload>(args: { where?: TestRunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyBenchmarkingSessions: <T = BatchPayload>(args: { where?: BenchmarkingSessionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyBenchmarkedQueries: <T = BatchPayload>(args: { where?: BenchmarkedQueryWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyRuns: <T = BatchPayload>(args: { where?: RunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyLatencies: <T = BatchPayload>(args: { where?: LatencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Subscription {
-    run2: <T = Run2SubscriptionPayload | null>(args: { where?: Run2SubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    performanceTest: <T = PerformanceTestSubscriptionPayload | null>(args: { where?: PerformanceTestSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    testRun: <T = TestRunSubscriptionPayload | null>(args: { where?: TestRunSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    benchmarkingSession: <T = BenchmarkingSessionSubscriptionPayload | null>(args: { where?: BenchmarkingSessionSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    benchmarkedQuery: <T = BenchmarkedQuerySubscriptionPayload | null>(args: { where?: BenchmarkedQuerySubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    run: <T = RunSubscriptionPayload | null>(args: { where?: RunSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     latency: <T = LatencySubscriptionPayload | null>(args: { where?: LatencySubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
   }
 
 export interface Exists {
-  Run2: (where?: Run2WhereInput) => Promise<boolean>
-  PerformanceTest: (where?: PerformanceTestWhereInput) => Promise<boolean>
-  TestRun: (where?: TestRunWhereInput) => Promise<boolean>
+  BenchmarkingSession: (where?: BenchmarkingSessionWhereInput) => Promise<boolean>
+  BenchmarkedQuery: (where?: BenchmarkedQueryWhereInput) => Promise<boolean>
+  Run: (where?: RunWhereInput) => Promise<boolean>
   Latency: (where?: LatencyWhereInput) => Promise<boolean>
 }
 
@@ -78,25 +82,547 @@ export interface BindingConstructor<T> {
  * Type Defs
 */
 
-const typeDefs = `type AggregateLatency {
+const typeDefs = `type AggregateBenchmarkedQuery {
   count: Int!
 }
 
-type AggregatePerformanceTest {
+type AggregateBenchmarkingSession {
   count: Int!
 }
 
-type AggregateRun2 {
+type AggregateLatency {
   count: Int!
 }
 
-type AggregateTestRun {
+type AggregateRun {
   count: Int!
 }
 
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type BenchmarkedQuery implements Node {
+  id: ID!
+  name: String!
+  query: String!
+  runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run!]
+}
+
+"""A connection to a list of items."""
+type BenchmarkedQueryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BenchmarkedQueryEdge]!
+  aggregate: AggregateBenchmarkedQuery!
+}
+
+input BenchmarkedQueryCreateInput {
+  name: String!
+  query: String!
+  runs: RunCreateManyInput
+}
+
+"""An edge in a connection."""
+type BenchmarkedQueryEdge {
+  """The item at the end of the edge."""
+  node: BenchmarkedQuery!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BenchmarkedQueryOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  query_ASC
+  query_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type BenchmarkedQueryPreviousValues {
+  id: ID!
+  name: String!
+  query: String!
+}
+
+type BenchmarkedQuerySubscriptionPayload {
+  mutation: MutationType!
+  node: BenchmarkedQuery
+  updatedFields: [String!]
+  previousValues: BenchmarkedQueryPreviousValues
+}
+
+input BenchmarkedQuerySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BenchmarkedQuerySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BenchmarkedQuerySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BenchmarkedQuerySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BenchmarkedQueryWhereInput
+}
+
+input BenchmarkedQueryUpdateInput {
+  name: String
+  query: String
+  runs: RunUpdateManyInput
+}
+
+input BenchmarkedQueryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BenchmarkedQueryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BenchmarkedQueryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BenchmarkedQueryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  query: String
+
+  """All values that are not equal to given value."""
+  query_not: String
+
+  """All values that are contained in given list."""
+  query_in: [String!]
+
+  """All values that are not contained in given list."""
+  query_not_in: [String!]
+
+  """All values less than the given value."""
+  query_lt: String
+
+  """All values less than or equal the given value."""
+  query_lte: String
+
+  """All values greater than the given value."""
+  query_gt: String
+
+  """All values greater than or equal the given value."""
+  query_gte: String
+
+  """All values containing the given string."""
+  query_contains: String
+
+  """All values not containing the given string."""
+  query_not_contains: String
+
+  """All values starting with the given string."""
+  query_starts_with: String
+
+  """All values not starting with the given string."""
+  query_not_starts_with: String
+
+  """All values ending with the given string."""
+  query_ends_with: String
+
+  """All values not ending with the given string."""
+  query_not_ends_with: String
+  runs_every: RunWhereInput
+  runs_some: RunWhereInput
+  runs_none: RunWhereInput
+}
+
+input BenchmarkedQueryWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type BenchmarkingSession implements Node {
+  id: ID!
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+  runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run!]
+}
+
+"""A connection to a list of items."""
+type BenchmarkingSessionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BenchmarkingSessionEdge]!
+  aggregate: AggregateBenchmarkingSession!
+}
+
+input BenchmarkingSessionCreateInput {
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+  runs: RunCreateManyWithoutSessionInput
+}
+
+input BenchmarkingSessionCreateOneWithoutRunsInput {
+  create: BenchmarkingSessionCreateWithoutRunsInput
+  connect: BenchmarkingSessionWhereUniqueInput
+}
+
+input BenchmarkingSessionCreateWithoutRunsInput {
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+}
+
+"""An edge in a connection."""
+type BenchmarkingSessionEdge {
+  """The item at the end of the edge."""
+  node: BenchmarkingSession!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BenchmarkingSessionOrderByInput {
+  id_ASC
+  id_DESC
+  queriesToRun_ASC
+  queriesToRun_DESC
+  queriesRun_ASC
+  queriesRun_DESC
+  started_ASC
+  started_DESC
+  finished_ASC
+  finished_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type BenchmarkingSessionPreviousValues {
+  id: ID!
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+}
+
+type BenchmarkingSessionSubscriptionPayload {
+  mutation: MutationType!
+  node: BenchmarkingSession
+  updatedFields: [String!]
+  previousValues: BenchmarkingSessionPreviousValues
+}
+
+input BenchmarkingSessionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BenchmarkingSessionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BenchmarkingSessionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BenchmarkingSessionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BenchmarkingSessionWhereInput
+}
+
+input BenchmarkingSessionUpdateInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished: DateTime
+  runs: RunUpdateManyWithoutSessionInput
+}
+
+input BenchmarkingSessionUpdateOneWithoutRunsInput {
+  create: BenchmarkingSessionCreateWithoutRunsInput
+  connect: BenchmarkingSessionWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: BenchmarkingSessionUpdateWithoutRunsDataInput
+  upsert: BenchmarkingSessionUpsertWithoutRunsInput
+}
+
+input BenchmarkingSessionUpdateWithoutRunsDataInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished: DateTime
+}
+
+input BenchmarkingSessionUpsertWithoutRunsInput {
+  update: BenchmarkingSessionUpdateWithoutRunsDataInput!
+  create: BenchmarkingSessionCreateWithoutRunsInput!
+}
+
+input BenchmarkingSessionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BenchmarkingSessionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BenchmarkingSessionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BenchmarkingSessionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  queriesToRun: Int
+
+  """All values that are not equal to given value."""
+  queriesToRun_not: Int
+
+  """All values that are contained in given list."""
+  queriesToRun_in: [Int!]
+
+  """All values that are not contained in given list."""
+  queriesToRun_not_in: [Int!]
+
+  """All values less than the given value."""
+  queriesToRun_lt: Int
+
+  """All values less than or equal the given value."""
+  queriesToRun_lte: Int
+
+  """All values greater than the given value."""
+  queriesToRun_gt: Int
+
+  """All values greater than or equal the given value."""
+  queriesToRun_gte: Int
+  queriesRun: Int
+
+  """All values that are not equal to given value."""
+  queriesRun_not: Int
+
+  """All values that are contained in given list."""
+  queriesRun_in: [Int!]
+
+  """All values that are not contained in given list."""
+  queriesRun_not_in: [Int!]
+
+  """All values less than the given value."""
+  queriesRun_lt: Int
+
+  """All values less than or equal the given value."""
+  queriesRun_lte: Int
+
+  """All values greater than the given value."""
+  queriesRun_gt: Int
+
+  """All values greater than or equal the given value."""
+  queriesRun_gte: Int
+  started: DateTime
+
+  """All values that are not equal to given value."""
+  started_not: DateTime
+
+  """All values that are contained in given list."""
+  started_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  started_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  started_lt: DateTime
+
+  """All values less than or equal the given value."""
+  started_lte: DateTime
+
+  """All values greater than the given value."""
+  started_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  started_gte: DateTime
+  finished: DateTime
+
+  """All values that are not equal to given value."""
+  finished_not: DateTime
+
+  """All values that are contained in given list."""
+  finished_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  finished_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  finished_lt: DateTime
+
+  """All values less than or equal the given value."""
+  finished_lte: DateTime
+
+  """All values greater than the given value."""
+  finished_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  finished_gte: DateTime
+  runs_every: RunWhereInput
+  runs_some: RunWhereInput
+  runs_none: RunWhereInput
+}
+
+input BenchmarkingSessionWhereUniqueInput {
+  id: ID
 }
 
 enum Connector {
@@ -481,26 +1007,29 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createRun2(data: Run2CreateInput!): Run2!
-  createPerformanceTest(data: PerformanceTestCreateInput!): PerformanceTest!
-  createTestRun(data: TestRunCreateInput!): TestRun!
+  createBenchmarkingSession(data: BenchmarkingSessionCreateInput!): BenchmarkingSession!
+  createBenchmarkedQuery(data: BenchmarkedQueryCreateInput!): BenchmarkedQuery!
+  createRun(data: RunCreateInput!): Run!
   createLatency(data: LatencyCreateInput!): Latency!
-  updatePerformanceTest(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  updateTestRun(data: TestRunUpdateInput!, where: TestRunWhereUniqueInput!): TestRun
+  updateBenchmarkingSession(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
+  updateBenchmarkedQuery(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
+  updateRun(data: RunUpdateInput!, where: RunWhereUniqueInput!): Run
   updateLatency(data: LatencyUpdateInput!, where: LatencyWhereUniqueInput!): Latency
-  deletePerformanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  deleteTestRun(where: TestRunWhereUniqueInput!): TestRun
+  deleteBenchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
+  deleteBenchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
+  deleteRun(where: RunWhereUniqueInput!): Run
   deleteLatency(where: LatencyWhereUniqueInput!): Latency
-  upsertPerformanceTest(where: PerformanceTestWhereUniqueInput!, create: PerformanceTestCreateInput!, update: PerformanceTestUpdateInput!): PerformanceTest!
-  upsertTestRun(where: TestRunWhereUniqueInput!, create: TestRunCreateInput!, update: TestRunUpdateInput!): TestRun!
+  upsertBenchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!, create: BenchmarkingSessionCreateInput!, update: BenchmarkingSessionUpdateInput!): BenchmarkingSession!
+  upsertBenchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!, create: BenchmarkedQueryCreateInput!, update: BenchmarkedQueryUpdateInput!): BenchmarkedQuery!
+  upsertRun(where: RunWhereUniqueInput!, create: RunCreateInput!, update: RunUpdateInput!): Run!
   upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
-  updateManyRun2s(data: Run2UpdateInput!, where: Run2WhereInput): BatchPayload!
-  updateManyPerformanceTests(data: PerformanceTestUpdateInput!, where: PerformanceTestWhereInput): BatchPayload!
-  updateManyTestRuns(data: TestRunUpdateInput!, where: TestRunWhereInput): BatchPayload!
+  updateManyBenchmarkingSessions(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereInput): BatchPayload!
+  updateManyBenchmarkedQueries(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereInput): BatchPayload!
+  updateManyRuns(data: RunUpdateInput!, where: RunWhereInput): BatchPayload!
   updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
-  deleteManyRun2s(where: Run2WhereInput): BatchPayload!
-  deleteManyPerformanceTests(where: PerformanceTestWhereInput): BatchPayload!
-  deleteManyTestRuns(where: TestRunWhereInput): BatchPayload!
+  deleteManyBenchmarkingSessions(where: BenchmarkingSessionWhereInput): BatchPayload!
+  deleteManyBenchmarkedQueries(where: BenchmarkedQueryWhereInput): BatchPayload!
+  deleteManyRuns(where: RunWhereInput): BatchPayload!
   deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
 }
 
@@ -531,252 +1060,18 @@ type PageInfo {
   endCursor: String
 }
 
-type PerformanceTest implements Node {
-  id: ID!
-  name: String!
-  query: String!
-  runs(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun!]
-}
-
-"""A connection to a list of items."""
-type PerformanceTestConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [PerformanceTestEdge]!
-  aggregate: AggregatePerformanceTest!
-}
-
-input PerformanceTestCreateInput {
-  name: String!
-  query: String!
-  runs: TestRunCreateManyInput
-}
-
-"""An edge in a connection."""
-type PerformanceTestEdge {
-  """The item at the end of the edge."""
-  node: PerformanceTest!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum PerformanceTestOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  query_ASC
-  query_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type PerformanceTestPreviousValues {
-  id: ID!
-  name: String!
-  query: String!
-}
-
-type PerformanceTestSubscriptionPayload {
-  mutation: MutationType!
-  node: PerformanceTest
-  updatedFields: [String!]
-  previousValues: PerformanceTestPreviousValues
-}
-
-input PerformanceTestSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PerformanceTestSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PerformanceTestSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PerformanceTestSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: PerformanceTestWhereInput
-}
-
-input PerformanceTestUpdateInput {
-  name: String
-  query: String
-  runs: TestRunUpdateManyInput
-}
-
-input PerformanceTestWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PerformanceTestWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PerformanceTestWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PerformanceTestWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  query: String
-
-  """All values that are not equal to given value."""
-  query_not: String
-
-  """All values that are contained in given list."""
-  query_in: [String!]
-
-  """All values that are not contained in given list."""
-  query_not_in: [String!]
-
-  """All values less than the given value."""
-  query_lt: String
-
-  """All values less than or equal the given value."""
-  query_lte: String
-
-  """All values greater than the given value."""
-  query_gt: String
-
-  """All values greater than or equal the given value."""
-  query_gte: String
-
-  """All values containing the given string."""
-  query_contains: String
-
-  """All values not containing the given string."""
-  query_not_contains: String
-
-  """All values starting with the given string."""
-  query_starts_with: String
-
-  """All values not starting with the given string."""
-  query_not_starts_with: String
-
-  """All values ending with the given string."""
-  query_ends_with: String
-
-  """All values not ending with the given string."""
-  query_not_ends_with: String
-  runs_every: TestRunWhereInput
-  runs_some: TestRunWhereInput
-  runs_none: TestRunWhereInput
-}
-
-input PerformanceTestWhereUniqueInput {
-  id: ID
-  name: String
-}
-
 type Query {
-  run2s(where: Run2WhereInput, orderBy: Run2OrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run2]!
-  performanceTests(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTest]!
-  testRuns(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun]!
+  benchmarkingSessions(where: BenchmarkingSessionWhereInput, orderBy: BenchmarkingSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BenchmarkingSession]!
+  benchmarkedQueries(where: BenchmarkedQueryWhereInput, orderBy: BenchmarkedQueryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BenchmarkedQuery]!
+  runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run]!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
-  performanceTest(where: PerformanceTestWhereUniqueInput!): PerformanceTest
-  testRun(where: TestRunWhereUniqueInput!): TestRun
+  benchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
+  benchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
+  run(where: RunWhereUniqueInput!): Run
   latency(where: LatencyWhereUniqueInput!): Latency
-  run2sConnection(where: Run2WhereInput, orderBy: Run2OrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Run2Connection!
-  performanceTestsConnection(where: PerformanceTestWhereInput, orderBy: PerformanceTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestConnection!
-  testRunsConnection(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestRunConnection!
+  benchmarkingSessionsConnection(where: BenchmarkingSessionWhereInput, orderBy: BenchmarkingSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BenchmarkingSessionConnection!
+  benchmarkedQueriesConnection(where: BenchmarkedQueryWhereInput, orderBy: BenchmarkedQueryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BenchmarkedQueryConnection!
+  runsConnection(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RunConnection!
   latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
 
   """Fetches an object given its ID"""
@@ -786,195 +1081,9 @@ type Query {
   ): Node
 }
 
-type Run2 {
-  queriesToRun: Int!
-  started: DateTime
-  finished: DateTime
-  runs(where: TestRunWhereInput, orderBy: TestRunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestRun!]
-}
-
-"""A connection to a list of items."""
-type Run2Connection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [Run2Edge]!
-  aggregate: AggregateRun2!
-}
-
-input Run2CreateInput {
-  queriesToRun: Int!
-  started: DateTime
-  finished: DateTime
-  runs: TestRunCreateManyInput
-}
-
-"""An edge in a connection."""
-type Run2Edge {
-  """The item at the end of the edge."""
-  node: Run2!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum Run2OrderByInput {
-  queriesToRun_ASC
-  queriesToRun_DESC
-  started_ASC
-  started_DESC
-  finished_ASC
-  finished_DESC
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type Run2PreviousValues {
-  queriesToRun: Int!
-  started: DateTime
-  finished: DateTime
-}
-
-type Run2SubscriptionPayload {
-  mutation: MutationType!
-  node: Run2
-  updatedFields: [String!]
-  previousValues: Run2PreviousValues
-}
-
-input Run2SubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [Run2SubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [Run2SubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [Run2SubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: Run2WhereInput
-}
-
-input Run2UpdateInput {
-  queriesToRun: Int
-  started: DateTime
-  finished: DateTime
-  runs: TestRunUpdateManyInput
-}
-
-input Run2WhereInput {
-  """Logical AND on all given filters."""
-  AND: [Run2WhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [Run2WhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [Run2WhereInput!]
-  queriesToRun: Int
-
-  """All values that are not equal to given value."""
-  queriesToRun_not: Int
-
-  """All values that are contained in given list."""
-  queriesToRun_in: [Int!]
-
-  """All values that are not contained in given list."""
-  queriesToRun_not_in: [Int!]
-
-  """All values less than the given value."""
-  queriesToRun_lt: Int
-
-  """All values less than or equal the given value."""
-  queriesToRun_lte: Int
-
-  """All values greater than the given value."""
-  queriesToRun_gt: Int
-
-  """All values greater than or equal the given value."""
-  queriesToRun_gte: Int
-  started: DateTime
-
-  """All values that are not equal to given value."""
-  started_not: DateTime
-
-  """All values that are contained in given list."""
-  started_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  started_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  started_lt: DateTime
-
-  """All values less than or equal the given value."""
-  started_lte: DateTime
-
-  """All values greater than the given value."""
-  started_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  started_gte: DateTime
-  finished: DateTime
-
-  """All values that are not equal to given value."""
-  finished_not: DateTime
-
-  """All values that are contained in given list."""
-  finished_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  finished_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  finished_lt: DateTime
-
-  """All values less than or equal the given value."""
-  finished_lte: DateTime
-
-  """All values greater than the given value."""
-  finished_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  finished_gte: DateTime
-  runs_every: TestRunWhereInput
-  runs_some: TestRunWhereInput
-  runs_none: TestRunWhereInput
-}
-
-type Subscription {
-  run2(where: Run2SubscriptionWhereInput): Run2SubscriptionPayload
-  performanceTest(where: PerformanceTestSubscriptionWhereInput): PerformanceTestSubscriptionPayload
-  testRun(where: TestRunSubscriptionWhereInput): TestRunSubscriptionPayload
-  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
-}
-
-type TestRun implements Node {
+type Run implements Node {
   id: ID!
+  session(where: BenchmarkingSessionWhereInput): BenchmarkingSession
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
   version: String!
@@ -985,16 +1094,37 @@ type TestRun implements Node {
 }
 
 """A connection to a list of items."""
-type TestRunConnection {
+type RunConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [TestRunEdge]!
-  aggregate: AggregateTestRun!
+  edges: [RunEdge]!
+  aggregate: AggregateRun!
 }
 
-input TestRunCreateInput {
+input RunCreateInput {
+  connector: Connector!
+  version: String!
+  importFile: Int!
+  commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
+  session: BenchmarkingSessionCreateOneWithoutRunsInput
+  latencies: LatencyCreateManyInput
+}
+
+input RunCreateManyInput {
+  create: [RunCreateInput!]
+  connect: [RunWhereUniqueInput!]
+}
+
+input RunCreateManyWithoutSessionInput {
+  create: [RunCreateWithoutSessionInput!]
+  connect: [RunWhereUniqueInput!]
+}
+
+input RunCreateWithoutSessionInput {
   connector: Connector!
   version: String!
   importFile: Int!
@@ -1004,21 +1134,16 @@ input TestRunCreateInput {
   latencies: LatencyCreateManyInput
 }
 
-input TestRunCreateManyInput {
-  create: [TestRunCreateInput!]
-  connect: [TestRunWhereUniqueInput!]
-}
-
 """An edge in a connection."""
-type TestRunEdge {
+type RunEdge {
   """The item at the end of the edge."""
-  node: TestRun!
+  node: Run!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum TestRunOrderByInput {
+enum RunOrderByInput {
   id_ASC
   id_DESC
   connector_ASC
@@ -1039,7 +1164,7 @@ enum TestRunOrderByInput {
   createdAt_DESC
 }
 
-type TestRunPreviousValues {
+type RunPreviousValues {
   id: ID!
   connector: Connector!
   version: String!
@@ -1049,22 +1174,22 @@ type TestRunPreviousValues {
   finishedAt: DateTime!
 }
 
-type TestRunSubscriptionPayload {
+type RunSubscriptionPayload {
   mutation: MutationType!
-  node: TestRun
+  node: Run
   updatedFields: [String!]
-  previousValues: TestRunPreviousValues
+  previousValues: RunPreviousValues
 }
 
-input TestRunSubscriptionWhereInput {
+input RunSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [TestRunSubscriptionWhereInput!]
+  AND: [RunSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [TestRunSubscriptionWhereInput!]
+  OR: [RunSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [TestRunSubscriptionWhereInput!]
+  NOT: [RunSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1085,10 +1210,50 @@ input TestRunSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: TestRunWhereInput
+  node: RunWhereInput
 }
 
-input TestRunUpdateDataInput {
+input RunUpdateDataInput {
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session: BenchmarkingSessionUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyInput
+}
+
+input RunUpdateInput {
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session: BenchmarkingSessionUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyInput
+}
+
+input RunUpdateManyInput {
+  create: [RunCreateInput!]
+  connect: [RunWhereUniqueInput!]
+  disconnect: [RunWhereUniqueInput!]
+  delete: [RunWhereUniqueInput!]
+  update: [RunUpdateWithWhereUniqueNestedInput!]
+  upsert: [RunUpsertWithWhereUniqueNestedInput!]
+}
+
+input RunUpdateManyWithoutSessionInput {
+  create: [RunCreateWithoutSessionInput!]
+  connect: [RunWhereUniqueInput!]
+  disconnect: [RunWhereUniqueInput!]
+  delete: [RunWhereUniqueInput!]
+  update: [RunUpdateWithWhereUniqueWithoutSessionInput!]
+  upsert: [RunUpsertWithWhereUniqueWithoutSessionInput!]
+}
+
+input RunUpdateWithoutSessionDataInput {
   connector: Connector
   version: String
   importFile: Int
@@ -1098,45 +1263,37 @@ input TestRunUpdateDataInput {
   latencies: LatencyUpdateManyInput
 }
 
-input TestRunUpdateInput {
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
-  latencies: LatencyUpdateManyInput
+input RunUpdateWithWhereUniqueNestedInput {
+  where: RunWhereUniqueInput!
+  data: RunUpdateDataInput!
 }
 
-input TestRunUpdateManyInput {
-  create: [TestRunCreateInput!]
-  connect: [TestRunWhereUniqueInput!]
-  disconnect: [TestRunWhereUniqueInput!]
-  delete: [TestRunWhereUniqueInput!]
-  update: [TestRunUpdateWithWhereUniqueNestedInput!]
-  upsert: [TestRunUpsertWithWhereUniqueNestedInput!]
+input RunUpdateWithWhereUniqueWithoutSessionInput {
+  where: RunWhereUniqueInput!
+  data: RunUpdateWithoutSessionDataInput!
 }
 
-input TestRunUpdateWithWhereUniqueNestedInput {
-  where: TestRunWhereUniqueInput!
-  data: TestRunUpdateDataInput!
+input RunUpsertWithWhereUniqueNestedInput {
+  where: RunWhereUniqueInput!
+  update: RunUpdateDataInput!
+  create: RunCreateInput!
 }
 
-input TestRunUpsertWithWhereUniqueNestedInput {
-  where: TestRunWhereUniqueInput!
-  update: TestRunUpdateDataInput!
-  create: TestRunCreateInput!
+input RunUpsertWithWhereUniqueWithoutSessionInput {
+  where: RunWhereUniqueInput!
+  update: RunUpdateWithoutSessionDataInput!
+  create: RunCreateWithoutSessionInput!
 }
 
-input TestRunWhereInput {
+input RunWhereInput {
   """Logical AND on all given filters."""
-  AND: [TestRunWhereInput!]
+  AND: [RunWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [TestRunWhereInput!]
+  OR: [RunWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [TestRunWhereInput!]
+  NOT: [RunWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1333,13 +1490,21 @@ input TestRunWhereInput {
 
   """All values greater than or equal the given value."""
   finishedAt_gte: DateTime
+  session: BenchmarkingSessionWhereInput
   latencies_every: LatencyWhereInput
   latencies_some: LatencyWhereInput
   latencies_none: LatencyWhereInput
 }
 
-input TestRunWhereUniqueInput {
+input RunWhereUniqueInput {
   id: ID
+}
+
+type Subscription {
+  benchmarkingSession(where: BenchmarkingSessionSubscriptionWhereInput): BenchmarkingSessionSubscriptionPayload
+  benchmarkedQuery(where: BenchmarkedQuerySubscriptionWhereInput): BenchmarkedQuerySubscriptionPayload
+  run(where: RunSubscriptionWhereInput): RunSubscriptionPayload
+  latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
 }
 `
 
@@ -1349,24 +1514,22 @@ export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDe
  * Types
 */
 
-export type MutationType =   'CREATED' |
-  'UPDATED' |
-  'DELETED'
-
-export type Run2OrderByInput =   'queriesToRun_ASC' |
+export type BenchmarkingSessionOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'queriesToRun_ASC' |
   'queriesToRun_DESC' |
+  'queriesRun_ASC' |
+  'queriesRun_DESC' |
   'started_ASC' |
   'started_DESC' |
   'finished_ASC' |
   'finished_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type TestRunOrderByInput =   'id_ASC' |
+export type RunOrderByInput =   'id_ASC' |
   'id_DESC' |
   'connector_ASC' |
   'connector_DESC' |
@@ -1410,7 +1573,7 @@ export type LatencyOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type PerformanceTestOrderByInput =   'id_ASC' |
+export type BenchmarkedQueryOrderByInput =   'id_ASC' |
   'id_DESC' |
   'name_ASC' |
   'name_DESC' |
@@ -1421,28 +1584,33 @@ export type PerformanceTestOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export interface PerformanceTestWhereUniqueInput {
+export type MutationType =   'CREATED' |
+  'UPDATED' |
+  'DELETED'
+
+export interface LatencyCreateManyInput {
+  create?: LatencyCreateInput[] | LatencyCreateInput
+  connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+}
+
+export interface BenchmarkingSessionWhereInput {
+  AND?: BenchmarkingSessionWhereInput[] | BenchmarkingSessionWhereInput
+  OR?: BenchmarkingSessionWhereInput[] | BenchmarkingSessionWhereInput
+  NOT?: BenchmarkingSessionWhereInput[] | BenchmarkingSessionWhereInput
   id?: ID_Input
-  name?: String
-}
-
-export interface Run2CreateInput {
-  queriesToRun: Int
-  started?: DateTime
-  finished?: DateTime
-  runs?: TestRunCreateManyInput
-}
-
-export interface LatencyUpsertWithWhereUniqueNestedInput {
-  where: LatencyWhereUniqueInput
-  update: LatencyUpdateDataInput
-  create: LatencyCreateInput
-}
-
-export interface Run2WhereInput {
-  AND?: Run2WhereInput[] | Run2WhereInput
-  OR?: Run2WhereInput[] | Run2WhereInput
-  NOT?: Run2WhereInput[] | Run2WhereInput
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
   queriesToRun?: Int
   queriesToRun_not?: Int
   queriesToRun_in?: Int[] | Int
@@ -1451,6 +1619,14 @@ export interface Run2WhereInput {
   queriesToRun_lte?: Int
   queriesToRun_gt?: Int
   queriesToRun_gte?: Int
+  queriesRun?: Int
+  queriesRun_not?: Int
+  queriesRun_in?: Int[] | Int
+  queriesRun_not_in?: Int[] | Int
+  queriesRun_lt?: Int
+  queriesRun_lte?: Int
+  queriesRun_gt?: Int
+  queriesRun_gte?: Int
   started?: DateTime
   started_not?: DateTime
   started_in?: DateTime[] | DateTime
@@ -1467,9 +1643,78 @@ export interface Run2WhereInput {
   finished_lte?: DateTime
   finished_gt?: DateTime
   finished_gte?: DateTime
-  runs_every?: TestRunWhereInput
-  runs_some?: TestRunWhereInput
-  runs_none?: TestRunWhereInput
+  runs_every?: RunWhereInput
+  runs_some?: RunWhereInput
+  runs_none?: RunWhereInput
+}
+
+export interface RunUpdateManyInput {
+  create?: RunCreateInput[] | RunCreateInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  disconnect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  delete?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  update?: RunUpdateWithWhereUniqueNestedInput[] | RunUpdateWithWhereUniqueNestedInput
+  upsert?: RunUpsertWithWhereUniqueNestedInput[] | RunUpsertWithWhereUniqueNestedInput
+}
+
+export interface RunUpdateManyWithoutSessionInput {
+  create?: RunCreateWithoutSessionInput[] | RunCreateWithoutSessionInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  disconnect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  delete?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  update?: RunUpdateWithWhereUniqueWithoutSessionInput[] | RunUpdateWithWhereUniqueWithoutSessionInput
+  upsert?: RunUpsertWithWhereUniqueWithoutSessionInput[] | RunUpsertWithWhereUniqueWithoutSessionInput
+}
+
+export interface BenchmarkedQueryUpdateInput {
+  name?: String
+  query?: String
+  runs?: RunUpdateManyInput
+}
+
+export interface RunCreateInput {
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session?: BenchmarkingSessionCreateOneWithoutRunsInput
+  latencies?: LatencyCreateManyInput
+}
+
+export interface RunUpsertWithWhereUniqueWithoutSessionInput {
+  where: RunWhereUniqueInput
+  update: RunUpdateWithoutSessionDataInput
+  create: RunCreateWithoutSessionInput
+}
+
+export interface BenchmarkedQuerySubscriptionWhereInput {
+  AND?: BenchmarkedQuerySubscriptionWhereInput[] | BenchmarkedQuerySubscriptionWhereInput
+  OR?: BenchmarkedQuerySubscriptionWhereInput[] | BenchmarkedQuerySubscriptionWhereInput
+  NOT?: BenchmarkedQuerySubscriptionWhereInput[] | BenchmarkedQuerySubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: BenchmarkedQueryWhereInput
+}
+
+export interface LatencyUpsertWithWhereUniqueNestedInput {
+  where: LatencyWhereUniqueInput
+  update: LatencyUpdateDataInput
+  create: LatencyCreateInput
+}
+
+export interface BenchmarkingSessionSubscriptionWhereInput {
+  AND?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
+  OR?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
+  NOT?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: BenchmarkingSessionWhereInput
 }
 
 export interface LatencyUpdateDataInput {
@@ -1480,6 +1725,256 @@ export interface LatencyUpdateDataInput {
   p99?: Float
   successes?: Int
   failures?: Int
+}
+
+export interface LatencyUpdateInput {
+  rps?: Int
+  avg?: Float
+  p50?: Float
+  p95?: Float
+  p99?: Float
+  successes?: Int
+  failures?: Int
+}
+
+export interface LatencyUpdateWithWhereUniqueNestedInput {
+  where: LatencyWhereUniqueInput
+  data: LatencyUpdateDataInput
+}
+
+export interface BenchmarkingSessionWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface LatencyUpdateManyInput {
+  create?: LatencyCreateInput[] | LatencyCreateInput
+  connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+  disconnect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+  delete?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+  update?: LatencyUpdateWithWhereUniqueNestedInput[] | LatencyUpdateWithWhereUniqueNestedInput
+  upsert?: LatencyUpsertWithWhereUniqueNestedInput[] | LatencyUpsertWithWhereUniqueNestedInput
+}
+
+export interface RunWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface RunUpdateWithoutSessionDataInput {
+  connector?: Connector
+  version?: String
+  importFile?: Int
+  commit?: String
+  startedAt?: DateTime
+  finishedAt?: DateTime
+  latencies?: LatencyUpdateManyInput
+}
+
+export interface RunUpsertWithWhereUniqueNestedInput {
+  where: RunWhereUniqueInput
+  update: RunUpdateDataInput
+  create: RunCreateInput
+}
+
+export interface BenchmarkingSessionCreateInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished?: DateTime
+  runs?: RunCreateManyWithoutSessionInput
+}
+
+export interface BenchmarkingSessionUpdateWithoutRunsDataInput {
+  queriesToRun?: Int
+  queriesRun?: Int
+  started?: DateTime
+  finished?: DateTime
+}
+
+export interface RunCreateManyWithoutSessionInput {
+  create?: RunCreateWithoutSessionInput[] | RunCreateWithoutSessionInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+}
+
+export interface RunUpdateDataInput {
+  connector?: Connector
+  version?: String
+  importFile?: Int
+  commit?: String
+  startedAt?: DateTime
+  finishedAt?: DateTime
+  session?: BenchmarkingSessionUpdateOneWithoutRunsInput
+  latencies?: LatencyUpdateManyInput
+}
+
+export interface RunCreateWithoutSessionInput {
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  latencies?: LatencyCreateManyInput
+}
+
+export interface LatencySubscriptionWhereInput {
+  AND?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  OR?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  NOT?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: LatencyWhereInput
+}
+
+export interface RunUpdateWithWhereUniqueWithoutSessionInput {
+  where: RunWhereUniqueInput
+  data: RunUpdateWithoutSessionDataInput
+}
+
+export interface RunWhereInput {
+  AND?: RunWhereInput[] | RunWhereInput
+  OR?: RunWhereInput[] | RunWhereInput
+  NOT?: RunWhereInput[] | RunWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  connector?: Connector
+  connector_not?: Connector
+  connector_in?: Connector[] | Connector
+  connector_not_in?: Connector[] | Connector
+  version?: String
+  version_not?: String
+  version_in?: String[] | String
+  version_not_in?: String[] | String
+  version_lt?: String
+  version_lte?: String
+  version_gt?: String
+  version_gte?: String
+  version_contains?: String
+  version_not_contains?: String
+  version_starts_with?: String
+  version_not_starts_with?: String
+  version_ends_with?: String
+  version_not_ends_with?: String
+  importFile?: Int
+  importFile_not?: Int
+  importFile_in?: Int[] | Int
+  importFile_not_in?: Int[] | Int
+  importFile_lt?: Int
+  importFile_lte?: Int
+  importFile_gt?: Int
+  importFile_gte?: Int
+  commit?: String
+  commit_not?: String
+  commit_in?: String[] | String
+  commit_not_in?: String[] | String
+  commit_lt?: String
+  commit_lte?: String
+  commit_gt?: String
+  commit_gte?: String
+  commit_contains?: String
+  commit_not_contains?: String
+  commit_starts_with?: String
+  commit_not_starts_with?: String
+  commit_ends_with?: String
+  commit_not_ends_with?: String
+  startedAt?: DateTime
+  startedAt_not?: DateTime
+  startedAt_in?: DateTime[] | DateTime
+  startedAt_not_in?: DateTime[] | DateTime
+  startedAt_lt?: DateTime
+  startedAt_lte?: DateTime
+  startedAt_gt?: DateTime
+  startedAt_gte?: DateTime
+  finishedAt?: DateTime
+  finishedAt_not?: DateTime
+  finishedAt_in?: DateTime[] | DateTime
+  finishedAt_not_in?: DateTime[] | DateTime
+  finishedAt_lt?: DateTime
+  finishedAt_lte?: DateTime
+  finishedAt_gt?: DateTime
+  finishedAt_gte?: DateTime
+  session?: BenchmarkingSessionWhereInput
+  latencies_every?: LatencyWhereInput
+  latencies_some?: LatencyWhereInput
+  latencies_none?: LatencyWhereInput
+}
+
+export interface LatencyCreateInput {
+  rps: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
+  successes: Int
+  failures: Int
+}
+
+export interface RunUpdateInput {
+  connector?: Connector
+  version?: String
+  importFile?: Int
+  commit?: String
+  startedAt?: DateTime
+  finishedAt?: DateTime
+  session?: BenchmarkingSessionUpdateOneWithoutRunsInput
+  latencies?: LatencyUpdateManyInput
+}
+
+export interface BenchmarkedQueryCreateInput {
+  name: String
+  query: String
+  runs?: RunCreateManyInput
+}
+
+export interface LatencyWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface RunCreateManyInput {
+  create?: RunCreateInput[] | RunCreateInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+}
+
+export interface BenchmarkingSessionUpdateOneWithoutRunsInput {
+  create?: BenchmarkingSessionCreateWithoutRunsInput
+  connect?: BenchmarkingSessionWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: BenchmarkingSessionUpdateWithoutRunsDataInput
+  upsert?: BenchmarkingSessionUpsertWithoutRunsInput
+}
+
+export interface BenchmarkingSessionUpdateInput {
+  queriesToRun?: Int
+  queriesRun?: Int
+  started?: DateTime
+  finished?: DateTime
+  runs?: RunUpdateManyWithoutSessionInput
+}
+
+export interface BenchmarkingSessionCreateWithoutRunsInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished?: DateTime
+}
+
+export interface BenchmarkingSessionCreateOneWithoutRunsInput {
+  create?: BenchmarkingSessionCreateWithoutRunsInput
+  connect?: BenchmarkingSessionWhereUniqueInput
 }
 
 export interface LatencyWhereInput {
@@ -1558,227 +2053,25 @@ export interface LatencyWhereInput {
   failures_gte?: Int
 }
 
-export interface LatencyUpdateWithWhereUniqueNestedInput {
-  where: LatencyWhereUniqueInput
-  data: LatencyUpdateDataInput
+export interface RunUpdateWithWhereUniqueNestedInput {
+  where: RunWhereUniqueInput
+  data: RunUpdateDataInput
 }
 
-export interface PerformanceTestSubscriptionWhereInput {
-  AND?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
-  OR?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
-  NOT?: PerformanceTestSubscriptionWhereInput[] | PerformanceTestSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: PerformanceTestWhereInput
+export interface BenchmarkingSessionUpsertWithoutRunsInput {
+  update: BenchmarkingSessionUpdateWithoutRunsDataInput
+  create: BenchmarkingSessionCreateWithoutRunsInput
 }
 
-export interface LatencyUpdateManyInput {
-  create?: LatencyCreateInput[] | LatencyCreateInput
-  connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
-  disconnect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
-  delete?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
-  update?: LatencyUpdateWithWhereUniqueNestedInput[] | LatencyUpdateWithWhereUniqueNestedInput
-  upsert?: LatencyUpsertWithWhereUniqueNestedInput[] | LatencyUpsertWithWhereUniqueNestedInput
-}
-
-export interface LatencyUpdateInput {
-  rps?: Int
-  avg?: Float
-  p50?: Float
-  p95?: Float
-  p99?: Float
-  successes?: Int
-  failures?: Int
-}
-
-export interface TestRunUpdateDataInput {
-  connector?: Connector
-  version?: String
-  importFile?: Int
-  commit?: String
-  startedAt?: DateTime
-  finishedAt?: DateTime
-  latencies?: LatencyUpdateManyInput
-}
-
-export interface TestRunWhereInput {
-  AND?: TestRunWhereInput[] | TestRunWhereInput
-  OR?: TestRunWhereInput[] | TestRunWhereInput
-  NOT?: TestRunWhereInput[] | TestRunWhereInput
+export interface BenchmarkedQueryWhereUniqueInput {
   id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  connector?: Connector
-  connector_not?: Connector
-  connector_in?: Connector[] | Connector
-  connector_not_in?: Connector[] | Connector
-  version?: String
-  version_not?: String
-  version_in?: String[] | String
-  version_not_in?: String[] | String
-  version_lt?: String
-  version_lte?: String
-  version_gt?: String
-  version_gte?: String
-  version_contains?: String
-  version_not_contains?: String
-  version_starts_with?: String
-  version_not_starts_with?: String
-  version_ends_with?: String
-  version_not_ends_with?: String
-  importFile?: Int
-  importFile_not?: Int
-  importFile_in?: Int[] | Int
-  importFile_not_in?: Int[] | Int
-  importFile_lt?: Int
-  importFile_lte?: Int
-  importFile_gt?: Int
-  importFile_gte?: Int
-  commit?: String
-  commit_not?: String
-  commit_in?: String[] | String
-  commit_not_in?: String[] | String
-  commit_lt?: String
-  commit_lte?: String
-  commit_gt?: String
-  commit_gte?: String
-  commit_contains?: String
-  commit_not_contains?: String
-  commit_starts_with?: String
-  commit_not_starts_with?: String
-  commit_ends_with?: String
-  commit_not_ends_with?: String
-  startedAt?: DateTime
-  startedAt_not?: DateTime
-  startedAt_in?: DateTime[] | DateTime
-  startedAt_not_in?: DateTime[] | DateTime
-  startedAt_lt?: DateTime
-  startedAt_lte?: DateTime
-  startedAt_gt?: DateTime
-  startedAt_gte?: DateTime
-  finishedAt?: DateTime
-  finishedAt_not?: DateTime
-  finishedAt_in?: DateTime[] | DateTime
-  finishedAt_not_in?: DateTime[] | DateTime
-  finishedAt_lt?: DateTime
-  finishedAt_lte?: DateTime
-  finishedAt_gt?: DateTime
-  finishedAt_gte?: DateTime
-  latencies_every?: LatencyWhereInput
-  latencies_some?: LatencyWhereInput
-  latencies_none?: LatencyWhereInput
-}
-
-export interface TestRunUpdateWithWhereUniqueNestedInput {
-  where: TestRunWhereUniqueInput
-  data: TestRunUpdateDataInput
-}
-
-export interface LatencySubscriptionWhereInput {
-  AND?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  OR?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  NOT?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: LatencyWhereInput
-}
-
-export interface TestRunUpdateManyInput {
-  create?: TestRunCreateInput[] | TestRunCreateInput
-  connect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
-  disconnect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
-  delete?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
-  update?: TestRunUpdateWithWhereUniqueNestedInput[] | TestRunUpdateWithWhereUniqueNestedInput
-  upsert?: TestRunUpsertWithWhereUniqueNestedInput[] | TestRunUpsertWithWhereUniqueNestedInput
-}
-
-export interface LatencyWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface PerformanceTestUpdateInput {
   name?: String
-  query?: String
-  runs?: TestRunUpdateManyInput
 }
 
-export interface Run2SubscriptionWhereInput {
-  AND?: Run2SubscriptionWhereInput[] | Run2SubscriptionWhereInput
-  OR?: Run2SubscriptionWhereInput[] | Run2SubscriptionWhereInput
-  NOT?: Run2SubscriptionWhereInput[] | Run2SubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: Run2WhereInput
-}
-
-export interface PerformanceTestCreateInput {
-  name: String
-  query: String
-  runs?: TestRunCreateManyInput
-}
-
-export interface TestRunSubscriptionWhereInput {
-  AND?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
-  OR?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
-  NOT?: TestRunSubscriptionWhereInput[] | TestRunSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: TestRunWhereInput
-}
-
-export interface TestRunCreateManyInput {
-  create?: TestRunCreateInput[] | TestRunCreateInput
-  connect?: TestRunWhereUniqueInput[] | TestRunWhereUniqueInput
-}
-
-export interface TestRunCreateInput {
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
-  latencies?: LatencyCreateManyInput
-}
-
-export interface LatencyCreateManyInput {
-  create?: LatencyCreateInput[] | LatencyCreateInput
-  connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
-}
-
-export interface LatencyCreateInput {
-  rps: Int
-  avg: Float
-  p50: Float
-  p95: Float
-  p99: Float
-  successes: Int
-  failures: Int
-}
-
-export interface PerformanceTestWhereInput {
-  AND?: PerformanceTestWhereInput[] | PerformanceTestWhereInput
-  OR?: PerformanceTestWhereInput[] | PerformanceTestWhereInput
-  NOT?: PerformanceTestWhereInput[] | PerformanceTestWhereInput
+export interface BenchmarkedQueryWhereInput {
+  AND?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
+  OR?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
+  NOT?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
   id?: ID_Input
   id_not?: ID_Input
   id_in?: ID_Input[] | ID_Input
@@ -1821,36 +2114,20 @@ export interface PerformanceTestWhereInput {
   query_not_starts_with?: String
   query_ends_with?: String
   query_not_ends_with?: String
-  runs_every?: TestRunWhereInput
-  runs_some?: TestRunWhereInput
-  runs_none?: TestRunWhereInput
+  runs_every?: RunWhereInput
+  runs_some?: RunWhereInput
+  runs_none?: RunWhereInput
 }
 
-export interface Run2UpdateInput {
-  queriesToRun?: Int
-  started?: DateTime
-  finished?: DateTime
-  runs?: TestRunUpdateManyInput
-}
-
-export interface TestRunUpsertWithWhereUniqueNestedInput {
-  where: TestRunWhereUniqueInput
-  update: TestRunUpdateDataInput
-  create: TestRunCreateInput
-}
-
-export interface TestRunWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface TestRunUpdateInput {
-  connector?: Connector
-  version?: String
-  importFile?: Int
-  commit?: String
-  startedAt?: DateTime
-  finishedAt?: DateTime
-  latencies?: LatencyUpdateManyInput
+export interface RunSubscriptionWhereInput {
+  AND?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
+  OR?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
+  NOT?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: RunWhereInput
 }
 
 /*
@@ -1859,26 +2136,6 @@ export interface TestRunUpdateInput {
  */
 export interface Node {
   id: ID_Output
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface LatencyEdge {
-  node: Latency
-  cursor: String
-}
-
-export interface TestRun extends Node {
-  id: ID_Output
-  latencies?: Latency[]
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
 }
 
 export interface LatencyPreviousValues {
@@ -1892,12 +2149,28 @@ export interface LatencyPreviousValues {
   failures: Int
 }
 
-export interface BatchPayload {
-  count: Long
+/*
+ * A connection to a list of items.
+
+ */
+export interface BenchmarkingSessionConnection {
+  pageInfo: PageInfo
+  edges: BenchmarkingSessionEdge[]
+  aggregate: AggregateBenchmarkingSession
 }
 
-export interface AggregateLatency {
-  count: Int
+export interface RunSubscriptionPayload {
+  mutation: MutationType
+  node?: Run
+  updatedFields?: String[]
+  previousValues?: RunPreviousValues
+}
+
+export interface BenchmarkedQuery extends Node {
+  id: ID_Output
+  name: String
+  query: String
+  runs?: Run[]
 }
 
 /*
@@ -1910,84 +2183,44 @@ export interface LatencyConnection {
   aggregate: AggregateLatency
 }
 
+export interface AggregateLatency {
+  count: Int
+}
+
 /*
  * An edge in a connection.
 
  */
-export interface TestRunEdge {
-  node: TestRun
+export interface RunEdge {
+  node: Run
   cursor: String
 }
 
-export interface Run2 {
-  queriesToRun: Int
-  started?: DateTime
-  finished?: DateTime
-  runs?: TestRun[]
+export interface BatchPayload {
+  count: Long
 }
 
-export interface AggregatePerformanceTest {
+export interface AggregateBenchmarkedQuery {
   count: Int
 }
 
-export interface AggregateTestRun {
-  count: Int
-}
-
-export interface PerformanceTestPreviousValues {
+export interface BenchmarkingSession extends Node {
   id: ID_Output
-  name: String
-  query: String
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished?: DateTime
+  runs?: Run[]
 }
 
 /*
  * A connection to a list of items.
 
  */
-export interface TestRunConnection {
+export interface BenchmarkedQueryConnection {
   pageInfo: PageInfo
-  edges: TestRunEdge[]
-  aggregate: AggregateTestRun
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface PerformanceTestConnection {
-  pageInfo: PageInfo
-  edges: PerformanceTestEdge[]
-  aggregate: AggregatePerformanceTest
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface PerformanceTestEdge {
-  node: PerformanceTest
-  cursor: String
-}
-
-export interface LatencySubscriptionPayload {
-  mutation: MutationType
-  node?: Latency
-  updatedFields?: String[]
-  previousValues?: LatencyPreviousValues
-}
-
-export interface AggregateRun2 {
-  count: Int
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface Run2Connection {
-  pageInfo: PageInfo
-  edges: Run2Edge[]
-  aggregate: AggregateRun2
+  edges: BenchmarkedQueryEdge[]
+  aggregate: AggregateBenchmarkedQuery
 }
 
 export interface Latency extends Node {
@@ -2001,34 +2234,16 @@ export interface Latency extends Node {
   failures: Int
 }
 
-export interface PerformanceTestSubscriptionPayload {
-  mutation: MutationType
-  node?: PerformanceTest
-  updatedFields?: String[]
-  previousValues?: PerformanceTestPreviousValues
+/*
+ * An edge in a connection.
+
+ */
+export interface BenchmarkingSessionEdge {
+  node: BenchmarkingSession
+  cursor: String
 }
 
-export interface TestRunSubscriptionPayload {
-  mutation: MutationType
-  node?: TestRun
-  updatedFields?: String[]
-  previousValues?: TestRunPreviousValues
-}
-
-export interface Run2PreviousValues {
-  queriesToRun: Int
-  started?: DateTime
-  finished?: DateTime
-}
-
-export interface Run2SubscriptionPayload {
-  mutation: MutationType
-  node?: Run2
-  updatedFields?: String[]
-  previousValues?: Run2PreviousValues
-}
-
-export interface TestRunPreviousValues {
+export interface RunPreviousValues {
   id: ID_Output
   connector: Connector
   version: String
@@ -2036,13 +2251,6 @@ export interface TestRunPreviousValues {
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
-}
-
-export interface PerformanceTest extends Node {
-  id: ID_Output
-  name: String
-  query: String
-  runs?: TestRun[]
 }
 
 /*
@@ -2056,14 +2264,90 @@ export interface PageInfo {
   endCursor?: String
 }
 
+export interface BenchmarkingSessionSubscriptionPayload {
+  mutation: MutationType
+  node?: BenchmarkingSession
+  updatedFields?: String[]
+  previousValues?: BenchmarkingSessionPreviousValues
+}
+
+export interface AggregateRun {
+  count: Int
+}
+
+export interface BenchmarkedQueryPreviousValues {
+  id: ID_Output
+  name: String
+  query: String
+}
+
+export interface BenchmarkedQuerySubscriptionPayload {
+  mutation: MutationType
+  node?: BenchmarkedQuery
+  updatedFields?: String[]
+  previousValues?: BenchmarkedQueryPreviousValues
+}
+
+export interface Run extends Node {
+  id: ID_Output
+  session?: BenchmarkingSession
+  latencies?: Latency[]
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+}
+
+export interface BenchmarkingSessionPreviousValues {
+  id: ID_Output
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished?: DateTime
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface RunConnection {
+  pageInfo: PageInfo
+  edges: RunEdge[]
+  aggregate: AggregateRun
+}
+
 /*
  * An edge in a connection.
 
  */
-export interface Run2Edge {
-  node: Run2
+export interface LatencyEdge {
+  node: Latency
   cursor: String
 }
+
+export interface LatencySubscriptionPayload {
+  mutation: MutationType
+  node?: Latency
+  updatedFields?: String[]
+  previousValues?: LatencyPreviousValues
+}
+
+export interface AggregateBenchmarkingSession {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface BenchmarkedQueryEdge {
+  node: BenchmarkedQuery
+  cursor: String
+}
+
+export type DateTime = Date | string
 
 /*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
@@ -2071,17 +2355,21 @@ The `Float` scalar type represents signed double-precision fractional values as 
 export type Float = number
 
 /*
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
-export type Long = string
+export type ID_Input = string | number
+export type ID_Output = string
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean
 
-export type DateTime = Date | string
+/*
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+*/
+export type Long = string
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
@@ -2092,9 +2380,3 @@ export type Int = number
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number
-export type ID_Output = string

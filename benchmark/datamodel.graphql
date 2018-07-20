@@ -4,15 +4,25 @@ enum Connector {
   MongoDB
 }
 
-type PerformanceTest {
+type BenchmarkingSession {
+  id: ID! @unique
+  queriesToRun: Int!
+  queriesRun: Int!
+  started: DateTime!
+  finished: DateTime
+  runs: [Run!]!
+}
+
+type BenchmarkedQuery {
   id: ID! @unique
   name: String! @unique # e.g. CreateFlat, CreateNested
   query: String!
-  runs: [TestRun!]! @relation(name: "TestToRun", onDelete: CASCADE)
+  runs: [Run!]! @relation(name: "CandidateToRun", onDelete: CASCADE)
 }
 
-type TestRun {
+type Run {
   id: ID! @unique
+  session: BenchmarkingSession
   latencies: [Latency!]! @relation(name: "RunToLatency", onDelete: CASCADE)
   connector: Connector!
   version: String!

@@ -3,10 +3,13 @@ import { readFileSync, writeFileSync } from "fs";
 import { walkSync } from "walk";
 import { basename } from "path";
 import { execSync } from "child_process";
-import { Prisma, TestRunUpdateManyInput, TestRunCreateManyInput, Connector } from "./binding";
+import { Prisma, RunUpdateManyInput, RunCreateManyInput, Connector } from "./binding";
 
 const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
 const resultStorageEndpoint = prismaServer + "/benchmark/dev";
+const resultStorage = new Prisma({
+  endpoint: resultStorageEndpoint
+});
 const benchmarkedServer = "http://localhost:4466";
 const benchmarkDuration = 60;
 
@@ -47,23 +50,29 @@ async function main() {
   const queryFiles = getQueryFiles();
   const connectorArg = args[0];
   const testToRun = args[1];
-  const serverInfo = await getServerInfo();
-  const importFileSize = await getImportFileSize();
   if (connectorArg == null) {
     console.log("You must provide the connector as the first argument");
     process.exit();
   }
   const connector = getConnectorForArg(connectorArg);
+  const serverInfo = await getServerInfo();
+  const importFileSize = await getImportFileSize();
+  const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
+
   if (testToRun == null || testToRun === "all") {
     console.log("running all tests");
     for (const queryFile of queryFiles) {
-      await benchMarkQuery(connector, queryFile, serverInfo, importFileSize);
+      await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
+      await incrementQueriesRun(benchmarkingSession.id);
     }
   } else {
     console.log("running one test");
     const queryFile = getQueryFileForName(args[0]);
-    await benchMarkQuery(connector, queryFile, serverInfo, importFileSize);
+    await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
+    await incrementQueriesRun(benchmarkingSession.id);
   }
+
+  await markSessionAsFinished(benchmarkingSession.id);
 }
 
 function getConnectorForArg(connectorArg: string): Connector {
@@ -132,6 +141,41 @@ async function getImportFileSize(): Promise<number> {
   return json["data"]["artistsConnection"]["aggregate"]["count"] as number;
 }
 
+async function createBenchmarkingSession(queriesToRun: number) {
+  return await resultStorage.mutation.createBenchmarkingSession({
+    data: {
+      queriesToRun: queriesToRun,
+      queriesRun: 0,
+      started: new Date()
+    }
+  });
+}
+
+async function incrementQueriesRun(sessionId: string) {
+  var currentCount = await resultStorage.query.benchmarkingSession({
+    where: { id: sessionId }
+  });
+  return await resultStorage.mutation.updateBenchmarkingSession({
+    where: {
+      id: sessionId
+    },
+    data: {
+      queriesRun: currentCount!.queriesRun + 1
+    }
+  });
+}
+
+async function markSessionAsFinished(sessionId: string) {
+  return await resultStorage.mutation.updateBenchmarkingSession({
+    where: {
+      id: sessionId
+    },
+    data: {
+      finished: new Date()
+    }
+  });
+}
+
 interface QueryFile {
   name: string;
   speed: string;
@@ -177,6 +221,7 @@ interface BenchmarkResult {
 }
 
 async function benchMarkQuery(
+  sessionId: string,
   connector: string,
   query: QueryFile,
   serverInfo: PrismaServerInfo,
@@ -212,6 +257,7 @@ async function benchMarkQuery(
   const finishedAt = new Date();
 
   await storeBenchmarkResults(
+    sessionId,
     connector,
     serverInfo.version,
     serverInfo.commit,
@@ -265,6 +311,7 @@ function runVegeta(url, graphqlQueryAsString, rps, duration): VegetaResult {
 }
 
 async function storeBenchmarkResults(
+  sessionId: string,
   connector: string,
   version: string,
   commit: string,
@@ -276,9 +323,6 @@ async function storeBenchmarkResults(
   finishedAt: Date
 ): Promise<void> {
   console.log(`storing ${results.length} results`);
-  const prisma = new Prisma({
-    endpoint: resultStorageEndpoint
-  });
   const latencies = results.map(result => {
     const failures = Object.keys(result.vegetaResult.status_codes).reduce((accumulator, statusCode) => {
       if (statusCode != "200") {
@@ -299,7 +343,7 @@ async function storeBenchmarkResults(
     };
   });
 
-  const nestedCreateRun: TestRunUpdateManyInput | TestRunCreateManyInput = {
+  const nestedCreateRun: RunUpdateManyInput | RunCreateManyInput = {
     create: [
       {
         connector: connector as Connector,
@@ -310,6 +354,11 @@ async function storeBenchmarkResults(
         importFile: importFile,
         latencies: {
           create: latencies
+        },
+        session: {
+          connect: {
+            id: sessionId
+          }
         }
       }
     ]
@@ -326,5 +375,5 @@ async function storeBenchmarkResults(
     }
   };
   // console.log(JSON.stringify(data, null, 2));
-  await prisma.mutation.upsertPerformanceTest(data);
+  await resultStorage.mutation.upsertBenchmarkedQuery(data);
 }
