@@ -3,12 +3,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { walkSync } from "walk";
 import { basename } from "path";
 import { execSync } from "child_process";
-import {
-  Prisma,
-  TestRunUpdateManyInput,
-  TestRunCreateManyInput,
-  Connector
-} from "./binding";
+import { Prisma, TestRunUpdateManyInput, TestRunCreateManyInput, Connector } from "./binding";
 
 const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
 const resultStorageEndpoint = prismaServer + "/benchmark/dev";
@@ -81,13 +76,9 @@ function getConnectorForArg(connectorArg: string): Connector {
 
 function getQueryFileForName(name) {
   const queryFiles = getQueryFiles();
-  const matches = queryFiles.filter(queryFile =>
-    queryFile.filePath.includes(name)
-  );
+  const matches = queryFiles.filter(queryFile => queryFile.filePath.includes(name));
   if (matches.length > 1) {
-    throw new Error(
-      "more than one test matched the given name. Provide a non ambiguous name."
-    );
+    throw new Error("more than one test matched the given name. Provide a non ambiguous name.");
   }
   return queryFiles[0];
 }
@@ -161,10 +152,7 @@ interface BenchmarkResult {
   vegetaResult: VegetaResult;
 }
 
-async function benchMarkQuery(
-  connector: string,
-  query: QueryFile
-): Promise<void> {
+async function benchMarkQuery(connector: string, query: QueryFile): Promise<void> {
   const config = benchmarkConfigs[query.speed];
   const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
   const url = benchmarkedServer;
@@ -194,14 +182,7 @@ async function benchMarkQuery(
     });
   }
 
-  await storeBenchmarkResults(
-    connector,
-    serverInfo.version,
-    serverInfo.commit,
-    query.name,
-    graphqlQuery,
-    results
-  );
+  await storeBenchmarkResults(connector, serverInfo.version, serverInfo.commit, query.name, graphqlQuery, results);
 }
 
 interface VegetaResult {
@@ -257,17 +238,14 @@ async function storeBenchmarkResults(
     endpoint: resultStorageEndpoint
   });
   const latencies = results.map(result => {
-    const failures = Object.keys(result.vegetaResult.status_codes).reduce(
-      (accumulator, statusCode) => {
-        if (statusCode != "200") {
-          let value = result.vegetaResult.status_codes[statusCode];
-          return value + accumulator;
-        } else {
-          return accumulator;
-        }
-      },
-      0
-    );
+    const failures = Object.keys(result.vegetaResult.status_codes).reduce((accumulator, statusCode) => {
+      if (statusCode != "200") {
+        let value = result.vegetaResult.status_codes[statusCode];
+        return value + accumulator;
+      } else {
+        return accumulator;
+      }
+    }, 0);
     return {
       rps: result.rps,
       avg: result.vegetaResult.latencies.mean,
