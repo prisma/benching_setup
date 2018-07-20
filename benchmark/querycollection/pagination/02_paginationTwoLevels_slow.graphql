@@ -1,5 +1,5 @@
 query {
-  artists (first:100){
+  artists (first:10){
     Albums(first:3){
       AlbumId
       Title

@@ -1,9 +1,9 @@
 query {
-  artists (first:100){
+  artists (first:10){
     Albums(first:3){
       AlbumId
       Title
-      Tracks(first:10){
+      Tracks(first:5){
         TrackId
         Name
       }
