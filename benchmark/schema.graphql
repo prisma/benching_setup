@@ -1,5 +1,5 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Fri Jul 20 2018 16:18:16 GMT+0200 (CEST)
+# timestamp: Sat Jul 21 2018 19:15:47 GMT+0200 (CEST)
 
 type AggregateBenchmarkedQuery {
   count: Int!
@@ -42,7 +42,17 @@ type BenchmarkedQueryConnection {
 input BenchmarkedQueryCreateInput {
   name: String!
   query: String!
-  runs: RunCreateManyInput
+  runs: RunCreateManyWithoutBenchmarkQueryInput
+}
+
+input BenchmarkedQueryCreateOneWithoutRunsInput {
+  create: BenchmarkedQueryCreateWithoutRunsInput
+  connect: BenchmarkedQueryWhereUniqueInput
+}
+
+input BenchmarkedQueryCreateWithoutRunsInput {
+  name: String!
+  query: String!
 }
 
 """An edge in a connection."""
@@ -115,7 +125,26 @@ input BenchmarkedQuerySubscriptionWhereInput {
 input BenchmarkedQueryUpdateInput {
   name: String
   query: String
-  runs: RunUpdateManyInput
+  runs: RunUpdateManyWithoutBenchmarkQueryInput
+}
+
+input BenchmarkedQueryUpdateOneWithoutRunsInput {
+  create: BenchmarkedQueryCreateWithoutRunsInput
+  connect: BenchmarkedQueryWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: BenchmarkedQueryUpdateWithoutRunsDataInput
+  upsert: BenchmarkedQueryUpsertWithoutRunsInput
+}
+
+input BenchmarkedQueryUpdateWithoutRunsDataInput {
+  name: String
+  query: String
+}
+
+input BenchmarkedQueryUpsertWithoutRunsInput {
+  update: BenchmarkedQueryUpdateWithoutRunsDataInput!
+  create: BenchmarkedQueryCreateWithoutRunsInput!
 }
 
 input BenchmarkedQueryWhereInput {
@@ -554,6 +583,7 @@ scalar DateTime
 
 type Latency implements Node {
   id: ID!
+  run(where: RunWhereInput): Run
   rps: Int!
   avg: Float!
   p50: Float!
@@ -581,11 +611,22 @@ input LatencyCreateInput {
   p99: Float!
   successes: Int!
   failures: Int!
+  run: RunCreateOneWithoutLatenciesInput
 }
 
-input LatencyCreateManyInput {
-  create: [LatencyCreateInput!]
+input LatencyCreateManyWithoutRunInput {
+  create: [LatencyCreateWithoutRunInput!]
   connect: [LatencyWhereUniqueInput!]
+}
+
+input LatencyCreateWithoutRunInput {
+  rps: Int!
+  avg: Float!
+  p50: Float!
+  p95: Float!
+  p99: Float!
+  successes: Int!
+  failures: Int!
 }
 
 """An edge in a connection."""
@@ -670,16 +711,6 @@ input LatencySubscriptionWhereInput {
   node: LatencyWhereInput
 }
 
-input LatencyUpdateDataInput {
-  rps: Int
-  avg: Float
-  p50: Float
-  p95: Float
-  p99: Float
-  successes: Int
-  failures: Int
-}
-
 input LatencyUpdateInput {
   rps: Int
   avg: Float
@@ -688,26 +719,37 @@ input LatencyUpdateInput {
   p99: Float
   successes: Int
   failures: Int
+  run: RunUpdateOneWithoutLatenciesInput
 }
 
-input LatencyUpdateManyInput {
-  create: [LatencyCreateInput!]
+input LatencyUpdateManyWithoutRunInput {
+  create: [LatencyCreateWithoutRunInput!]
   connect: [LatencyWhereUniqueInput!]
   disconnect: [LatencyWhereUniqueInput!]
   delete: [LatencyWhereUniqueInput!]
-  update: [LatencyUpdateWithWhereUniqueNestedInput!]
-  upsert: [LatencyUpsertWithWhereUniqueNestedInput!]
+  update: [LatencyUpdateWithWhereUniqueWithoutRunInput!]
+  upsert: [LatencyUpsertWithWhereUniqueWithoutRunInput!]
 }
 
-input LatencyUpdateWithWhereUniqueNestedInput {
-  where: LatencyWhereUniqueInput!
-  data: LatencyUpdateDataInput!
+input LatencyUpdateWithoutRunDataInput {
+  rps: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
+  successes: Int
+  failures: Int
 }
 
-input LatencyUpsertWithWhereUniqueNestedInput {
+input LatencyUpdateWithWhereUniqueWithoutRunInput {
   where: LatencyWhereUniqueInput!
-  update: LatencyUpdateDataInput!
-  create: LatencyCreateInput!
+  data: LatencyUpdateWithoutRunDataInput!
+}
+
+input LatencyUpsertWithWhereUniqueWithoutRunInput {
+  where: LatencyWhereUniqueInput!
+  update: LatencyUpdateWithoutRunDataInput!
+  create: LatencyCreateWithoutRunInput!
 }
 
 input LatencyWhereInput {
@@ -913,6 +955,7 @@ input LatencyWhereInput {
 
   """All values greater than or equal the given value."""
   failures_gte: Int
+  run: RunWhereInput
 }
 
 input LatencyWhereUniqueInput {
@@ -1003,6 +1046,7 @@ type Query {
 type Run implements Node {
   id: ID!
   session(where: BenchmarkingSessionWhereInput): BenchmarkingSession
+  benchmarkQuery(where: BenchmarkedQueryWhereInput): BenchmarkedQuery
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
   version: String!
@@ -1030,17 +1074,45 @@ input RunCreateInput {
   startedAt: DateTime!
   finishedAt: DateTime!
   session: BenchmarkingSessionCreateOneWithoutRunsInput
-  latencies: LatencyCreateManyInput
+  benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
+  latencies: LatencyCreateManyWithoutRunInput
 }
 
-input RunCreateManyInput {
-  create: [RunCreateInput!]
+input RunCreateManyWithoutBenchmarkQueryInput {
+  create: [RunCreateWithoutBenchmarkQueryInput!]
   connect: [RunWhereUniqueInput!]
 }
 
 input RunCreateManyWithoutSessionInput {
   create: [RunCreateWithoutSessionInput!]
   connect: [RunWhereUniqueInput!]
+}
+
+input RunCreateOneWithoutLatenciesInput {
+  create: RunCreateWithoutLatenciesInput
+  connect: RunWhereUniqueInput
+}
+
+input RunCreateWithoutBenchmarkQueryInput {
+  connector: Connector!
+  version: String!
+  importFile: Int!
+  commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
+  session: BenchmarkingSessionCreateOneWithoutRunsInput
+  latencies: LatencyCreateManyWithoutRunInput
+}
+
+input RunCreateWithoutLatenciesInput {
+  connector: Connector!
+  version: String!
+  importFile: Int!
+  commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
+  session: BenchmarkingSessionCreateOneWithoutRunsInput
+  benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
 }
 
 input RunCreateWithoutSessionInput {
@@ -1050,7 +1122,8 @@ input RunCreateWithoutSessionInput {
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
-  latencies: LatencyCreateManyInput
+  benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
+  latencies: LatencyCreateManyWithoutRunInput
 }
 
 """An edge in a connection."""
@@ -1132,17 +1205,6 @@ input RunSubscriptionWhereInput {
   node: RunWhereInput
 }
 
-input RunUpdateDataInput {
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
-  session: BenchmarkingSessionUpdateOneWithoutRunsInput
-  latencies: LatencyUpdateManyInput
-}
-
 input RunUpdateInput {
   connector: Connector
   version: String
@@ -1151,16 +1213,17 @@ input RunUpdateInput {
   startedAt: DateTime
   finishedAt: DateTime
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
-  latencies: LatencyUpdateManyInput
+  benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyWithoutRunInput
 }
 
-input RunUpdateManyInput {
-  create: [RunCreateInput!]
+input RunUpdateManyWithoutBenchmarkQueryInput {
+  create: [RunCreateWithoutBenchmarkQueryInput!]
   connect: [RunWhereUniqueInput!]
   disconnect: [RunWhereUniqueInput!]
   delete: [RunWhereUniqueInput!]
-  update: [RunUpdateWithWhereUniqueNestedInput!]
-  upsert: [RunUpsertWithWhereUniqueNestedInput!]
+  update: [RunUpdateWithWhereUniqueWithoutBenchmarkQueryInput!]
+  upsert: [RunUpsertWithWhereUniqueWithoutBenchmarkQueryInput!]
 }
 
 input RunUpdateManyWithoutSessionInput {
@@ -1172,6 +1235,37 @@ input RunUpdateManyWithoutSessionInput {
   upsert: [RunUpsertWithWhereUniqueWithoutSessionInput!]
 }
 
+input RunUpdateOneWithoutLatenciesInput {
+  create: RunCreateWithoutLatenciesInput
+  connect: RunWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RunUpdateWithoutLatenciesDataInput
+  upsert: RunUpsertWithoutLatenciesInput
+}
+
+input RunUpdateWithoutBenchmarkQueryDataInput {
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session: BenchmarkingSessionUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyWithoutRunInput
+}
+
+input RunUpdateWithoutLatenciesDataInput {
+  connector: Connector
+  version: String
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session: BenchmarkingSessionUpdateOneWithoutRunsInput
+  benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
+}
+
 input RunUpdateWithoutSessionDataInput {
   connector: Connector
   version: String
@@ -1179,12 +1273,13 @@ input RunUpdateWithoutSessionDataInput {
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
-  latencies: LatencyUpdateManyInput
+  benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyWithoutRunInput
 }
 
-input RunUpdateWithWhereUniqueNestedInput {
+input RunUpdateWithWhereUniqueWithoutBenchmarkQueryInput {
   where: RunWhereUniqueInput!
-  data: RunUpdateDataInput!
+  data: RunUpdateWithoutBenchmarkQueryDataInput!
 }
 
 input RunUpdateWithWhereUniqueWithoutSessionInput {
@@ -1192,10 +1287,15 @@ input RunUpdateWithWhereUniqueWithoutSessionInput {
   data: RunUpdateWithoutSessionDataInput!
 }
 
-input RunUpsertWithWhereUniqueNestedInput {
+input RunUpsertWithoutLatenciesInput {
+  update: RunUpdateWithoutLatenciesDataInput!
+  create: RunCreateWithoutLatenciesInput!
+}
+
+input RunUpsertWithWhereUniqueWithoutBenchmarkQueryInput {
   where: RunWhereUniqueInput!
-  update: RunUpdateDataInput!
-  create: RunCreateInput!
+  update: RunUpdateWithoutBenchmarkQueryDataInput!
+  create: RunCreateWithoutBenchmarkQueryInput!
 }
 
 input RunUpsertWithWhereUniqueWithoutSessionInput {
@@ -1410,6 +1510,7 @@ input RunWhereInput {
   """All values greater than or equal the given value."""
   finishedAt_gte: DateTime
   session: BenchmarkingSessionWhereInput
+  benchmarkQuery: BenchmarkedQueryWhereInput
   latencies_every: LatencyWhereInput
   latencies_some: LatencyWhereInput
   latencies_none: LatencyWhereInput

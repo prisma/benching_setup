@@ -23,6 +23,7 @@ type BenchmarkedQuery {
 type Run {
   id: ID! @unique
   session: BenchmarkingSession
+  benchmarkQuery: BenchmarkedQuery @relation(name: "CandidateToRun", onDelete: CASCADE)
   latencies: [Latency!]! @relation(name: "RunToLatency", onDelete: CASCADE)
   connector: Connector!
   version: String!
@@ -34,6 +35,7 @@ type Run {
 
 type Latency {
   id: ID! @unique
+  run: Run @relation(name: "RunToLatency", onDelete: CASCADE)
   rps: Int!
   avg: Float!
   p50: Float!
