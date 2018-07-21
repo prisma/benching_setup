@@ -33,6 +33,7 @@
     "bench-server": "ts-node benchmark/bench.ts",
     "start-cron": "ts-node benchmark/cron.ts",
     "create-benchmark-droplet": "ts-node benchmark/createBenchmarkDroplet.ts",
+    "create-all-benchmark-droplets": "ts-node benchmark/createAllBenchmarkDroplets.ts",
     "create-cron-droplet": "ts-node benchmark/createCronDroplet.ts"
   }
 }
