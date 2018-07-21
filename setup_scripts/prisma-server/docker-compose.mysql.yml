@@ -21,7 +21,7 @@ services:
     restart: always
     command: mysqld
     environment:
-      MYSQL_USER: root
+      MYSQL_USER: prisma
       MYSQL_ROOT_PASSWORD: prisma
       MYSQL_DATABASE: prisma
     ports:
