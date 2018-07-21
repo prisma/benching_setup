@@ -8,7 +8,7 @@ const digitalOcean = new DigitalOcean(token as string);
 export async function createBenchmarkDroplets(version: string): Promise<void> {
   const connectors = ["postgres", "mysql"];
   const importFiles = [1000, 10000];
-  const test = "artistNameContains";
+  const test = "all";
   const token = process.env["DIGITAL_OCEAN_ACCESS_TOKEN"];
 
   for (const connector of connectors) {
