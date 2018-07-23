@@ -3,7 +3,12 @@ import { readFileSync, writeFileSync } from "fs";
 import { walkSync } from "walk";
 import { basename } from "path";
 import { execSync } from "child_process";
-import { Prisma, RunUpdateManyInput, RunCreateManyInput, Connector } from "./binding";
+import {
+  Prisma,
+  RunUpdateManyWithoutBenchmarkQueryInput,
+  RunCreateManyWithoutBenchmarkQueryInput,
+  Connector
+} from "./binding";
 
 const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
 const resultStorageEndpoint = prismaServer + "/benchmark/dev";
@@ -344,7 +349,7 @@ async function storeBenchmarkResults(
     };
   });
 
-  const nestedCreateRun: RunUpdateManyInput | RunCreateManyInput = {
+  const nestedCreateRun: RunUpdateManyWithoutBenchmarkQueryInput | RunCreateManyWithoutBenchmarkQueryInput = {
     create: [
       {
         connector: connector as Connector,
