@@ -4,6 +4,7 @@ import { loadavg, cpus } from "os";
 import { walkSync } from "walk";
 import { basename } from "path";
 import { execSync } from "child_process";
+import { getServerInfo, getImportFileSize, PrismaServerInfo } from "../helpers/server_info";
 import {
   Prisma,
   RunUpdateManyWithoutBenchmarkQueryInput,
@@ -61,8 +62,8 @@ async function main() {
     process.exit();
   }
   const connector = getConnectorForArg(connectorArg);
-  const serverInfo = await getServerInfo();
-  const importFileSize = await getImportFileSize();
+  const serverInfo = await getServerInfo(benchmarkedServer);
+  const importFileSize = await getImportFileSize(benchmarkedServer);
 
   if (testToRun == null || testToRun === "all") {
     const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
@@ -99,52 +100,6 @@ function getQueryFileForName(name) {
     throw new Error("more than one test matched the given name. Provide a non ambiguous name.");
   }
   return matches[0];
-}
-
-interface PrismaServerInfo {
-  version: string;
-  commit: string;
-}
-async function getServerInfo(): Promise<PrismaServerInfo> {
-  const query = `
-  {
-    serverInfo {
-      version
-      commit
-    }
-  }
-  `;
-  const managementEndpoint = benchmarkedServer + "/management";
-  return await fetch(managementEndpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ query: query })
-  })
-    .then(res => res.json())
-    .then(json => json["data"]["serverInfo"]);
-}
-
-async function getImportFileSize(): Promise<number> {
-  const query = `
-    {
-      artistsConnection {
-        aggregate {
-          count
-        }
-      }
-    }
-  `;
-  const response = await fetch(benchmarkedServer, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ query: query })
-  });
-  const json = await response.json();
-  return json["data"]["artistsConnection"]["aggregate"]["count"] as number;
 }
 
 async function createBenchmarkingSession(queriesToRun: number) {
