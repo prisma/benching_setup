@@ -1,5 +1,6 @@
 const testFolder = "./benchmark/querycollection";
 import { readFileSync, writeFileSync } from "fs";
+import { loadavg, cpus } from "os";
 import { walkSync } from "walk";
 import { basename } from "path";
 import { execSync } from "child_process";
@@ -251,13 +252,26 @@ async function benchMarkQuery(
   await new Promise(r => setTimeout(r, 10000)); // give the service a bit of time to recover
 
   const results: BenchmarkResult[] = [];
+  var cpuTresholdReached = false;
   for (const rps of config.rps) {
     console.log(`----------------- Benching: ${query.name} at ${rps} req/s -----------------`);
-    const vegetaResult = runVegeta(url, graphqlQuery, rps, benchmarkDuration);
-    results.push({
-      rps: rps,
-      vegetaResult: vegetaResult
-    });
+    if (!cpuTresholdReached) {
+      const vegetaResult = runVegeta(url, graphqlQuery, rps, benchmarkDuration);
+      results.push({
+        rps: rps,
+        vegetaResult: vegetaResult
+      });
+
+      const loadLastMinute = loadavg()[0];
+      const numberOfCpus = cpus().length;
+      cpuTresholdReached = loadLastMinute > numberOfCpus;
+      console.log(loadLastMinute, numberOfCpus);
+      if (cpuTresholdReached) {
+        console.log(`CPU treshold reached. Load was: ${loadLastMinute}`);
+      }
+    } else {
+      console.log(`Skipping ${rps} req/s because CPU treshold was reached.`);
+    }
   }
   const finishedAt = new Date();
 
