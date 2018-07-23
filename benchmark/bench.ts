@@ -1,4 +1,4 @@
-const testFolder = "./benchmark/querycollection";
+const testFolder = "./benchmark/queries";
 import { readFileSync, writeFileSync } from "fs";
 import { loadavg, cpus } from "os";
 import { walkSync } from "walk";
