@@ -64,16 +64,16 @@ async function main() {
   const importFileSize = await getImportFileSize();
 
   if (testToRun == null || testToRun === "all") {
+    const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
     for (const queryFile of queryFiles) {
-      const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
       await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
       await incrementQueriesRun(benchmarkingSession.id);
       await markSessionAsFinished(benchmarkingSession.id);
     }
   } else {
     console.log("running one test");
-    const queryFile = getQueryFileForName(testToRun);
     const benchmarkingSession = await createBenchmarkingSession(1);
+    const queryFile = getQueryFileForName(testToRun);
     await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
     await incrementQueriesRun(benchmarkingSession.id);
     await markSessionAsFinished(benchmarkingSession.id);
