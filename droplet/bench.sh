@@ -1,15 +1,8 @@
 #!/bin/bash
-curl http://169.254.169.254/metadata/v1/tags/ > metadata
-function getValue {
-    KEY=$1
-    LINE=`cat metadata | grep $KEY`
-    echo ${LINE#$KEY:}
-}
-CONNECTOR=`getValue connector`
-IMPORT_FILE=`getValue import`
-VERSION=`getValue version | tr _ .`
-API_TOKEN=`getValue api_token`
-TEST=`getValue test`
+CONNECTOR="${1:?You must provide a Connector}"
+VERSION="${2:?You must provide a version}"
+IMPORT_FILE="${3:?You must provide an import file}"
+API_TOKEN="${4:?You must provide an API token}"
 echo "Starting benchmark for Connector $CONNECTOR with version $VERSION based on import file $IMPORT_FILE"
 CURRENT_DIR=`pwd`
 cd ../setup_scripts/prisma-server && ./start.sh $CONNECTOR $VERSION && cd -

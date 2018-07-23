@@ -24,7 +24,11 @@ export async function createBenchmarkDroplet(
   importFile: number,
   test: string
 ): Promise<IDroplet> {
-  const cloudConfig = readFileSync("./droplet/benchmark_cloud_config", { encoding: "utf-8" });
+  const cloudConfig = readFileSync("./droplet/benchmark_cloud_config_template", { encoding: "utf-8" })
+    .replace("$CONNECTOR", connector)
+    .replace("$VERSION", version)
+    .replace("$IMPORT_FILE", importFile.toString())
+    .replace("$API_TOKEN", token!);
   const sshKey = await getSSHKey();
   const droplet = await digitalOcean.Droplet.create({
     name: `benchmark-${connector}-${version}-${importFile}-${test}`,
@@ -32,8 +36,7 @@ export async function createBenchmarkDroplet(
       `connector:${connector}`,
       `version:${version.replace(".", "_")}`, // DO does not allow dots in tags. Therefore we are escaping it.
       `import:${importFile}`,
-      `test:${test}`,
-      `api_token:${token}`
+      `test:${test}`
     ],
     size: "8gb",
     region: "fra1",
