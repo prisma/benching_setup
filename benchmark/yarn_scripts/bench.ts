@@ -1,22 +1,17 @@
-const testFolder = "./benchmark/queries";
-import { readFileSync, writeFileSync } from "fs";
-import { loadavg, cpus } from "os";
-import { walkSync } from "walk";
-import { basename } from "path";
-import { execSync } from "child_process";
-import { getServerInfo, getImportFileSize, PrismaServerInfo } from "../helpers/server_info";
+import { readFileSync } from "fs";
+import { cpus, loadavg } from "os";
+import { getQueryFileForName, getQueryFiles, QueryFile } from "../helpers/query_files";
+import { getImportFileSize, getServerInfo, PrismaServerInfo } from "../helpers/server_info";
+import { runVegeta, VegetaResult } from "../helpers/vegeta";
+import { Connector } from "../result_storage/binding";
 import {
-  Prisma,
-  RunUpdateManyWithoutBenchmarkQueryInput,
-  RunCreateManyWithoutBenchmarkQueryInput,
-  Connector
-} from "../result_storage/binding";
+  BenchmarkResult,
+  createBenchmarkingSession,
+  incrementQueriesRun,
+  markSessionAsFinished,
+  storeBenchmarkResults
+} from "../result_storage/result_storage";
 
-const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
-const resultStorageEndpoint = prismaServer + "/benchmark/dev";
-const resultStorage = new Prisma({
-  endpoint: resultStorageEndpoint
-});
 const benchmarkedServer = "http://localhost:4466";
 const benchmarkDuration = 60;
 
@@ -93,94 +88,6 @@ function getConnectorForArg(connectorArg: string): Connector {
   }
 }
 
-function getQueryFileForName(name) {
-  const queryFiles = getQueryFiles();
-  const matches = queryFiles.filter(queryFile => queryFile.name == name);
-  if (matches.length > 1) {
-    throw new Error("more than one test matched the given name. Provide a non ambiguous name.");
-  }
-  return matches[0];
-}
-
-async function createBenchmarkingSession(queriesToRun: number) {
-  return await resultStorage.mutation.createBenchmarkingSession({
-    data: {
-      queriesToRun: queriesToRun,
-      queriesRun: 0,
-      started: new Date()
-    }
-  });
-}
-
-async function incrementQueriesRun(sessionId: string) {
-  var currentCount = await resultStorage.query.benchmarkingSession({
-    where: { id: sessionId }
-  });
-  return await resultStorage.mutation.updateBenchmarkingSession({
-    where: {
-      id: sessionId
-    },
-    data: {
-      queriesRun: currentCount!.queriesRun + 1
-    }
-  });
-}
-
-async function markSessionAsFinished(sessionId: string) {
-  return await resultStorage.mutation.updateBenchmarkingSession({
-    where: {
-      id: sessionId
-    },
-    data: {
-      finished: new Date()
-    }
-  });
-}
-
-interface QueryFile {
-  name: string;
-  speed: string;
-  filePath: string;
-}
-
-function getQueryFiles(): QueryFile[] {
-  const queryFiles: QueryFile[] = [];
-
-  const options = {
-    listeners: {
-      file: function(root, fileStats, next) {
-        // console.log(fileStats.name);
-        if (fileStats.name.endsWith(".graphql")) {
-          // console.log(root)
-          // console.log(fileStats.name);
-          const fileName = basename(fileStats.name, ".graphql");
-          const parts = fileName.split("_");
-          const query = {
-            name: parts[parts.length - 2],
-            speed: parts[parts.length - 1],
-            filePath: root + "/" + fileStats.name
-          };
-          queryFiles.push(query);
-        }
-        next();
-      },
-      errors: function(_0, _1, next) {
-        console.log("error");
-        console.log(_1);
-        next();
-      }
-    }
-  };
-
-  walkSync(testFolder, options);
-  return queryFiles;
-}
-
-interface BenchmarkResult {
-  rps: number;
-  vegetaResult: VegetaResult;
-}
-
 async function benchMarkQuery(
   sessionId: string,
   connector: string,
@@ -214,7 +121,12 @@ async function benchMarkQuery(
       const vegetaResult = runVegeta(url, graphqlQuery, rps, benchmarkDuration);
       results.push({
         rps: rps,
-        vegetaResult: vegetaResult
+        successes: vegetaResult.status_codes["200"],
+        failures: failures(vegetaResult),
+        avg: vegetaResult.latencies.mean,
+        p50: vegetaResult.latencies["50th"],
+        p95: vegetaResult.latencies["95th"],
+        p99: vegetaResult.latencies["99th"]
       });
 
       const loadLastMinute = loadavg()[0];
@@ -244,110 +156,13 @@ async function benchMarkQuery(
   );
 }
 
-interface VegetaResult {
-  latencies: VegetaLantencies;
-  status_codes: Map<string, number>;
-}
-
-interface VegetaLantencies {
-  total: number;
-  mean: number;
-  "50th": number;
-  "95th": number;
-  "99th": number;
-  max: number;
-}
-
-function runVegeta(url, graphqlQueryAsString, rps, duration): VegetaResult {
-  const graphqlQuery = {
-    query: graphqlQueryAsString
-  };
-
-  writeFileSync("body.json", JSON.stringify(graphqlQuery));
-  const attack = `
-      POST ${url}
-      Content-Type: application/json
-      @body.json
-    `;
-  const result = execSync(
-    `vegeta attack -rate=${rps} -duration="${duration}s" -timeout="10s" | vegeta report -reporter=json`,
-    { input: attack }
-  ).toString();
-  const vegetaResult: VegetaResult = JSON.parse(result);
-
-  // vegeta is measuring in nano seconds
-  for (const key of ["mean", "50th", "95th", "99th", "max"]) {
-    vegetaResult.latencies[key] /= 1000000;
-  }
-  console.log(vegetaResult);
-
-  return vegetaResult;
-}
-
-async function storeBenchmarkResults(
-  sessionId: string,
-  connector: string,
-  version: string,
-  commit: string,
-  importFile: number,
-  queryName: string,
-  query: string,
-  results: BenchmarkResult[],
-  startedAt: Date,
-  finishedAt: Date
-): Promise<void> {
-  console.log(`storing ${results.length} results`);
-  const latencies = results.map(result => {
-    const failures = Object.keys(result.vegetaResult.status_codes).reduce((accumulator, statusCode) => {
-      if (statusCode != "200") {
-        let value = result.vegetaResult.status_codes[statusCode];
-        return value + accumulator;
-      } else {
-        return accumulator;
-      }
-    }, 0);
-    return {
-      rps: result.rps,
-      avg: result.vegetaResult.latencies.mean,
-      p50: result.vegetaResult.latencies["50th"],
-      p95: result.vegetaResult.latencies["95th"],
-      p99: result.vegetaResult.latencies["99th"],
-      failures: failures,
-      successes: result.vegetaResult.status_codes["200"]
-    };
-  });
-
-  const nestedCreateRun: RunUpdateManyWithoutBenchmarkQueryInput | RunCreateManyWithoutBenchmarkQueryInput = {
-    create: [
-      {
-        connector: connector as Connector,
-        startedAt: startedAt,
-        finishedAt: finishedAt,
-        version: version,
-        commit: commit,
-        importFile: importFile,
-        latencies: {
-          create: latencies
-        },
-        session: {
-          connect: {
-            id: sessionId
-          }
-        }
-      }
-    ]
-  };
-  const data = {
-    where: { name: queryName },
-    update: {
-      runs: nestedCreateRun
-    },
-    create: {
-      name: queryName,
-      query: query,
-      runs: nestedCreateRun
+function failures(vegetaResult: VegetaResult): number {
+  return Object.keys(vegetaResult.status_codes).reduce((accumulator, statusCode) => {
+    if (statusCode != "200") {
+      let value = vegetaResult.status_codes[statusCode];
+      return value + accumulator;
+    } else {
+      return accumulator;
     }
-  };
-  // console.log(JSON.stringify(data, null, 2));
-  await resultStorage.mutation.upsertBenchmarkedQuery(data);
+  }, 0);
 }
