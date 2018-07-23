@@ -9,7 +9,7 @@ import {
   RunUpdateManyWithoutBenchmarkQueryInput,
   RunCreateManyWithoutBenchmarkQueryInput,
   Connector
-} from "../binding";
+} from "../result_storage/binding";
 
 const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
 const resultStorageEndpoint = prismaServer + "/benchmark/dev";
