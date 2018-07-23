@@ -64,7 +64,6 @@ async function main() {
   const importFileSize = await getImportFileSize();
 
   if (testToRun == null || testToRun === "all") {
-    console.log("running all tests");
     for (const queryFile of queryFiles) {
       const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
       await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
@@ -73,7 +72,7 @@ async function main() {
     }
   } else {
     console.log("running one test");
-    const queryFile = getQueryFileForName(args[0]);
+    const queryFile = getQueryFileForName(testToRun);
     const benchmarkingSession = await createBenchmarkingSession(1);
     await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
     await incrementQueriesRun(benchmarkingSession.id);
@@ -94,11 +93,11 @@ function getConnectorForArg(connectorArg: string): Connector {
 
 function getQueryFileForName(name) {
   const queryFiles = getQueryFiles();
-  const matches = queryFiles.filter(queryFile => queryFile.filePath.includes(name));
+  const matches = queryFiles.filter(queryFile => queryFile.name == name);
   if (matches.length > 1) {
     throw new Error("more than one test matched the given name. Provide a non ambiguous name.");
   }
-  return queryFiles[0];
+  return matches[0];
 }
 
 interface PrismaServerInfo {
