@@ -1,4 +1,4 @@
-import { createCronDroplet } from "./droplets";
+import { createCronDroplet } from "../helpers/droplets";
 
 main().catch(console.error);
 

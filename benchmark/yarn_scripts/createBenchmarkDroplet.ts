@@ -1,4 +1,4 @@
-import { createBenchmarkDroplet } from "./droplets";
+import { createBenchmarkDroplet } from "../helpers/droplets";
 
 main().catch(console.error);
 

@@ -26,14 +26,12 @@
     "fill": "ts-node scripts/bin.ts",
     "bench-debug": "inspect -r ts-node/register benchmark/bench.ts",
     "compile": "tsc",
-    "docker": "docker build -t prismagraphql/benchmarks:latest .",
-    "docker-push": "docker push prismagraphql/benchmarks:latest",
     "start-server": "cd setup_scripts/prisma-server && ./start.sh",
     "reset-server": "cd setup_scripts/prisma-service && ./reset_test_data.sh",
-    "bench-server": "ts-node benchmark/bench.ts",
-    "start-cron": "ts-node benchmark/cron.ts",
-    "create-benchmark-droplet": "ts-node benchmark/createBenchmarkDroplet.ts",
-    "create-all-benchmark-droplets": "ts-node benchmark/createAllBenchmarkDroplets.ts",
-    "create-cron-droplet": "ts-node benchmark/createCronDroplet.ts"
+    "bench-server": "ts-node benchmark/yarn_scripts/bench.ts",
+    "start-cron": "ts-node benchmark/yarn_scripts/startCron.ts",
+    "create-benchmark-droplet": "ts-node benchmark/yarn_scripts/createBenchmarkDroplet.ts",
+    "create-all-benchmark-droplets": "ts-node benchmark/yarn_scripts/createAllBenchmarkDroplets.ts",
+    "create-cron-droplet": "ts-node benchmark/yarn_scripts/createCronDroplet.ts"
   }
 }

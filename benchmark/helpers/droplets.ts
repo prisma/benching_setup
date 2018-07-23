@@ -1,6 +1,6 @@
 import { DigitalOcean } from "dots-wrapper";
 import { readFileSync } from "fs";
-import { IDroplet } from "../node_modules/dots-wrapper/src/lib/common/interfaces";
+import { IDroplet } from "../../node_modules/dots-wrapper/src/lib/common/interfaces";
 
 const token = process.env["DIGITAL_OCEAN_ACCESS_TOKEN"];
 const digitalOcean = new DigitalOcean(token as string);

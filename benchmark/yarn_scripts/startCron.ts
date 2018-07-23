@@ -1,6 +1,6 @@
-import { createBenchmarkDroplets } from "./droplets";
+import { createBenchmarkDroplets } from "../helpers/droplets";
 import { CronJob } from "cron";
-import { getLatestVersionFromDockerHub } from "./docker_hub";
+import { getLatestVersionFromDockerHub } from "../helpers/docker_hub";
 const fetch = require("node-fetch");
 // Runs Monday to Saturday at 19:00:00
 const cron = new CronJob("00 00 19 * * 1-6", trigger, null, false, "Europe/Berlin");
