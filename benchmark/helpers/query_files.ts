@@ -13,7 +13,11 @@ export function getQueryFileForName(name): QueryFile {
   const queryFiles = getQueryFiles();
   const matches = queryFiles.filter(queryFile => queryFile.name == name);
   if (matches.length > 1) {
-    throw new Error("more than one test matched the given name. Provide a non ambiguous name.");
+    throw new Error("more than one query matched the given name. Provide a non ambiguous name.");
+  }
+  if (matches.length == 0) {
+    const candidates = queryFiles.filter(queryFile => queryFile.filePath.includes(name)).map(qf => qf.name);
+    throw new Error(`No query matched the given name. The following queries included the provided name: ${candidates}`);
   }
   return matches[0];
 }
