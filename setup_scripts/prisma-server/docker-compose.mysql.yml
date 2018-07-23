@@ -13,18 +13,16 @@ services:
             connector: mysql
             host: db
             port: 3306
-            user: prisma
+            user: root
             password: prisma
             migrations: true
+    
   db:
     image: mysql:5.7
     restart: always
     command: mysqld
     environment:
-      MYSQL_USER: prisma
+      MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: prisma
-      MYSQL_DATABASE: prisma
     ports:
     - "3306:3306"
-volumes:
-  postgres:
