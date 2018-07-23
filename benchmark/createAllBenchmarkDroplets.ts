@@ -9,7 +9,14 @@ async function main() {
     console.log("env var DIGITAL_OCEAN_ACCESS_TOKEN must bet set");
     process.exit(1);
   }
-  const version = await getLatestVersionFromDockerHub();
+  
+  const args = process.argv.slice(2);
+  var version : string  
+  if (args[0] == undefined) {
+    version = await getLatestVersionFromDockerHub();
+  } else {
+    version = args[0];
+  }
   console.log(`Will benchmark version ${version}`);
   await createBenchmarkDroplets(version);
 }
