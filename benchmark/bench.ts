@@ -68,8 +68,8 @@ async function main() {
     for (const queryFile of queryFiles) {
       await benchMarkQuery(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
       await incrementQueriesRun(benchmarkingSession.id);
-      await markSessionAsFinished(benchmarkingSession.id);
     }
+    await markSessionAsFinished(benchmarkingSession.id);
   } else {
     console.log("running one test");
     const benchmarkingSession = await createBenchmarkingSession(1);
