@@ -34,6 +34,7 @@ type Run {
 }
 
 type Version {
+  id: ID! @unique
   name: String! @unique
   runs: [Run!]!
 }

@@ -1,5 +1,5 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Tue Jul 24 2018 11:56:35 GMT+0200 (CEST)
+# timestamp: Tue Jul 24 2018 16:52:20 GMT+0200 (CEST)
 
 type AggregateBenchmarkedQuery {
   count: Int!
@@ -1546,7 +1546,8 @@ type Subscription {
   latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
 }
 
-type Version {
+type Version implements Node {
+  id: ID!
   name: String!
   runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run!]
 }
@@ -1585,10 +1586,10 @@ type VersionEdge {
 }
 
 enum VersionOrderByInput {
-  name_ASC
-  name_DESC
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1596,6 +1597,7 @@ enum VersionOrderByInput {
 }
 
 type VersionPreviousValues {
+  id: ID!
   name: String!
 }
 
@@ -1669,6 +1671,46 @@ input VersionWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [VersionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   name: String
 
   """All values that are not equal to given value."""
@@ -1715,5 +1757,6 @@ input VersionWhereInput {
 }
 
 input VersionWhereUniqueInput {
+  id: ID
   name: String
 }

@@ -1638,7 +1638,8 @@ type Subscription {
   latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
 }
 
-type Version {
+type Version implements Node {
+  id: ID!
   name: String!
   runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run!]
 }
@@ -1677,10 +1678,10 @@ type VersionEdge {
 }
 
 enum VersionOrderByInput {
-  name_ASC
-  name_DESC
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1688,6 +1689,7 @@ enum VersionOrderByInput {
 }
 
 type VersionPreviousValues {
+  id: ID!
   name: String!
 }
 
@@ -1761,6 +1763,46 @@ input VersionWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [VersionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   name: String
 
   """All values that are not equal to given value."""
@@ -1807,6 +1849,7 @@ input VersionWhereInput {
 }
 
 input VersionWhereUniqueInput {
+  id: ID
   name: String
 }
 `
@@ -1885,10 +1928,10 @@ export type BenchmarkedQueryOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type VersionOrderByInput =   'name_ASC' |
-  'name_DESC' |
-  'id_ASC' |
+export type VersionOrderByInput =   'id_ASC' |
   'id_DESC' |
+  'name_ASC' |
+  'name_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -2334,6 +2377,20 @@ export interface VersionWhereInput {
   AND?: VersionWhereInput[] | VersionWhereInput
   OR?: VersionWhereInput[] | VersionWhereInput
   NOT?: VersionWhereInput[] | VersionWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
   name?: String
   name_not?: String
   name_in?: String[] | String
@@ -2577,6 +2634,7 @@ export interface LatencyUpdateManyWithoutRunInput {
 }
 
 export interface VersionWhereUniqueInput {
+  id?: ID_Input
   name?: String
 }
 
@@ -2696,7 +2754,8 @@ export interface BenchmarkingSessionConnection {
   aggregate: AggregateBenchmarkingSession
 }
 
-export interface Version {
+export interface Version extends Node {
+  id: ID_Output
   name: String
   runs?: Run[]
 }
@@ -2742,6 +2801,7 @@ export interface AggregateRun {
 }
 
 export interface VersionPreviousValues {
+  id: ID_Output
   name: String
 }
 
