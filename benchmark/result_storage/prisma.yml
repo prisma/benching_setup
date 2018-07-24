@@ -4,4 +4,4 @@ hooks:
     - graphql get-schema
     - graphql codegen
 
-endpoint: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
+endpoint: ${env:PRISMA_ENDPOINT}
