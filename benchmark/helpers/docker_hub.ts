@@ -10,6 +10,6 @@ interface DockerTag {
 export async function getLatestVersionFromDockerHub(): Promise<string> {
   const response = await fetch("https://registry.hub.docker.com/v2/repositories/prismagraphql/prisma/tags/");
   const result: DockerTagsResult = await response.json();
-  const nonHerokuTags = result.results.filter(r => !r.name.includes("heroku"));
+  const nonHerokuTags = result.results.filter(r => !r.name.includes("heroku") && !r.name.includes("performance"));
   return nonHerokuTags[0].name;
 }
