@@ -46,6 +46,14 @@ export async function markSessionAsFinished(sessionId: string) {
   });
 }
 
+export async function ensureVersionExists(name: string) {
+  return await resultStorage.mutation.upsertVersion({
+    where: { name: name },
+    create: { name: name },
+    update: {}
+  });
+}
+
 export interface BenchmarkResult {
   rps: number;
   successes: number;
@@ -69,25 +77,6 @@ export async function storeBenchmarkResults(
   finishedAt: Date
 ): Promise<void> {
   console.log(`storing ${results.length} results`);
-  // const latencies = results.map(result => {
-  //   const failures = Object.keys(result.vegetaResult.status_codes).reduce((accumulator, statusCode) => {
-  //     if (statusCode != "200") {
-  //       let value = result.vegetaResult.status_codes[statusCode];
-  //       return value + accumulator;
-  //     } else {
-  //       return accumulator;
-  //     }
-  //   }, 0);
-  //   return {
-  //     rps: result.rps,
-  //     avg: result.vegetaResult.latencies.mean,
-  //     p50: result.vegetaResult.latencies["50th"],
-  //     p95: result.vegetaResult.latencies["95th"],
-  //     p99: result.vegetaResult.latencies["99th"],
-  //     failures: failures,
-  //     successes: result.vegetaResult.status_codes["200"]
-  //   };
-  // });
 
   const nestedCreateRun: RunUpdateManyWithoutBenchmarkQueryInput | RunCreateManyWithoutBenchmarkQueryInput = {
     create: [
@@ -95,7 +84,11 @@ export async function storeBenchmarkResults(
         connector: connector as Connector,
         startedAt: startedAt,
         finishedAt: finishedAt,
-        version: version,
+        version: {
+          connect: {
+            name: version
+          }
+        },
         commit: commit,
         importFile: importFile,
         latencies: {

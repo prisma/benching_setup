@@ -26,11 +26,16 @@ type Run {
   benchmarkQuery: BenchmarkedQuery @relation(name: "CandidateToRun", onDelete: CASCADE)
   latencies: [Latency!]! @relation(name: "RunToLatency", onDelete: CASCADE)
   connector: Connector!
-  version: String!
+  version: Version!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
+}
+
+type Version {
+  name: String! @unique
+  runs: [Run!]!
 }
 
 type Latency {

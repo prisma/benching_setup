@@ -9,7 +9,8 @@ import {
   createBenchmarkingSession,
   incrementQueriesRun,
   markSessionAsFinished,
-  storeBenchmarkResults
+  storeBenchmarkResults,
+  ensureVersionExists
 } from "../result_storage/result_storage";
 
 const benchmarkedServer = "http://localhost:4466";
@@ -58,6 +59,7 @@ async function main() {
   }
   const connector = getConnectorForArg(connectorArg);
   const serverInfo = await getServerInfo(benchmarkedServer);
+  await ensureVersionExists(serverInfo.version);
   const importFileSize = await getImportFileSize(benchmarkedServer);
 
   if (testToRun == null || testToRun === "all") {

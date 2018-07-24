@@ -7,14 +7,17 @@ export interface Query {
     benchmarkingSessions: <T = BenchmarkingSession[]>(args: { where?: BenchmarkingSessionWhereInput, orderBy?: BenchmarkingSessionOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     benchmarkedQueries: <T = BenchmarkedQuery[]>(args: { where?: BenchmarkedQueryWhereInput, orderBy?: BenchmarkedQueryOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     runs: <T = Run[]>(args: { where?: RunWhereInput, orderBy?: RunOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    versions: <T = Version[]>(args: { where?: VersionWhereInput, orderBy?: VersionOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     latencies: <T = Latency[]>(args: { where?: LatencyWhereInput, orderBy?: LatencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     benchmarkingSession: <T = BenchmarkingSession | null>(args: { where: BenchmarkingSessionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     benchmarkedQuery: <T = BenchmarkedQuery | null>(args: { where: BenchmarkedQueryWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     run: <T = Run | null>(args: { where: RunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    version: <T = Version | null>(args: { where: VersionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     latency: <T = Latency | null>(args: { where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     benchmarkingSessionsConnection: <T = BenchmarkingSessionConnection>(args: { where?: BenchmarkingSessionWhereInput, orderBy?: BenchmarkingSessionOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     benchmarkedQueriesConnection: <T = BenchmarkedQueryConnection>(args: { where?: BenchmarkedQueryWhereInput, orderBy?: BenchmarkedQueryOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     runsConnection: <T = RunConnection>(args: { where?: RunWhereInput, orderBy?: RunOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    versionsConnection: <T = VersionConnection>(args: { where?: VersionWhereInput, orderBy?: VersionOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     latenciesConnection: <T = LatencyConnection>(args: { where?: LatencyWhereInput, orderBy?: LatencyOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
@@ -23,26 +26,32 @@ export interface Mutation {
     createBenchmarkingSession: <T = BenchmarkingSession>(args: { data: BenchmarkingSessionCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createBenchmarkedQuery: <T = BenchmarkedQuery>(args: { data: BenchmarkedQueryCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createRun: <T = Run>(args: { data: RunCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createVersion: <T = Version>(args: { data: VersionCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createLatency: <T = Latency>(args: { data: LatencyCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateBenchmarkingSession: <T = BenchmarkingSession | null>(args: { data: BenchmarkingSessionUpdateInput, where: BenchmarkingSessionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateBenchmarkedQuery: <T = BenchmarkedQuery | null>(args: { data: BenchmarkedQueryUpdateInput, where: BenchmarkedQueryWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateRun: <T = Run | null>(args: { data: RunUpdateInput, where: RunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateVersion: <T = Version | null>(args: { data: VersionUpdateInput, where: VersionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateLatency: <T = Latency | null>(args: { data: LatencyUpdateInput, where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteBenchmarkingSession: <T = BenchmarkingSession | null>(args: { where: BenchmarkingSessionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteBenchmarkedQuery: <T = BenchmarkedQuery | null>(args: { where: BenchmarkedQueryWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteRun: <T = Run | null>(args: { where: RunWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteVersion: <T = Version | null>(args: { where: VersionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteLatency: <T = Latency | null>(args: { where: LatencyWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertBenchmarkingSession: <T = BenchmarkingSession>(args: { where: BenchmarkingSessionWhereUniqueInput, create: BenchmarkingSessionCreateInput, update: BenchmarkingSessionUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertBenchmarkedQuery: <T = BenchmarkedQuery>(args: { where: BenchmarkedQueryWhereUniqueInput, create: BenchmarkedQueryCreateInput, update: BenchmarkedQueryUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertRun: <T = Run>(args: { where: RunWhereUniqueInput, create: RunCreateInput, update: RunUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertVersion: <T = Version>(args: { where: VersionWhereUniqueInput, create: VersionCreateInput, update: VersionUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertLatency: <T = Latency>(args: { where: LatencyWhereUniqueInput, create: LatencyCreateInput, update: LatencyUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyBenchmarkingSessions: <T = BatchPayload>(args: { data: BenchmarkingSessionUpdateInput, where?: BenchmarkingSessionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyBenchmarkedQueries: <T = BatchPayload>(args: { data: BenchmarkedQueryUpdateInput, where?: BenchmarkedQueryWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyRuns: <T = BatchPayload>(args: { data: RunUpdateInput, where?: RunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyVersions: <T = BatchPayload>(args: { data: VersionUpdateInput, where?: VersionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyLatencies: <T = BatchPayload>(args: { data: LatencyUpdateInput, where?: LatencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyBenchmarkingSessions: <T = BatchPayload>(args: { where?: BenchmarkingSessionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyBenchmarkedQueries: <T = BatchPayload>(args: { where?: BenchmarkedQueryWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyRuns: <T = BatchPayload>(args: { where?: RunWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyVersions: <T = BatchPayload>(args: { where?: VersionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyLatencies: <T = BatchPayload>(args: { where?: LatencyWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
@@ -50,6 +59,7 @@ export interface Subscription {
     benchmarkingSession: <T = BenchmarkingSessionSubscriptionPayload | null>(args: { where?: BenchmarkingSessionSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     benchmarkedQuery: <T = BenchmarkedQuerySubscriptionPayload | null>(args: { where?: BenchmarkedQuerySubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     run: <T = RunSubscriptionPayload | null>(args: { where?: RunSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    version: <T = VersionSubscriptionPayload | null>(args: { where?: VersionSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     latency: <T = LatencySubscriptionPayload | null>(args: { where?: LatencySubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
   }
 
@@ -57,6 +67,7 @@ export interface Exists {
   BenchmarkingSession: (where?: BenchmarkingSessionWhereInput) => Promise<boolean>
   BenchmarkedQuery: (where?: BenchmarkedQueryWhereInput) => Promise<boolean>
   Run: (where?: RunWhereInput) => Promise<boolean>
+  Version: (where?: VersionWhereInput) => Promise<boolean>
   Latency: (where?: LatencyWhereInput) => Promise<boolean>
 }
 
@@ -95,6 +106,10 @@ type AggregateLatency {
 }
 
 type AggregateRun {
+  count: Int!
+}
+
+type AggregateVersion {
   count: Int!
 }
 
@@ -1053,26 +1068,32 @@ type Mutation {
   createBenchmarkingSession(data: BenchmarkingSessionCreateInput!): BenchmarkingSession!
   createBenchmarkedQuery(data: BenchmarkedQueryCreateInput!): BenchmarkedQuery!
   createRun(data: RunCreateInput!): Run!
+  createVersion(data: VersionCreateInput!): Version!
   createLatency(data: LatencyCreateInput!): Latency!
   updateBenchmarkingSession(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
   updateBenchmarkedQuery(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
   updateRun(data: RunUpdateInput!, where: RunWhereUniqueInput!): Run
+  updateVersion(data: VersionUpdateInput!, where: VersionWhereUniqueInput!): Version
   updateLatency(data: LatencyUpdateInput!, where: LatencyWhereUniqueInput!): Latency
   deleteBenchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
   deleteBenchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
   deleteRun(where: RunWhereUniqueInput!): Run
+  deleteVersion(where: VersionWhereUniqueInput!): Version
   deleteLatency(where: LatencyWhereUniqueInput!): Latency
   upsertBenchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!, create: BenchmarkingSessionCreateInput!, update: BenchmarkingSessionUpdateInput!): BenchmarkingSession!
   upsertBenchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!, create: BenchmarkedQueryCreateInput!, update: BenchmarkedQueryUpdateInput!): BenchmarkedQuery!
   upsertRun(where: RunWhereUniqueInput!, create: RunCreateInput!, update: RunUpdateInput!): Run!
+  upsertVersion(where: VersionWhereUniqueInput!, create: VersionCreateInput!, update: VersionUpdateInput!): Version!
   upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
   updateManyBenchmarkingSessions(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereInput): BatchPayload!
   updateManyBenchmarkedQueries(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereInput): BatchPayload!
   updateManyRuns(data: RunUpdateInput!, where: RunWhereInput): BatchPayload!
+  updateManyVersions(data: VersionUpdateInput!, where: VersionWhereInput): BatchPayload!
   updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
   deleteManyBenchmarkingSessions(where: BenchmarkingSessionWhereInput): BatchPayload!
   deleteManyBenchmarkedQueries(where: BenchmarkedQueryWhereInput): BatchPayload!
   deleteManyRuns(where: RunWhereInput): BatchPayload!
+  deleteManyVersions(where: VersionWhereInput): BatchPayload!
   deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
 }
 
@@ -1107,14 +1128,17 @@ type Query {
   benchmarkingSessions(where: BenchmarkingSessionWhereInput, orderBy: BenchmarkingSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BenchmarkingSession]!
   benchmarkedQueries(where: BenchmarkedQueryWhereInput, orderBy: BenchmarkedQueryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BenchmarkedQuery]!
   runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run]!
+  versions(where: VersionWhereInput, orderBy: VersionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Version]!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
   benchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
   benchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
   run(where: RunWhereUniqueInput!): Run
+  version(where: VersionWhereUniqueInput!): Version
   latency(where: LatencyWhereUniqueInput!): Latency
   benchmarkingSessionsConnection(where: BenchmarkingSessionWhereInput, orderBy: BenchmarkingSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BenchmarkingSessionConnection!
   benchmarkedQueriesConnection(where: BenchmarkedQueryWhereInput, orderBy: BenchmarkedQueryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BenchmarkedQueryConnection!
   runsConnection(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RunConnection!
+  versionsConnection(where: VersionWhereInput, orderBy: VersionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VersionConnection!
   latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
 
   """Fetches an object given its ID"""
@@ -1130,7 +1154,7 @@ type Run implements Node {
   benchmarkQuery(where: BenchmarkedQueryWhereInput): BenchmarkedQuery
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
-  version: String!
+  version(where: VersionWhereInput): Version!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
@@ -1149,7 +1173,6 @@ type RunConnection {
 
 input RunCreateInput {
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
@@ -1157,6 +1180,7 @@ input RunCreateInput {
   session: BenchmarkingSessionCreateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
   latencies: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput!
 }
 
 input RunCreateManyWithoutBenchmarkQueryInput {
@@ -1169,6 +1193,11 @@ input RunCreateManyWithoutSessionInput {
   connect: [RunWhereUniqueInput!]
 }
 
+input RunCreateManyWithoutVersionInput {
+  create: [RunCreateWithoutVersionInput!]
+  connect: [RunWhereUniqueInput!]
+}
+
 input RunCreateOneWithoutLatenciesInput {
   create: RunCreateWithoutLatenciesInput
   connect: RunWhereUniqueInput
@@ -1176,33 +1205,44 @@ input RunCreateOneWithoutLatenciesInput {
 
 input RunCreateWithoutBenchmarkQueryInput {
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
   session: BenchmarkingSessionCreateOneWithoutRunsInput
   latencies: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput!
 }
 
 input RunCreateWithoutLatenciesInput {
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
   session: BenchmarkingSessionCreateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
+  version: VersionCreateOneWithoutRunsInput!
 }
 
 input RunCreateWithoutSessionInput {
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
+  benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
+  latencies: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput!
+}
+
+input RunCreateWithoutVersionInput {
+  connector: Connector!
+  importFile: Int!
+  commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
+  session: BenchmarkingSessionCreateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
   latencies: LatencyCreateManyWithoutRunInput
 }
@@ -1221,8 +1261,6 @@ enum RunOrderByInput {
   id_DESC
   connector_ASC
   connector_DESC
-  version_ASC
-  version_DESC
   importFile_ASC
   importFile_DESC
   commit_ASC
@@ -1240,7 +1278,6 @@ enum RunOrderByInput {
 type RunPreviousValues {
   id: ID!
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
@@ -1288,7 +1325,6 @@ input RunSubscriptionWhereInput {
 
 input RunUpdateInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
@@ -1296,6 +1332,7 @@ input RunUpdateInput {
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
+  version: VersionUpdateOneWithoutRunsInput
 }
 
 input RunUpdateManyWithoutBenchmarkQueryInput {
@@ -1316,6 +1353,15 @@ input RunUpdateManyWithoutSessionInput {
   upsert: [RunUpsertWithWhereUniqueWithoutSessionInput!]
 }
 
+input RunUpdateManyWithoutVersionInput {
+  create: [RunCreateWithoutVersionInput!]
+  connect: [RunWhereUniqueInput!]
+  disconnect: [RunWhereUniqueInput!]
+  delete: [RunWhereUniqueInput!]
+  update: [RunUpdateWithWhereUniqueWithoutVersionInput!]
+  upsert: [RunUpsertWithWhereUniqueWithoutVersionInput!]
+}
+
 input RunUpdateOneWithoutLatenciesInput {
   create: RunCreateWithoutLatenciesInput
   connect: RunWhereUniqueInput
@@ -1327,33 +1373,44 @@ input RunUpdateOneWithoutLatenciesInput {
 
 input RunUpdateWithoutBenchmarkQueryDataInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
+  version: VersionUpdateOneWithoutRunsInput
 }
 
 input RunUpdateWithoutLatenciesDataInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
+  version: VersionUpdateOneWithoutRunsInput
 }
 
 input RunUpdateWithoutSessionDataInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
+  benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyWithoutRunInput
+  version: VersionUpdateOneWithoutRunsInput
+}
+
+input RunUpdateWithoutVersionDataInput {
+  connector: Connector
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session: BenchmarkingSessionUpdateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
 }
@@ -1366,6 +1423,11 @@ input RunUpdateWithWhereUniqueWithoutBenchmarkQueryInput {
 input RunUpdateWithWhereUniqueWithoutSessionInput {
   where: RunWhereUniqueInput!
   data: RunUpdateWithoutSessionDataInput!
+}
+
+input RunUpdateWithWhereUniqueWithoutVersionInput {
+  where: RunWhereUniqueInput!
+  data: RunUpdateWithoutVersionDataInput!
 }
 
 input RunUpsertWithoutLatenciesInput {
@@ -1383,6 +1445,12 @@ input RunUpsertWithWhereUniqueWithoutSessionInput {
   where: RunWhereUniqueInput!
   update: RunUpdateWithoutSessionDataInput!
   create: RunCreateWithoutSessionInput!
+}
+
+input RunUpsertWithWhereUniqueWithoutVersionInput {
+  where: RunWhereUniqueInput!
+  update: RunUpdateWithoutVersionDataInput!
+  create: RunCreateWithoutVersionInput!
 }
 
 input RunWhereInput {
@@ -1444,46 +1512,6 @@ input RunWhereInput {
 
   """All values that are not contained in given list."""
   connector_not_in: [Connector!]
-  version: String
-
-  """All values that are not equal to given value."""
-  version_not: String
-
-  """All values that are contained in given list."""
-  version_in: [String!]
-
-  """All values that are not contained in given list."""
-  version_not_in: [String!]
-
-  """All values less than the given value."""
-  version_lt: String
-
-  """All values less than or equal the given value."""
-  version_lte: String
-
-  """All values greater than the given value."""
-  version_gt: String
-
-  """All values greater than or equal the given value."""
-  version_gte: String
-
-  """All values containing the given string."""
-  version_contains: String
-
-  """All values not containing the given string."""
-  version_not_contains: String
-
-  """All values starting with the given string."""
-  version_starts_with: String
-
-  """All values not starting with the given string."""
-  version_not_starts_with: String
-
-  """All values ending with the given string."""
-  version_ends_with: String
-
-  """All values not ending with the given string."""
-  version_not_ends_with: String
   importFile: Int
 
   """All values that are not equal to given value."""
@@ -1595,6 +1623,7 @@ input RunWhereInput {
   latencies_every: LatencyWhereInput
   latencies_some: LatencyWhereInput
   latencies_none: LatencyWhereInput
+  version: VersionWhereInput
 }
 
 input RunWhereUniqueInput {
@@ -1605,7 +1634,180 @@ type Subscription {
   benchmarkingSession(where: BenchmarkingSessionSubscriptionWhereInput): BenchmarkingSessionSubscriptionPayload
   benchmarkedQuery(where: BenchmarkedQuerySubscriptionWhereInput): BenchmarkedQuerySubscriptionPayload
   run(where: RunSubscriptionWhereInput): RunSubscriptionPayload
+  version(where: VersionSubscriptionWhereInput): VersionSubscriptionPayload
   latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
+}
+
+type Version {
+  name: String!
+  runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run!]
+}
+
+"""A connection to a list of items."""
+type VersionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [VersionEdge]!
+  aggregate: AggregateVersion!
+}
+
+input VersionCreateInput {
+  name: String!
+  runs: RunCreateManyWithoutVersionInput
+}
+
+input VersionCreateOneWithoutRunsInput {
+  create: VersionCreateWithoutRunsInput
+  connect: VersionWhereUniqueInput
+}
+
+input VersionCreateWithoutRunsInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type VersionEdge {
+  """The item at the end of the edge."""
+  node: Version!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum VersionOrderByInput {
+  name_ASC
+  name_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type VersionPreviousValues {
+  name: String!
+}
+
+type VersionSubscriptionPayload {
+  mutation: MutationType!
+  node: Version
+  updatedFields: [String!]
+  previousValues: VersionPreviousValues
+}
+
+input VersionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VersionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VersionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VersionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: VersionWhereInput
+}
+
+input VersionUpdateInput {
+  name: String
+  runs: RunUpdateManyWithoutVersionInput
+}
+
+input VersionUpdateOneWithoutRunsInput {
+  create: VersionCreateWithoutRunsInput
+  connect: VersionWhereUniqueInput
+  delete: Boolean
+  update: VersionUpdateWithoutRunsDataInput
+  upsert: VersionUpsertWithoutRunsInput
+}
+
+input VersionUpdateWithoutRunsDataInput {
+  name: String
+}
+
+input VersionUpsertWithoutRunsInput {
+  update: VersionUpdateWithoutRunsDataInput!
+  create: VersionCreateWithoutRunsInput!
+}
+
+input VersionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VersionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VersionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VersionWhereInput!]
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  runs_every: RunWhereInput
+  runs_some: RunWhereInput
+  runs_none: RunWhereInput
+}
+
+input VersionWhereUniqueInput {
+  name: String
 }
 `
 
@@ -1634,8 +1836,6 @@ export type RunOrderByInput =   'id_ASC' |
   'id_DESC' |
   'connector_ASC' |
   'connector_DESC' |
-  'version_ASC' |
-  'version_DESC' |
   'importFile_ASC' |
   'importFile_DESC' |
   'commit_ASC' |
@@ -1648,10 +1848,6 @@ export type RunOrderByInput =   'id_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC'
-
-export type Connector =   'Postgres' |
-  'MySQL' |
-  'MongoDB'
 
 export type LatencyOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -1674,6 +1870,10 @@ export type LatencyOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
+export type Connector =   'Postgres' |
+  'MySQL' |
+  'MongoDB'
+
 export type BenchmarkedQueryOrderByInput =   'id_ASC' |
   'id_DESC' |
   'name_ASC' |
@@ -1685,19 +1885,29 @@ export type BenchmarkedQueryOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
+export type VersionOrderByInput =   'name_ASC' |
+  'name_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
 export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
 
-export interface RunCreateWithoutBenchmarkQueryInput {
+export interface RunCreateInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
   session?: BenchmarkingSessionCreateOneWithoutRunsInput
+  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
   latencies?: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput
 }
 
 export interface BenchmarkingSessionWhereInput {
@@ -1755,6 +1965,23 @@ export interface BenchmarkingSessionWhereInput {
   runs_none?: RunWhereInput
 }
 
+export interface BenchmarkingSessionCreateInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished?: DateTime
+  runs?: RunCreateManyWithoutSessionInput
+}
+
+export interface VersionUpdateWithoutRunsDataInput {
+  name?: String
+}
+
+export interface RunCreateManyWithoutSessionInput {
+  create?: RunCreateWithoutSessionInput[] | RunCreateWithoutSessionInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+}
+
 export interface LatencyCreateInput {
   rps: Int
   avg: Float
@@ -1764,6 +1991,366 @@ export interface LatencyCreateInput {
   successes: Int
   failures: Int
   run?: RunCreateOneWithoutLatenciesInput
+}
+
+export interface RunCreateWithoutSessionInput {
+  connector: Connector
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
+  latencies?: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput
+}
+
+export interface LatencySubscriptionWhereInput {
+  AND?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  OR?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  NOT?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: LatencyWhereInput
+}
+
+export interface BenchmarkedQueryCreateOneWithoutRunsInput {
+  create?: BenchmarkedQueryCreateWithoutRunsInput
+  connect?: BenchmarkedQueryWhereUniqueInput
+}
+
+export interface BenchmarkedQueryWhereInput {
+  AND?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
+  OR?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
+  NOT?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  query?: String
+  query_not?: String
+  query_in?: String[] | String
+  query_not_in?: String[] | String
+  query_lt?: String
+  query_lte?: String
+  query_gt?: String
+  query_gte?: String
+  query_contains?: String
+  query_not_contains?: String
+  query_starts_with?: String
+  query_not_starts_with?: String
+  query_ends_with?: String
+  query_not_ends_with?: String
+  runs_every?: RunWhereInput
+  runs_some?: RunWhereInput
+  runs_none?: RunWhereInput
+}
+
+export interface BenchmarkedQueryCreateWithoutRunsInput {
+  name: String
+  query: String
+}
+
+export interface RunSubscriptionWhereInput {
+  AND?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
+  OR?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
+  NOT?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: RunWhereInput
+}
+
+export interface LatencyCreateManyWithoutRunInput {
+  create?: LatencyCreateWithoutRunInput[] | LatencyCreateWithoutRunInput
+  connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+}
+
+export interface BenchmarkingSessionSubscriptionWhereInput {
+  AND?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
+  OR?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
+  NOT?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: BenchmarkingSessionWhereInput
+}
+
+export interface LatencyCreateWithoutRunInput {
+  rps: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
+  successes: Int
+  failures: Int
+}
+
+export interface RunWhereInput {
+  AND?: RunWhereInput[] | RunWhereInput
+  OR?: RunWhereInput[] | RunWhereInput
+  NOT?: RunWhereInput[] | RunWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  connector?: Connector
+  connector_not?: Connector
+  connector_in?: Connector[] | Connector
+  connector_not_in?: Connector[] | Connector
+  importFile?: Int
+  importFile_not?: Int
+  importFile_in?: Int[] | Int
+  importFile_not_in?: Int[] | Int
+  importFile_lt?: Int
+  importFile_lte?: Int
+  importFile_gt?: Int
+  importFile_gte?: Int
+  commit?: String
+  commit_not?: String
+  commit_in?: String[] | String
+  commit_not_in?: String[] | String
+  commit_lt?: String
+  commit_lte?: String
+  commit_gt?: String
+  commit_gte?: String
+  commit_contains?: String
+  commit_not_contains?: String
+  commit_starts_with?: String
+  commit_not_starts_with?: String
+  commit_ends_with?: String
+  commit_not_ends_with?: String
+  startedAt?: DateTime
+  startedAt_not?: DateTime
+  startedAt_in?: DateTime[] | DateTime
+  startedAt_not_in?: DateTime[] | DateTime
+  startedAt_lt?: DateTime
+  startedAt_lte?: DateTime
+  startedAt_gt?: DateTime
+  startedAt_gte?: DateTime
+  finishedAt?: DateTime
+  finishedAt_not?: DateTime
+  finishedAt_in?: DateTime[] | DateTime
+  finishedAt_not_in?: DateTime[] | DateTime
+  finishedAt_lt?: DateTime
+  finishedAt_lte?: DateTime
+  finishedAt_gt?: DateTime
+  finishedAt_gte?: DateTime
+  session?: BenchmarkingSessionWhereInput
+  benchmarkQuery?: BenchmarkedQueryWhereInput
+  latencies_every?: LatencyWhereInput
+  latencies_some?: LatencyWhereInput
+  latencies_none?: LatencyWhereInput
+  version?: VersionWhereInput
+}
+
+export interface VersionCreateOneWithoutRunsInput {
+  create?: VersionCreateWithoutRunsInput
+  connect?: VersionWhereUniqueInput
+}
+
+export interface BenchmarkingSessionWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface VersionCreateWithoutRunsInput {
+  name: String
+}
+
+export interface RunWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface BenchmarkedQueryCreateInput {
+  name: String
+  query: String
+  runs?: RunCreateManyWithoutBenchmarkQueryInput
+}
+
+export interface LatencyWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface RunCreateManyWithoutBenchmarkQueryInput {
+  create?: RunCreateWithoutBenchmarkQueryInput[] | RunCreateWithoutBenchmarkQueryInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+}
+
+export interface LatencyUpdateInput {
+  rps?: Int
+  avg?: Float
+  p50?: Float
+  p95?: Float
+  p99?: Float
+  successes?: Int
+  failures?: Int
+  run?: RunUpdateOneWithoutLatenciesInput
+}
+
+export interface RunCreateWithoutBenchmarkQueryInput {
+  connector: Connector
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session?: BenchmarkingSessionCreateOneWithoutRunsInput
+  latencies?: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput
+}
+
+export interface RunUpdateWithoutVersionDataInput {
+  connector?: Connector
+  importFile?: Int
+  commit?: String
+  startedAt?: DateTime
+  finishedAt?: DateTime
+  session?: BenchmarkingSessionUpdateOneWithoutRunsInput
+  benchmarkQuery?: BenchmarkedQueryUpdateOneWithoutRunsInput
+  latencies?: LatencyUpdateManyWithoutRunInput
+}
+
+export interface BenchmarkingSessionCreateOneWithoutRunsInput {
+  create?: BenchmarkingSessionCreateWithoutRunsInput
+  connect?: BenchmarkingSessionWhereUniqueInput
+}
+
+export interface RunUpdateManyWithoutVersionInput {
+  create?: RunCreateWithoutVersionInput[] | RunCreateWithoutVersionInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  disconnect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  delete?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  update?: RunUpdateWithWhereUniqueWithoutVersionInput[] | RunUpdateWithWhereUniqueWithoutVersionInput
+  upsert?: RunUpsertWithWhereUniqueWithoutVersionInput[] | RunUpsertWithWhereUniqueWithoutVersionInput
+}
+
+export interface BenchmarkingSessionCreateWithoutRunsInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished?: DateTime
+}
+
+export interface RunUpdateInput {
+  connector?: Connector
+  importFile?: Int
+  commit?: String
+  startedAt?: DateTime
+  finishedAt?: DateTime
+  session?: BenchmarkingSessionUpdateOneWithoutRunsInput
+  benchmarkQuery?: BenchmarkedQueryUpdateOneWithoutRunsInput
+  latencies?: LatencyUpdateManyWithoutRunInput
+  version?: VersionUpdateOneWithoutRunsInput
+}
+
+export interface VersionUpsertWithoutRunsInput {
+  update: VersionUpdateWithoutRunsDataInput
+  create: VersionCreateWithoutRunsInput
+}
+
+export interface BenchmarkingSessionUpsertWithoutRunsInput {
+  update: BenchmarkingSessionUpdateWithoutRunsDataInput
+  create: BenchmarkingSessionCreateWithoutRunsInput
+}
+
+export interface VersionCreateInput {
+  name: String
+  runs?: RunCreateManyWithoutVersionInput
+}
+
+export interface BenchmarkingSessionUpdateOneWithoutRunsInput {
+  create?: BenchmarkingSessionCreateWithoutRunsInput
+  connect?: BenchmarkingSessionWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: BenchmarkingSessionUpdateWithoutRunsDataInput
+  upsert?: BenchmarkingSessionUpsertWithoutRunsInput
+}
+
+export interface RunCreateManyWithoutVersionInput {
+  create?: RunCreateWithoutVersionInput[] | RunCreateWithoutVersionInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+}
+
+export interface RunUpdateWithWhereUniqueWithoutBenchmarkQueryInput {
+  where: RunWhereUniqueInput
+  data: RunUpdateWithoutBenchmarkQueryDataInput
+}
+
+export interface RunCreateWithoutVersionInput {
+  connector: Connector
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session?: BenchmarkingSessionCreateOneWithoutRunsInput
+  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
+  latencies?: LatencyCreateManyWithoutRunInput
+}
+
+export interface BenchmarkedQueryUpdateInput {
+  name?: String
+  query?: String
+  runs?: RunUpdateManyWithoutBenchmarkQueryInput
+}
+
+export interface VersionWhereInput {
+  AND?: VersionWhereInput[] | VersionWhereInput
+  OR?: VersionWhereInput[] | VersionWhereInput
+  NOT?: VersionWhereInput[] | VersionWhereInput
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  runs_every?: RunWhereInput
+  runs_some?: RunWhereInput
+  runs_none?: RunWhereInput
 }
 
 export interface LatencyWhereInput {
@@ -1848,55 +2435,114 @@ export interface RunCreateOneWithoutLatenciesInput {
   connect?: RunWhereUniqueInput
 }
 
-export interface BenchmarkedQueryWhereInput {
-  AND?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
-  OR?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
-  NOT?: BenchmarkedQueryWhereInput[] | BenchmarkedQueryWhereInput
+export interface VersionSubscriptionWhereInput {
+  AND?: VersionSubscriptionWhereInput[] | VersionSubscriptionWhereInput
+  OR?: VersionSubscriptionWhereInput[] | VersionSubscriptionWhereInput
+  NOT?: VersionSubscriptionWhereInput[] | VersionSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: VersionWhereInput
+}
+
+export interface RunCreateWithoutLatenciesInput {
+  connector: Connector
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session?: BenchmarkingSessionCreateOneWithoutRunsInput
+  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
+  version: VersionCreateOneWithoutRunsInput
+}
+
+export interface RunUpsertWithoutLatenciesInput {
+  update: RunUpdateWithoutLatenciesDataInput
+  create: RunCreateWithoutLatenciesInput
+}
+
+export interface BenchmarkingSessionUpdateInput {
+  queriesToRun?: Int
+  queriesRun?: Int
+  started?: DateTime
+  finished?: DateTime
+  runs?: RunUpdateManyWithoutSessionInput
+}
+
+export interface BenchmarkedQueryWhereUniqueInput {
   id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
   name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
+}
+
+export interface RunUpdateManyWithoutSessionInput {
+  create?: RunCreateWithoutSessionInput[] | RunCreateWithoutSessionInput
+  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  disconnect?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  delete?: RunWhereUniqueInput[] | RunWhereUniqueInput
+  update?: RunUpdateWithWhereUniqueWithoutSessionInput[] | RunUpdateWithWhereUniqueWithoutSessionInput
+  upsert?: RunUpsertWithWhereUniqueWithoutSessionInput[] | RunUpsertWithWhereUniqueWithoutSessionInput
+}
+
+export interface RunUpdateOneWithoutLatenciesInput {
+  create?: RunCreateWithoutLatenciesInput
+  connect?: RunWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: RunUpdateWithoutLatenciesDataInput
+  upsert?: RunUpsertWithoutLatenciesInput
+}
+
+export interface RunUpdateWithWhereUniqueWithoutSessionInput {
+  where: RunWhereUniqueInput
+  data: RunUpdateWithoutSessionDataInput
+}
+
+export interface RunUpdateWithWhereUniqueWithoutVersionInput {
+  where: RunWhereUniqueInput
+  data: RunUpdateWithoutVersionDataInput
+}
+
+export interface RunUpdateWithoutSessionDataInput {
+  connector?: Connector
+  importFile?: Int
+  commit?: String
+  startedAt?: DateTime
+  finishedAt?: DateTime
+  benchmarkQuery?: BenchmarkedQueryUpdateOneWithoutRunsInput
+  latencies?: LatencyUpdateManyWithoutRunInput
+  version?: VersionUpdateOneWithoutRunsInput
+}
+
+export interface RunUpsertWithWhereUniqueWithoutBenchmarkQueryInput {
+  where: RunWhereUniqueInput
+  update: RunUpdateWithoutBenchmarkQueryDataInput
+  create: RunCreateWithoutBenchmarkQueryInput
+}
+
+export interface BenchmarkedQueryUpdateOneWithoutRunsInput {
+  create?: BenchmarkedQueryCreateWithoutRunsInput
+  connect?: BenchmarkedQueryWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: BenchmarkedQueryUpdateWithoutRunsDataInput
+  upsert?: BenchmarkedQueryUpsertWithoutRunsInput
+}
+
+export interface RunUpdateWithoutBenchmarkQueryDataInput {
+  connector?: Connector
+  importFile?: Int
+  commit?: String
+  startedAt?: DateTime
+  finishedAt?: DateTime
+  session?: BenchmarkingSessionUpdateOneWithoutRunsInput
+  latencies?: LatencyUpdateManyWithoutRunInput
+  version?: VersionUpdateOneWithoutRunsInput
+}
+
+export interface BenchmarkedQueryUpdateWithoutRunsDataInput {
+  name?: String
   query?: String
-  query_not?: String
-  query_in?: String[] | String
-  query_not_in?: String[] | String
-  query_lt?: String
-  query_lte?: String
-  query_gt?: String
-  query_gte?: String
-  query_contains?: String
-  query_not_contains?: String
-  query_starts_with?: String
-  query_not_starts_with?: String
-  query_ends_with?: String
-  query_not_ends_with?: String
-  runs_every?: RunWhereInput
-  runs_some?: RunWhereInput
-  runs_none?: RunWhereInput
 }
 
 export interface RunUpsertWithWhereUniqueWithoutSessionInput {
@@ -1910,52 +2556,6 @@ export interface BenchmarkedQueryUpsertWithoutRunsInput {
   create: BenchmarkedQueryCreateWithoutRunsInput
 }
 
-export interface BenchmarkingSessionCreateInput {
-  queriesToRun: Int
-  queriesRun: Int
-  started: DateTime
-  finished?: DateTime
-  runs?: RunCreateManyWithoutSessionInput
-}
-
-export interface RunCreateWithoutLatenciesInput {
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
-  session?: BenchmarkingSessionCreateOneWithoutRunsInput
-  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
-}
-
-export interface RunCreateManyWithoutSessionInput {
-  create?: RunCreateWithoutSessionInput[] | RunCreateWithoutSessionInput
-  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
-}
-
-export interface RunSubscriptionWhereInput {
-  AND?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
-  OR?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
-  NOT?: RunSubscriptionWhereInput[] | RunSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: RunWhereInput
-}
-
-export interface RunCreateWithoutSessionInput {
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
-  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
-  latencies?: LatencyCreateManyWithoutRunInput
-}
-
 export interface BenchmarkedQuerySubscriptionWhereInput {
   AND?: BenchmarkedQuerySubscriptionWhereInput[] | BenchmarkedQuerySubscriptionWhereInput
   OR?: BenchmarkedQuerySubscriptionWhereInput[] | BenchmarkedQuerySubscriptionWhereInput
@@ -1967,210 +2567,36 @@ export interface BenchmarkedQuerySubscriptionWhereInput {
   node?: BenchmarkedQueryWhereInput
 }
 
-export interface BenchmarkedQueryCreateOneWithoutRunsInput {
-  create?: BenchmarkedQueryCreateWithoutRunsInput
-  connect?: BenchmarkedQueryWhereUniqueInput
-}
-
-export interface BenchmarkingSessionWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface BenchmarkedQueryCreateWithoutRunsInput {
-  name: String
-  query: String
-}
-
-export interface RunWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface LatencyCreateManyWithoutRunInput {
+export interface LatencyUpdateManyWithoutRunInput {
   create?: LatencyCreateWithoutRunInput[] | LatencyCreateWithoutRunInput
   connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+  disconnect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+  delete?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
+  update?: LatencyUpdateWithWhereUniqueWithoutRunInput[] | LatencyUpdateWithWhereUniqueWithoutRunInput
+  upsert?: LatencyUpsertWithWhereUniqueWithoutRunInput[] | LatencyUpsertWithWhereUniqueWithoutRunInput
 }
 
-export interface RunUpsertWithoutLatenciesInput {
-  update: RunUpdateWithoutLatenciesDataInput
-  create: RunCreateWithoutLatenciesInput
+export interface VersionWhereUniqueInput {
+  name?: String
 }
 
-export interface LatencyCreateWithoutRunInput {
-  rps: Int
-  avg: Float
-  p50: Float
-  p95: Float
-  p99: Float
-  successes: Int
-  failures: Int
+export interface VersionUpdateInput {
+  name?: String
+  runs?: RunUpdateManyWithoutVersionInput
 }
 
-export interface RunUpdateOneWithoutLatenciesInput {
-  create?: RunCreateWithoutLatenciesInput
-  connect?: RunWhereUniqueInput
-  disconnect?: Boolean
+export interface VersionUpdateOneWithoutRunsInput {
+  create?: VersionCreateWithoutRunsInput
+  connect?: VersionWhereUniqueInput
   delete?: Boolean
-  update?: RunUpdateWithoutLatenciesDataInput
-  upsert?: RunUpsertWithoutLatenciesInput
-}
-
-export interface BenchmarkedQueryCreateInput {
-  name: String
-  query: String
-  runs?: RunCreateManyWithoutBenchmarkQueryInput
-}
-
-export interface RunUpdateInput {
-  connector?: Connector
-  version?: String
-  importFile?: Int
-  commit?: String
-  startedAt?: DateTime
-  finishedAt?: DateTime
-  session?: BenchmarkingSessionUpdateOneWithoutRunsInput
-  benchmarkQuery?: BenchmarkedQueryUpdateOneWithoutRunsInput
-  latencies?: LatencyUpdateManyWithoutRunInput
-}
-
-export interface RunCreateManyWithoutBenchmarkQueryInput {
-  create?: RunCreateWithoutBenchmarkQueryInput[] | RunCreateWithoutBenchmarkQueryInput
-  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
-}
-
-export interface BenchmarkingSessionUpsertWithoutRunsInput {
-  update: BenchmarkingSessionUpdateWithoutRunsDataInput
-  create: BenchmarkingSessionCreateWithoutRunsInput
+  update?: VersionUpdateWithoutRunsDataInput
+  upsert?: VersionUpsertWithoutRunsInput
 }
 
 export interface LatencyUpsertWithWhereUniqueWithoutRunInput {
   where: LatencyWhereUniqueInput
   update: LatencyUpdateWithoutRunDataInput
   create: LatencyCreateWithoutRunInput
-}
-
-export interface BenchmarkingSessionUpdateOneWithoutRunsInput {
-  create?: BenchmarkingSessionCreateWithoutRunsInput
-  connect?: BenchmarkingSessionWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: BenchmarkingSessionUpdateWithoutRunsDataInput
-  upsert?: BenchmarkingSessionUpsertWithoutRunsInput
-}
-
-export interface BenchmarkingSessionCreateOneWithoutRunsInput {
-  create?: BenchmarkingSessionCreateWithoutRunsInput
-  connect?: BenchmarkingSessionWhereUniqueInput
-}
-
-export interface RunUpdateWithWhereUniqueWithoutBenchmarkQueryInput {
-  where: RunWhereUniqueInput
-  data: RunUpdateWithoutBenchmarkQueryDataInput
-}
-
-export interface BenchmarkingSessionCreateWithoutRunsInput {
-  queriesToRun: Int
-  queriesRun: Int
-  started: DateTime
-  finished?: DateTime
-}
-
-export interface BenchmarkedQueryUpdateInput {
-  name?: String
-  query?: String
-  runs?: RunUpdateManyWithoutBenchmarkQueryInput
-}
-
-export interface RunCreateInput {
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
-  session?: BenchmarkingSessionCreateOneWithoutRunsInput
-  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
-  latencies?: LatencyCreateManyWithoutRunInput
-}
-
-export interface RunWhereInput {
-  AND?: RunWhereInput[] | RunWhereInput
-  OR?: RunWhereInput[] | RunWhereInput
-  NOT?: RunWhereInput[] | RunWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  connector?: Connector
-  connector_not?: Connector
-  connector_in?: Connector[] | Connector
-  connector_not_in?: Connector[] | Connector
-  version?: String
-  version_not?: String
-  version_in?: String[] | String
-  version_not_in?: String[] | String
-  version_lt?: String
-  version_lte?: String
-  version_gt?: String
-  version_gte?: String
-  version_contains?: String
-  version_not_contains?: String
-  version_starts_with?: String
-  version_not_starts_with?: String
-  version_ends_with?: String
-  version_not_ends_with?: String
-  importFile?: Int
-  importFile_not?: Int
-  importFile_in?: Int[] | Int
-  importFile_not_in?: Int[] | Int
-  importFile_lt?: Int
-  importFile_lte?: Int
-  importFile_gt?: Int
-  importFile_gte?: Int
-  commit?: String
-  commit_not?: String
-  commit_in?: String[] | String
-  commit_not_in?: String[] | String
-  commit_lt?: String
-  commit_lte?: String
-  commit_gt?: String
-  commit_gte?: String
-  commit_contains?: String
-  commit_not_contains?: String
-  commit_starts_with?: String
-  commit_not_starts_with?: String
-  commit_ends_with?: String
-  commit_not_ends_with?: String
-  startedAt?: DateTime
-  startedAt_not?: DateTime
-  startedAt_in?: DateTime[] | DateTime
-  startedAt_not_in?: DateTime[] | DateTime
-  startedAt_lt?: DateTime
-  startedAt_lte?: DateTime
-  startedAt_gt?: DateTime
-  startedAt_gte?: DateTime
-  finishedAt?: DateTime
-  finishedAt_not?: DateTime
-  finishedAt_in?: DateTime[] | DateTime
-  finishedAt_not_in?: DateTime[] | DateTime
-  finishedAt_lt?: DateTime
-  finishedAt_lte?: DateTime
-  finishedAt_gt?: DateTime
-  finishedAt_gte?: DateTime
-  session?: BenchmarkingSessionWhereInput
-  benchmarkQuery?: BenchmarkedQueryWhereInput
-  latencies_every?: LatencyWhereInput
-  latencies_some?: LatencyWhereInput
-  latencies_none?: LatencyWhereInput
 }
 
 export interface LatencyUpdateWithoutRunDataInput {
@@ -2183,135 +2609,33 @@ export interface LatencyUpdateWithoutRunDataInput {
   failures?: Int
 }
 
-export interface BenchmarkedQueryWhereUniqueInput {
-  id?: ID_Input
-  name?: String
-}
-
 export interface LatencyUpdateWithWhereUniqueWithoutRunInput {
   where: LatencyWhereUniqueInput
   data: LatencyUpdateWithoutRunDataInput
 }
 
-export interface RunUpdateWithoutLatenciesDataInput {
-  connector?: Connector
-  version?: String
-  importFile?: Int
-  commit?: String
-  startedAt?: DateTime
-  finishedAt?: DateTime
-  session?: BenchmarkingSessionUpdateOneWithoutRunsInput
-  benchmarkQuery?: BenchmarkedQueryUpdateOneWithoutRunsInput
-}
-
-export interface LatencyUpdateManyWithoutRunInput {
-  create?: LatencyCreateWithoutRunInput[] | LatencyCreateWithoutRunInput
-  connect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
-  disconnect?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
-  delete?: LatencyWhereUniqueInput[] | LatencyWhereUniqueInput
-  update?: LatencyUpdateWithWhereUniqueWithoutRunInput[] | LatencyUpdateWithWhereUniqueWithoutRunInput
-  upsert?: LatencyUpsertWithWhereUniqueWithoutRunInput[] | LatencyUpsertWithWhereUniqueWithoutRunInput
-}
-
-export interface RunUpsertWithWhereUniqueWithoutBenchmarkQueryInput {
-  where: RunWhereUniqueInput
-  update: RunUpdateWithoutBenchmarkQueryDataInput
-  create: RunCreateWithoutBenchmarkQueryInput
-}
-
-export interface BenchmarkingSessionUpdateInput {
+export interface BenchmarkingSessionUpdateWithoutRunsDataInput {
   queriesToRun?: Int
   queriesRun?: Int
   started?: DateTime
   finished?: DateTime
-  runs?: RunUpdateManyWithoutSessionInput
 }
 
-export interface RunUpdateWithoutBenchmarkQueryDataInput {
+export interface RunUpsertWithWhereUniqueWithoutVersionInput {
+  where: RunWhereUniqueInput
+  update: RunUpdateWithoutVersionDataInput
+  create: RunCreateWithoutVersionInput
+}
+
+export interface RunUpdateWithoutLatenciesDataInput {
   connector?: Connector
-  version?: String
   importFile?: Int
   commit?: String
   startedAt?: DateTime
   finishedAt?: DateTime
   session?: BenchmarkingSessionUpdateOneWithoutRunsInput
-  latencies?: LatencyUpdateManyWithoutRunInput
-}
-
-export interface RunUpdateManyWithoutSessionInput {
-  create?: RunCreateWithoutSessionInput[] | RunCreateWithoutSessionInput
-  connect?: RunWhereUniqueInput[] | RunWhereUniqueInput
-  disconnect?: RunWhereUniqueInput[] | RunWhereUniqueInput
-  delete?: RunWhereUniqueInput[] | RunWhereUniqueInput
-  update?: RunUpdateWithWhereUniqueWithoutSessionInput[] | RunUpdateWithWhereUniqueWithoutSessionInput
-  upsert?: RunUpsertWithWhereUniqueWithoutSessionInput[] | RunUpsertWithWhereUniqueWithoutSessionInput
-}
-
-export interface LatencySubscriptionWhereInput {
-  AND?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  OR?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  NOT?: LatencySubscriptionWhereInput[] | LatencySubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: LatencyWhereInput
-}
-
-export interface LatencyWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface BenchmarkedQueryUpdateWithoutRunsDataInput {
-  name?: String
-  query?: String
-}
-
-export interface BenchmarkedQueryUpdateOneWithoutRunsInput {
-  create?: BenchmarkedQueryCreateWithoutRunsInput
-  connect?: BenchmarkedQueryWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: BenchmarkedQueryUpdateWithoutRunsDataInput
-  upsert?: BenchmarkedQueryUpsertWithoutRunsInput
-}
-
-export interface RunUpdateWithoutSessionDataInput {
-  connector?: Connector
-  version?: String
-  importFile?: Int
-  commit?: String
-  startedAt?: DateTime
-  finishedAt?: DateTime
   benchmarkQuery?: BenchmarkedQueryUpdateOneWithoutRunsInput
-  latencies?: LatencyUpdateManyWithoutRunInput
-}
-
-export interface RunUpdateWithWhereUniqueWithoutSessionInput {
-  where: RunWhereUniqueInput
-  data: RunUpdateWithoutSessionDataInput
-}
-
-export interface LatencyUpdateInput {
-  rps?: Int
-  avg?: Float
-  p50?: Float
-  p95?: Float
-  p99?: Float
-  successes?: Int
-  failures?: Int
-  run?: RunUpdateOneWithoutLatenciesInput
-}
-
-export interface BenchmarkingSessionSubscriptionWhereInput {
-  AND?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
-  OR?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
-  NOT?: BenchmarkingSessionSubscriptionWhereInput[] | BenchmarkingSessionSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: BenchmarkingSessionWhereInput
+  version?: VersionUpdateOneWithoutRunsInput
 }
 
 export interface RunUpdateManyWithoutBenchmarkQueryInput {
@@ -2323,30 +2647,12 @@ export interface RunUpdateManyWithoutBenchmarkQueryInput {
   upsert?: RunUpsertWithWhereUniqueWithoutBenchmarkQueryInput[] | RunUpsertWithWhereUniqueWithoutBenchmarkQueryInput
 }
 
-export interface BenchmarkingSessionUpdateWithoutRunsDataInput {
-  queriesToRun?: Int
-  queriesRun?: Int
-  started?: DateTime
-  finished?: DateTime
-}
-
 /*
  * An object with an ID
 
  */
 export interface Node {
   id: ID_Output
-}
-
-/*
- * Information about pagination in a connection.
-
- */
-export interface PageInfo {
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-  startCursor?: String
-  endCursor?: String
 }
 
 export interface LatencyPreviousValues {
@@ -2360,17 +2666,39 @@ export interface LatencyPreviousValues {
   failures: Int
 }
 
-export interface LatencySubscriptionPayload {
-  mutation: MutationType
-  node?: Latency
-  updatedFields?: String[]
-  previousValues?: LatencyPreviousValues
+/*
+ * Information about pagination in a connection.
+
+ */
+export interface PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
 }
 
-export interface BenchmarkedQueryPreviousValues {
+export interface RunPreviousValues {
   id: ID_Output
+  connector: Connector
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface BenchmarkingSessionConnection {
+  pageInfo: PageInfo
+  edges: BenchmarkingSessionEdge[]
+  aggregate: AggregateBenchmarkingSession
+}
+
+export interface Version {
   name: String
-  query: String
+  runs?: Run[]
 }
 
 export interface BenchmarkingSession extends Node {
@@ -2386,31 +2714,22 @@ export interface BenchmarkingSession extends Node {
  * A connection to a list of items.
 
  */
-export interface BenchmarkingSessionConnection {
+export interface LatencyConnection {
   pageInfo: PageInfo
-  edges: BenchmarkingSessionEdge[]
-  aggregate: AggregateBenchmarkingSession
+  edges: LatencyEdge[]
+  aggregate: AggregateLatency
 }
 
-export interface Run extends Node {
-  id: ID_Output
-  session?: BenchmarkingSession
-  benchmarkQuery?: BenchmarkedQuery
-  latencies?: Latency[]
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
+export interface AggregateLatency {
+  count: Int
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface LatencyEdge {
-  node: Latency
+export interface VersionEdge {
+  node: Version
   cursor: String
 }
 
@@ -2422,14 +2741,8 @@ export interface AggregateRun {
   count: Int
 }
 
-export interface RunPreviousValues {
-  id: ID_Output
-  connector: Connector
-  version: String
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
+export interface VersionPreviousValues {
+  name: String
 }
 
 /*
@@ -2440,44 +2753,6 @@ export interface RunConnection {
   pageInfo: PageInfo
   edges: RunEdge[]
   aggregate: AggregateRun
-}
-
-export interface RunSubscriptionPayload {
-  mutation: MutationType
-  node?: Run
-  updatedFields?: String[]
-  previousValues?: RunPreviousValues
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface BenchmarkedQueryEdge {
-  node: BenchmarkedQuery
-  cursor: String
-}
-
-export interface BenchmarkedQuery extends Node {
-  id: ID_Output
-  name: String
-  query: String
-  runs?: Run[]
-}
-
-export interface AggregateBenchmarkingSession {
-  count: Int
-}
-
-export interface AggregateLatency {
-  count: Int
-}
-
-export interface BenchmarkedQuerySubscriptionPayload {
-  mutation: MutationType
-  node?: BenchmarkedQuery
-  updatedFields?: String[]
-  previousValues?: BenchmarkedQueryPreviousValues
 }
 
 export interface Latency extends Node {
@@ -2492,12 +2767,24 @@ export interface Latency extends Node {
   failures: Int
 }
 
-export interface BenchmarkingSessionPreviousValues {
-  id: ID_Output
-  queriesToRun: Int
-  queriesRun: Int
-  started: DateTime
-  finished?: DateTime
+/*
+ * An edge in a connection.
+
+ */
+export interface BenchmarkedQueryEdge {
+  node: BenchmarkedQuery
+  cursor: String
+}
+
+export interface VersionSubscriptionPayload {
+  mutation: MutationType
+  node?: Version
+  updatedFields?: String[]
+  previousValues?: VersionPreviousValues
+}
+
+export interface AggregateBenchmarkingSession {
+  count: Int
 }
 
 export interface BenchmarkingSessionSubscriptionPayload {
@@ -2507,22 +2794,44 @@ export interface BenchmarkingSessionSubscriptionPayload {
   previousValues?: BenchmarkingSessionPreviousValues
 }
 
-/*
- * A connection to a list of items.
+export interface LatencySubscriptionPayload {
+  mutation: MutationType
+  node?: Latency
+  updatedFields?: String[]
+  previousValues?: LatencyPreviousValues
+}
 
- */
-export interface LatencyConnection {
-  pageInfo: PageInfo
-  edges: LatencyEdge[]
-  aggregate: AggregateLatency
+export interface BenchmarkingSessionPreviousValues {
+  id: ID_Output
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished?: DateTime
+}
+
+export interface AggregateVersion {
+  count: Int
+}
+
+export interface Run extends Node {
+  id: ID_Output
+  session?: BenchmarkingSession
+  benchmarkQuery?: BenchmarkedQuery
+  latencies?: Latency[]
+  connector: Connector
+  version: Version
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface BenchmarkingSessionEdge {
-  node: BenchmarkingSession
+export interface RunEdge {
+  node: Run
   cursor: String
 }
 
@@ -2536,33 +2845,69 @@ export interface BenchmarkedQueryConnection {
   aggregate: AggregateBenchmarkedQuery
 }
 
-export interface AggregateBenchmarkedQuery {
-  count: Int
+export interface RunSubscriptionPayload {
+  mutation: MutationType
+  node?: Run
+  updatedFields?: String[]
+  previousValues?: RunPreviousValues
+}
+
+export interface BenchmarkedQuery extends Node {
+  id: ID_Output
+  name: String
+  query: String
+  runs?: Run[]
+}
+
+export interface BenchmarkedQueryPreviousValues {
+  id: ID_Output
+  name: String
+  query: String
+}
+
+export interface BenchmarkedQuerySubscriptionPayload {
+  mutation: MutationType
+  node?: BenchmarkedQuery
+  updatedFields?: String[]
+  previousValues?: BenchmarkedQueryPreviousValues
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface RunEdge {
-  node: Run
+export interface BenchmarkingSessionEdge {
+  node: BenchmarkingSession
   cursor: String
 }
 
+export interface AggregateBenchmarkedQuery {
+  count: Int
+}
+
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string
+ * A connection to a list of items.
+
+ */
+export interface VersionConnection {
+  pageInfo: PageInfo
+  edges: VersionEdge[]
+  aggregate: AggregateVersion
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface LatencyEdge {
+  node: Latency
+  cursor: String
+}
 
 /*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
 */
 export type Float = number
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -2571,14 +2916,24 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean
+
+export type DateTime = Date | string
+
+/*
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 */
 export type Long = string
 
-export type DateTime = Date | string
-
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string

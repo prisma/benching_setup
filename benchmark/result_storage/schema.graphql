@@ -1,5 +1,5 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Sat Jul 21 2018 19:15:47 GMT+0200 (CEST)
+# timestamp: Tue Jul 24 2018 11:56:35 GMT+0200 (CEST)
 
 type AggregateBenchmarkedQuery {
   count: Int!
@@ -14,6 +14,10 @@ type AggregateLatency {
 }
 
 type AggregateRun {
+  count: Int!
+}
+
+type AggregateVersion {
   count: Int!
 }
 
@@ -972,26 +976,32 @@ type Mutation {
   createBenchmarkingSession(data: BenchmarkingSessionCreateInput!): BenchmarkingSession!
   createBenchmarkedQuery(data: BenchmarkedQueryCreateInput!): BenchmarkedQuery!
   createRun(data: RunCreateInput!): Run!
+  createVersion(data: VersionCreateInput!): Version!
   createLatency(data: LatencyCreateInput!): Latency!
   updateBenchmarkingSession(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
   updateBenchmarkedQuery(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
   updateRun(data: RunUpdateInput!, where: RunWhereUniqueInput!): Run
+  updateVersion(data: VersionUpdateInput!, where: VersionWhereUniqueInput!): Version
   updateLatency(data: LatencyUpdateInput!, where: LatencyWhereUniqueInput!): Latency
   deleteBenchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
   deleteBenchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
   deleteRun(where: RunWhereUniqueInput!): Run
+  deleteVersion(where: VersionWhereUniqueInput!): Version
   deleteLatency(where: LatencyWhereUniqueInput!): Latency
   upsertBenchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!, create: BenchmarkingSessionCreateInput!, update: BenchmarkingSessionUpdateInput!): BenchmarkingSession!
   upsertBenchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!, create: BenchmarkedQueryCreateInput!, update: BenchmarkedQueryUpdateInput!): BenchmarkedQuery!
   upsertRun(where: RunWhereUniqueInput!, create: RunCreateInput!, update: RunUpdateInput!): Run!
+  upsertVersion(where: VersionWhereUniqueInput!, create: VersionCreateInput!, update: VersionUpdateInput!): Version!
   upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
   updateManyBenchmarkingSessions(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereInput): BatchPayload!
   updateManyBenchmarkedQueries(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereInput): BatchPayload!
   updateManyRuns(data: RunUpdateInput!, where: RunWhereInput): BatchPayload!
+  updateManyVersions(data: VersionUpdateInput!, where: VersionWhereInput): BatchPayload!
   updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
   deleteManyBenchmarkingSessions(where: BenchmarkingSessionWhereInput): BatchPayload!
   deleteManyBenchmarkedQueries(where: BenchmarkedQueryWhereInput): BatchPayload!
   deleteManyRuns(where: RunWhereInput): BatchPayload!
+  deleteManyVersions(where: VersionWhereInput): BatchPayload!
   deleteManyLatencies(where: LatencyWhereInput): BatchPayload!
 }
 
@@ -1026,14 +1036,17 @@ type Query {
   benchmarkingSessions(where: BenchmarkingSessionWhereInput, orderBy: BenchmarkingSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BenchmarkingSession]!
   benchmarkedQueries(where: BenchmarkedQueryWhereInput, orderBy: BenchmarkedQueryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BenchmarkedQuery]!
   runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run]!
+  versions(where: VersionWhereInput, orderBy: VersionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Version]!
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency]!
   benchmarkingSession(where: BenchmarkingSessionWhereUniqueInput!): BenchmarkingSession
   benchmarkedQuery(where: BenchmarkedQueryWhereUniqueInput!): BenchmarkedQuery
   run(where: RunWhereUniqueInput!): Run
+  version(where: VersionWhereUniqueInput!): Version
   latency(where: LatencyWhereUniqueInput!): Latency
   benchmarkingSessionsConnection(where: BenchmarkingSessionWhereInput, orderBy: BenchmarkingSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BenchmarkingSessionConnection!
   benchmarkedQueriesConnection(where: BenchmarkedQueryWhereInput, orderBy: BenchmarkedQueryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BenchmarkedQueryConnection!
   runsConnection(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RunConnection!
+  versionsConnection(where: VersionWhereInput, orderBy: VersionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VersionConnection!
   latenciesConnection(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LatencyConnection!
 
   """Fetches an object given its ID"""
@@ -1049,7 +1062,7 @@ type Run implements Node {
   benchmarkQuery(where: BenchmarkedQueryWhereInput): BenchmarkedQuery
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
-  version: String!
+  version(where: VersionWhereInput): Version!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
@@ -1068,7 +1081,6 @@ type RunConnection {
 
 input RunCreateInput {
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
@@ -1076,6 +1088,7 @@ input RunCreateInput {
   session: BenchmarkingSessionCreateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
   latencies: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput!
 }
 
 input RunCreateManyWithoutBenchmarkQueryInput {
@@ -1088,6 +1101,11 @@ input RunCreateManyWithoutSessionInput {
   connect: [RunWhereUniqueInput!]
 }
 
+input RunCreateManyWithoutVersionInput {
+  create: [RunCreateWithoutVersionInput!]
+  connect: [RunWhereUniqueInput!]
+}
+
 input RunCreateOneWithoutLatenciesInput {
   create: RunCreateWithoutLatenciesInput
   connect: RunWhereUniqueInput
@@ -1095,33 +1113,44 @@ input RunCreateOneWithoutLatenciesInput {
 
 input RunCreateWithoutBenchmarkQueryInput {
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
   session: BenchmarkingSessionCreateOneWithoutRunsInput
   latencies: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput!
 }
 
 input RunCreateWithoutLatenciesInput {
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
   session: BenchmarkingSessionCreateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
+  version: VersionCreateOneWithoutRunsInput!
 }
 
 input RunCreateWithoutSessionInput {
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
+  benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
+  latencies: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput!
+}
+
+input RunCreateWithoutVersionInput {
+  connector: Connector!
+  importFile: Int!
+  commit: String!
+  startedAt: DateTime!
+  finishedAt: DateTime!
+  session: BenchmarkingSessionCreateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryCreateOneWithoutRunsInput
   latencies: LatencyCreateManyWithoutRunInput
 }
@@ -1140,8 +1169,6 @@ enum RunOrderByInput {
   id_DESC
   connector_ASC
   connector_DESC
-  version_ASC
-  version_DESC
   importFile_ASC
   importFile_DESC
   commit_ASC
@@ -1159,7 +1186,6 @@ enum RunOrderByInput {
 type RunPreviousValues {
   id: ID!
   connector: Connector!
-  version: String!
   importFile: Int!
   commit: String!
   startedAt: DateTime!
@@ -1207,7 +1233,6 @@ input RunSubscriptionWhereInput {
 
 input RunUpdateInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
@@ -1215,6 +1240,7 @@ input RunUpdateInput {
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
+  version: VersionUpdateOneWithoutRunsInput
 }
 
 input RunUpdateManyWithoutBenchmarkQueryInput {
@@ -1235,6 +1261,15 @@ input RunUpdateManyWithoutSessionInput {
   upsert: [RunUpsertWithWhereUniqueWithoutSessionInput!]
 }
 
+input RunUpdateManyWithoutVersionInput {
+  create: [RunCreateWithoutVersionInput!]
+  connect: [RunWhereUniqueInput!]
+  disconnect: [RunWhereUniqueInput!]
+  delete: [RunWhereUniqueInput!]
+  update: [RunUpdateWithWhereUniqueWithoutVersionInput!]
+  upsert: [RunUpsertWithWhereUniqueWithoutVersionInput!]
+}
+
 input RunUpdateOneWithoutLatenciesInput {
   create: RunCreateWithoutLatenciesInput
   connect: RunWhereUniqueInput
@@ -1246,33 +1281,44 @@ input RunUpdateOneWithoutLatenciesInput {
 
 input RunUpdateWithoutBenchmarkQueryDataInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
+  version: VersionUpdateOneWithoutRunsInput
 }
 
 input RunUpdateWithoutLatenciesDataInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
+  version: VersionUpdateOneWithoutRunsInput
 }
 
 input RunUpdateWithoutSessionDataInput {
   connector: Connector
-  version: String
   importFile: Int
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
+  benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
+  latencies: LatencyUpdateManyWithoutRunInput
+  version: VersionUpdateOneWithoutRunsInput
+}
+
+input RunUpdateWithoutVersionDataInput {
+  connector: Connector
+  importFile: Int
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session: BenchmarkingSessionUpdateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
 }
@@ -1285,6 +1331,11 @@ input RunUpdateWithWhereUniqueWithoutBenchmarkQueryInput {
 input RunUpdateWithWhereUniqueWithoutSessionInput {
   where: RunWhereUniqueInput!
   data: RunUpdateWithoutSessionDataInput!
+}
+
+input RunUpdateWithWhereUniqueWithoutVersionInput {
+  where: RunWhereUniqueInput!
+  data: RunUpdateWithoutVersionDataInput!
 }
 
 input RunUpsertWithoutLatenciesInput {
@@ -1302,6 +1353,12 @@ input RunUpsertWithWhereUniqueWithoutSessionInput {
   where: RunWhereUniqueInput!
   update: RunUpdateWithoutSessionDataInput!
   create: RunCreateWithoutSessionInput!
+}
+
+input RunUpsertWithWhereUniqueWithoutVersionInput {
+  where: RunWhereUniqueInput!
+  update: RunUpdateWithoutVersionDataInput!
+  create: RunCreateWithoutVersionInput!
 }
 
 input RunWhereInput {
@@ -1363,46 +1420,6 @@ input RunWhereInput {
 
   """All values that are not contained in given list."""
   connector_not_in: [Connector!]
-  version: String
-
-  """All values that are not equal to given value."""
-  version_not: String
-
-  """All values that are contained in given list."""
-  version_in: [String!]
-
-  """All values that are not contained in given list."""
-  version_not_in: [String!]
-
-  """All values less than the given value."""
-  version_lt: String
-
-  """All values less than or equal the given value."""
-  version_lte: String
-
-  """All values greater than the given value."""
-  version_gt: String
-
-  """All values greater than or equal the given value."""
-  version_gte: String
-
-  """All values containing the given string."""
-  version_contains: String
-
-  """All values not containing the given string."""
-  version_not_contains: String
-
-  """All values starting with the given string."""
-  version_starts_with: String
-
-  """All values not starting with the given string."""
-  version_not_starts_with: String
-
-  """All values ending with the given string."""
-  version_ends_with: String
-
-  """All values not ending with the given string."""
-  version_not_ends_with: String
   importFile: Int
 
   """All values that are not equal to given value."""
@@ -1514,6 +1531,7 @@ input RunWhereInput {
   latencies_every: LatencyWhereInput
   latencies_some: LatencyWhereInput
   latencies_none: LatencyWhereInput
+  version: VersionWhereInput
 }
 
 input RunWhereUniqueInput {
@@ -1524,5 +1542,178 @@ type Subscription {
   benchmarkingSession(where: BenchmarkingSessionSubscriptionWhereInput): BenchmarkingSessionSubscriptionPayload
   benchmarkedQuery(where: BenchmarkedQuerySubscriptionWhereInput): BenchmarkedQuerySubscriptionPayload
   run(where: RunSubscriptionWhereInput): RunSubscriptionPayload
+  version(where: VersionSubscriptionWhereInput): VersionSubscriptionPayload
   latency(where: LatencySubscriptionWhereInput): LatencySubscriptionPayload
+}
+
+type Version {
+  name: String!
+  runs(where: RunWhereInput, orderBy: RunOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Run!]
+}
+
+"""A connection to a list of items."""
+type VersionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [VersionEdge]!
+  aggregate: AggregateVersion!
+}
+
+input VersionCreateInput {
+  name: String!
+  runs: RunCreateManyWithoutVersionInput
+}
+
+input VersionCreateOneWithoutRunsInput {
+  create: VersionCreateWithoutRunsInput
+  connect: VersionWhereUniqueInput
+}
+
+input VersionCreateWithoutRunsInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type VersionEdge {
+  """The item at the end of the edge."""
+  node: Version!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum VersionOrderByInput {
+  name_ASC
+  name_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type VersionPreviousValues {
+  name: String!
+}
+
+type VersionSubscriptionPayload {
+  mutation: MutationType!
+  node: Version
+  updatedFields: [String!]
+  previousValues: VersionPreviousValues
+}
+
+input VersionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VersionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VersionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VersionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: VersionWhereInput
+}
+
+input VersionUpdateInput {
+  name: String
+  runs: RunUpdateManyWithoutVersionInput
+}
+
+input VersionUpdateOneWithoutRunsInput {
+  create: VersionCreateWithoutRunsInput
+  connect: VersionWhereUniqueInput
+  delete: Boolean
+  update: VersionUpdateWithoutRunsDataInput
+  upsert: VersionUpsertWithoutRunsInput
+}
+
+input VersionUpdateWithoutRunsDataInput {
+  name: String
+}
+
+input VersionUpsertWithoutRunsInput {
+  update: VersionUpdateWithoutRunsDataInput!
+  create: VersionCreateWithoutRunsInput!
+}
+
+input VersionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VersionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VersionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VersionWhereInput!]
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  runs_every: RunWhereInput
+  runs_some: RunWhereInput
+  runs_none: RunWhereInput
+}
+
+input VersionWhereUniqueInput {
+  name: String
 }
