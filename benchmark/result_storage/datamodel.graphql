@@ -32,7 +32,7 @@ type Run {
   latencies: [Latency!]! @relation(name: "RunToLatency", onDelete: CASCADE)
   connector: Connector!
   version: Version!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!

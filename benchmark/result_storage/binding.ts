@@ -1160,7 +1160,7 @@ type Run implements Node {
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
   version(where: VersionWhereInput): Version!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1178,7 +1178,7 @@ type RunConnection {
 
 input RunCreateInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1210,7 +1210,7 @@ input RunCreateOneWithoutLatenciesInput {
 
 input RunCreateWithoutBenchmarkQueryInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1221,7 +1221,7 @@ input RunCreateWithoutBenchmarkQueryInput {
 
 input RunCreateWithoutLatenciesInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1232,7 +1232,7 @@ input RunCreateWithoutLatenciesInput {
 
 input RunCreateWithoutSessionInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1243,7 +1243,7 @@ input RunCreateWithoutSessionInput {
 
 input RunCreateWithoutVersionInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1283,7 +1283,7 @@ enum RunOrderByInput {
 type RunPreviousValues {
   id: ID!
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -2029,7 +2029,7 @@ export interface LatencyCreateInput {
 
 export interface RunCreateWithoutSessionInput {
   connector: Connector
-  importFile?: ImportFileSize
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2256,7 +2256,7 @@ export interface LatencyUpdateInput {
 
 export interface RunCreateWithoutBenchmarkQueryInput {
   connector: Connector
-  importFile?: ImportFileSize
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2309,7 +2309,7 @@ export interface RunUpdateInput {
 
 export interface RunCreateInput {
   connector: Connector
-  importFile?: ImportFileSize
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2350,7 +2350,7 @@ export interface RunUpdateWithWhereUniqueWithoutBenchmarkQueryInput {
 
 export interface RunCreateWithoutVersionInput {
   connector: Connector
-  importFile?: ImportFileSize
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2497,7 +2497,7 @@ export interface VersionSubscriptionWhereInput {
 
 export interface RunCreateWithoutLatenciesInput {
   connector: Connector
-  importFile?: ImportFileSize
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2730,7 +2730,7 @@ export interface PageInfo {
 export interface RunPreviousValues {
   id: ID_Output
   connector: Connector
-  importFile?: ImportFileSize
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2872,7 +2872,7 @@ export interface Run extends Node {
   latencies?: Latency[]
   connector: Connector
   version: Version
-  importFile?: ImportFileSize
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime

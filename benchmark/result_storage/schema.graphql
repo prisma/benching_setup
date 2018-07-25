@@ -1,5 +1,5 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Wed Jul 25 2018 14:10:57 GMT+0200 (CEST)
+# timestamp: Wed Jul 25 2018 14:15:40 GMT+0200 (CEST)
 
 type AggregateBenchmarkedQuery {
   count: Int!
@@ -1068,7 +1068,7 @@ type Run implements Node {
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
   version(where: VersionWhereInput): Version!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1086,7 +1086,7 @@ type RunConnection {
 
 input RunCreateInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1118,7 +1118,7 @@ input RunCreateOneWithoutLatenciesInput {
 
 input RunCreateWithoutBenchmarkQueryInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1129,7 +1129,7 @@ input RunCreateWithoutBenchmarkQueryInput {
 
 input RunCreateWithoutLatenciesInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1140,7 +1140,7 @@ input RunCreateWithoutLatenciesInput {
 
 input RunCreateWithoutSessionInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1151,7 +1151,7 @@ input RunCreateWithoutSessionInput {
 
 input RunCreateWithoutVersionInput {
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1191,7 +1191,7 @@ enum RunOrderByInput {
 type RunPreviousValues {
   id: ID!
   connector: Connector!
-  importFile: ImportFileSize
+  importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
