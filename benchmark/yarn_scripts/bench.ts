@@ -133,7 +133,7 @@ async function benchMarkQuery(
 
       const loadLastMinute = loadavg()[0];
       const numberOfCpus = cpus().length;
-      cpuTresholdReached = loadLastMinute > numberOfCpus;
+      cpuTresholdReached = loadLastMinute > numberOfCpus * 1.25;
       console.log(loadLastMinute, numberOfCpus);
       if (cpuTresholdReached) {
         console.log(`CPU treshold reached. Load was: ${loadLastMinute}`);
