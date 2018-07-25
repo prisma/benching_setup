@@ -18,29 +18,24 @@ const benchmarkDuration = 60;
 // IMPORTANT: warmup_duration must be a multiple of 30!
 const benchmarkConfigs = {
   "very-slow": {
-    warmup_rps: 20,
     warmup_duration: 900, // 15 minutes
     rps: [20, 40, 60, 80, 100, 120, 140, 160, 180, 200]
   },
   slow: {
-    warmup_rps: 50,
     warmup_duration: 480, // 8 minutes
     rps: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
   },
   medium: {
-    warmup_rps: 100,
     warmup_duration: 300, // 5 minutes
     rps: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
     // warmup_duration: 3,
     // rps: [100, 200]
   },
   fast: {
-    warmup_rps: 250,
     warmup_duration: 300, // 5 minutes
     rps: [250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500]
   },
   "very-fast": {
-    warmup_rps: 500,
     warmup_duration: 300, // 5 minutes
     rps: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
   }
@@ -103,10 +98,11 @@ async function benchMarkQuery(
 
   const startedAt = new Date();
   var cpuTresholdHasBeenReached = false;
+  var warmupRps = config.rps[0];
   console.log("");
   console.log("");
   console.log(
-    `----------------- Warmup: ${query.name} ${url} warming up to ${config.warmup_rps}req/s ${
+    `----------------- Warmup: ${query.name} ${url} warming up to ${warmupRps}req/s ${
       config.warmup_duration
     }s -----------------`
   );
@@ -116,7 +112,7 @@ async function benchMarkQuery(
       console.log(`CPU treshold reached. Stopping the warmup.`);
       break;
     }
-    const rps = (config.warmup_rps / iterations) * i;
+    const rps = (warmupRps / iterations) * i;
     const duration = 30;
     console.log(`Warm up step: ${rps}req/s for ${duration}s`);
     console.log(graphqlQuery);
