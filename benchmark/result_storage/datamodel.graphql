@@ -4,6 +4,11 @@ enum Connector {
   MongoDB
 }
 
+enum ImportFileSize {
+  Import1000Nodes
+  Import10000Nodes
+}
+
 type BenchmarkingSession {
   id: ID! @unique
   queriesToRun: Int!
@@ -27,7 +32,7 @@ type Run {
   latencies: [Latency!]! @relation(name: "RunToLatency", onDelete: CASCADE)
   connector: Connector!
   version: Version!
-  importFile: Int!
+  importFile: ImportFileSize
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!

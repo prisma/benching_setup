@@ -2,7 +2,8 @@ import {
   Prisma,
   RunUpdateManyWithoutBenchmarkQueryInput,
   RunCreateManyWithoutBenchmarkQueryInput,
-  Connector
+  Connector,
+  ImportFileSize
 } from "./binding";
 
 const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
@@ -90,7 +91,7 @@ export async function storeBenchmarkResults(
           }
         },
         commit: commit,
-        importFile: importFile,
+        importFile: getImportFileSize(importFile),
         latencies: {
           create: results
         },
@@ -114,4 +115,14 @@ export async function storeBenchmarkResults(
     }
   };
   await resultStorage.mutation.upsertBenchmarkedQuery(data);
+}
+
+function getImportFileSize(importFile: number): ImportFileSize {
+  if (importFile == 1000) {
+    return "Import1000Nodes";
+  } else if (importFile == 10000) {
+    return "Import10000Nodes";
+  } else {
+    throw new Error(`import file size ${importFile} is not valid`);
+  }
 }

@@ -677,6 +677,11 @@ enum Connector {
 
 scalar DateTime
 
+enum ImportFileSize {
+  Import1000Nodes
+  Import10000Nodes
+}
+
 type Latency implements Node {
   id: ID!
   run(where: RunWhereInput): Run
@@ -1155,7 +1160,7 @@ type Run implements Node {
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
   version(where: VersionWhereInput): Version!
-  importFile: Int!
+  importFile: ImportFileSize
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1173,7 +1178,7 @@ type RunConnection {
 
 input RunCreateInput {
   connector: Connector!
-  importFile: Int!
+  importFile: ImportFileSize
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1205,7 +1210,7 @@ input RunCreateOneWithoutLatenciesInput {
 
 input RunCreateWithoutBenchmarkQueryInput {
   connector: Connector!
-  importFile: Int!
+  importFile: ImportFileSize
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1216,7 +1221,7 @@ input RunCreateWithoutBenchmarkQueryInput {
 
 input RunCreateWithoutLatenciesInput {
   connector: Connector!
-  importFile: Int!
+  importFile: ImportFileSize
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1227,7 +1232,7 @@ input RunCreateWithoutLatenciesInput {
 
 input RunCreateWithoutSessionInput {
   connector: Connector!
-  importFile: Int!
+  importFile: ImportFileSize
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1238,7 +1243,7 @@ input RunCreateWithoutSessionInput {
 
 input RunCreateWithoutVersionInput {
   connector: Connector!
-  importFile: Int!
+  importFile: ImportFileSize
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1278,7 +1283,7 @@ enum RunOrderByInput {
 type RunPreviousValues {
   id: ID!
   connector: Connector!
-  importFile: Int!
+  importFile: ImportFileSize
   commit: String!
   startedAt: DateTime!
   finishedAt: DateTime!
@@ -1325,7 +1330,7 @@ input RunSubscriptionWhereInput {
 
 input RunUpdateInput {
   connector: Connector
-  importFile: Int
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -1373,7 +1378,7 @@ input RunUpdateOneWithoutLatenciesInput {
 
 input RunUpdateWithoutBenchmarkQueryDataInput {
   connector: Connector
-  importFile: Int
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -1384,7 +1389,7 @@ input RunUpdateWithoutBenchmarkQueryDataInput {
 
 input RunUpdateWithoutLatenciesDataInput {
   connector: Connector
-  importFile: Int
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -1395,7 +1400,7 @@ input RunUpdateWithoutLatenciesDataInput {
 
 input RunUpdateWithoutSessionDataInput {
   connector: Connector
-  importFile: Int
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -1406,7 +1411,7 @@ input RunUpdateWithoutSessionDataInput {
 
 input RunUpdateWithoutVersionDataInput {
   connector: Connector
-  importFile: Int
+  importFile: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -1512,28 +1517,16 @@ input RunWhereInput {
 
   """All values that are not contained in given list."""
   connector_not_in: [Connector!]
-  importFile: Int
+  importFile: ImportFileSize
 
   """All values that are not equal to given value."""
-  importFile_not: Int
+  importFile_not: ImportFileSize
 
   """All values that are contained in given list."""
-  importFile_in: [Int!]
+  importFile_in: [ImportFileSize!]
 
   """All values that are not contained in given list."""
-  importFile_not_in: [Int!]
-
-  """All values less than the given value."""
-  importFile_lt: Int
-
-  """All values less than or equal the given value."""
-  importFile_lte: Int
-
-  """All values greater than the given value."""
-  importFile_gt: Int
-
-  """All values greater than or equal the given value."""
-  importFile_gte: Int
+  importFile_not_in: [ImportFileSize!]
   commit: String
 
   """All values that are not equal to given value."""
@@ -1913,6 +1906,9 @@ export type LatencyOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
+export type ImportFileSize =   'Import1000Nodes' |
+  'Import10000Nodes'
+
 export type Connector =   'Postgres' |
   'MySQL' |
   'MongoDB'
@@ -1941,16 +1937,11 @@ export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
 
-export interface RunCreateInput {
-  connector: Connector
-  importFile: Int
-  commit: String
-  startedAt: DateTime
-  finishedAt: DateTime
-  session?: BenchmarkingSessionCreateOneWithoutRunsInput
-  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
-  latencies?: LatencyCreateManyWithoutRunInput
-  version: VersionCreateOneWithoutRunsInput
+export interface BenchmarkingSessionCreateWithoutRunsInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished?: DateTime
 }
 
 export interface BenchmarkingSessionWhereInput {
@@ -2038,7 +2029,7 @@ export interface LatencyCreateInput {
 
 export interface RunCreateWithoutSessionInput {
   connector: Connector
-  importFile: Int
+  importFile?: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2178,14 +2169,10 @@ export interface RunWhereInput {
   connector_not?: Connector
   connector_in?: Connector[] | Connector
   connector_not_in?: Connector[] | Connector
-  importFile?: Int
-  importFile_not?: Int
-  importFile_in?: Int[] | Int
-  importFile_not_in?: Int[] | Int
-  importFile_lt?: Int
-  importFile_lte?: Int
-  importFile_gt?: Int
-  importFile_gte?: Int
+  importFile?: ImportFileSize
+  importFile_not?: ImportFileSize
+  importFile_in?: ImportFileSize[] | ImportFileSize
+  importFile_not_in?: ImportFileSize[] | ImportFileSize
   commit?: String
   commit_not?: String
   commit_in?: String[] | String
@@ -2269,7 +2256,7 @@ export interface LatencyUpdateInput {
 
 export interface RunCreateWithoutBenchmarkQueryInput {
   connector: Connector
-  importFile: Int
+  importFile?: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2280,7 +2267,7 @@ export interface RunCreateWithoutBenchmarkQueryInput {
 
 export interface RunUpdateWithoutVersionDataInput {
   connector?: Connector
-  importFile?: Int
+  importFile?: ImportFileSize
   commit?: String
   startedAt?: DateTime
   finishedAt?: DateTime
@@ -2303,16 +2290,14 @@ export interface RunUpdateManyWithoutVersionInput {
   upsert?: RunUpsertWithWhereUniqueWithoutVersionInput[] | RunUpsertWithWhereUniqueWithoutVersionInput
 }
 
-export interface BenchmarkingSessionCreateWithoutRunsInput {
-  queriesToRun: Int
-  queriesRun: Int
-  started: DateTime
-  finished?: DateTime
+export interface VersionUpsertWithoutRunsInput {
+  update: VersionUpdateWithoutRunsDataInput
+  create: VersionCreateWithoutRunsInput
 }
 
 export interface RunUpdateInput {
   connector?: Connector
-  importFile?: Int
+  importFile?: ImportFileSize
   commit?: String
   startedAt?: DateTime
   finishedAt?: DateTime
@@ -2322,9 +2307,16 @@ export interface RunUpdateInput {
   version?: VersionUpdateOneWithoutRunsInput
 }
 
-export interface VersionUpsertWithoutRunsInput {
-  update: VersionUpdateWithoutRunsDataInput
-  create: VersionCreateWithoutRunsInput
+export interface RunCreateInput {
+  connector: Connector
+  importFile?: ImportFileSize
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
+  session?: BenchmarkingSessionCreateOneWithoutRunsInput
+  benchmarkQuery?: BenchmarkedQueryCreateOneWithoutRunsInput
+  latencies?: LatencyCreateManyWithoutRunInput
+  version: VersionCreateOneWithoutRunsInput
 }
 
 export interface BenchmarkingSessionUpsertWithoutRunsInput {
@@ -2358,7 +2350,7 @@ export interface RunUpdateWithWhereUniqueWithoutBenchmarkQueryInput {
 
 export interface RunCreateWithoutVersionInput {
   connector: Connector
-  importFile: Int
+  importFile?: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2505,7 +2497,7 @@ export interface VersionSubscriptionWhereInput {
 
 export interface RunCreateWithoutLatenciesInput {
   connector: Connector
-  importFile: Int
+  importFile?: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2562,7 +2554,7 @@ export interface RunUpdateWithWhereUniqueWithoutVersionInput {
 
 export interface RunUpdateWithoutSessionDataInput {
   connector?: Connector
-  importFile?: Int
+  importFile?: ImportFileSize
   commit?: String
   startedAt?: DateTime
   finishedAt?: DateTime
@@ -2588,7 +2580,7 @@ export interface BenchmarkedQueryUpdateOneWithoutRunsInput {
 
 export interface RunUpdateWithoutBenchmarkQueryDataInput {
   connector?: Connector
-  importFile?: Int
+  importFile?: ImportFileSize
   commit?: String
   startedAt?: DateTime
   finishedAt?: DateTime
@@ -2687,7 +2679,7 @@ export interface RunUpsertWithWhereUniqueWithoutVersionInput {
 
 export interface RunUpdateWithoutLatenciesDataInput {
   connector?: Connector
-  importFile?: Int
+  importFile?: ImportFileSize
   commit?: String
   startedAt?: DateTime
   finishedAt?: DateTime
@@ -2738,7 +2730,7 @@ export interface PageInfo {
 export interface RunPreviousValues {
   id: ID_Output
   connector: Connector
-  importFile: Int
+  importFile?: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
@@ -2880,7 +2872,7 @@ export interface Run extends Node {
   latencies?: Latency[]
   connector: Connector
   version: Version
-  importFile: Int
+  importFile?: ImportFileSize
   commit: String
   startedAt: DateTime
   finishedAt: DateTime
