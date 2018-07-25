@@ -29,6 +29,7 @@ export async function createBenchmarkDroplet(
     .replace("$VERSION", version)
     .replace("$IMPORT_FILE", importFile.toString())
     .replace("$API_TOKEN", token!);
+    .replace("$TEST", test)
   const sshKey = await getSSHKey();
   const droplet = await digitalOcean.Droplet.create({
     name: `benchmark-${connector}-${version}-${importFile}-${test}`,

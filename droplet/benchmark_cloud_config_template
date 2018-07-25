@@ -4,4 +4,4 @@ runcmd:
   - cd /root
   - git clone https://github.com/prismagraphql/benching_setup.git
   - cd /root/benching_setup/droplet/tools && ./setup.sh
-  - cd /root/benching_setup/droplet && ./bench.sh $CONNECTOR $VERSION $IMPORT_FILE $API_TOKEN
+  - cd /root/benching_setup/droplet && ./bench.sh $CONNECTOR $VERSION $IMPORT_FILE $TEST $API_TOKEN
