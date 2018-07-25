@@ -15,33 +15,33 @@ import {
 
 const benchmarkedServer = "http://localhost:4466";
 const benchmarkDuration = 60;
-
+// IMPORTANT: warmup_duration must be a multiple of 30!
 const benchmarkConfigs = {
   "very-slow": {
     warmup_rps: 20,
-    warmup_duration: 1000,
+    warmup_duration: 900, // 15 minutes
     rps: [20, 40, 60, 80, 100, 120, 140, 160, 180, 200]
   },
   slow: {
     warmup_rps: 50,
-    warmup_duration: 500,
+    warmup_duration: 480, // 8 minutes
     rps: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
   },
   medium: {
     warmup_rps: 100,
-    warmup_duration: 300,
+    warmup_duration: 300, // 5 minutes
     rps: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
     // warmup_duration: 3,
     // rps: [100, 200]
   },
   fast: {
-    warmup_rps: 150,
-    warmup_duration: 200,
+    warmup_rps: 250,
+    warmup_duration: 300, // 5 minutes
     rps: [250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500]
   },
   "very-fast": {
-    warmup_rps: 150,
-    warmup_duration: 200,
+    warmup_rps: 500,
+    warmup_duration: 300, // 5 minutes
     rps: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
   }
 };
@@ -102,45 +102,49 @@ async function benchMarkQuery(
   const url = benchmarkedServer;
 
   const startedAt = new Date();
+  var cpuTresholdHasBeenReached = false;
   console.log("");
   console.log("");
   console.log(
-    `----------------- Warmup: ${query.name} ${url} ${config.warmup_rps}Req/s ${
+    `----------------- Warmup: ${query.name} ${url} warming up to ${config.warmup_rps}req/s ${
       config.warmup_duration
     }s -----------------`
   );
-  console.log("");
-  console.log(graphqlQuery);
-  runVegeta(url, graphqlQuery, config.warmup_rps, config.warmup_duration);
+  const iterations = config.warmup_duration / 30;
+  for (var i = 1; i <= iterations; i++) {
+    if (cpuTresholdHasBeenReached) {
+      console.log(`CPU treshold reached. Stopping the warmup.`);
+      break;
+    }
+    const rps = (config.warmup_rps / iterations) * i;
+    const duration = 30;
+    console.log(`Warm up step: ${rps}req/s for ${duration}s`);
+    console.log(graphqlQuery);
+    runVegeta(url, graphqlQuery, rps, duration);
+    cpuTresholdHasBeenReached = isCpuTresholdReached();
+  }
 
   await new Promise(r => setTimeout(r, 10000)); // give the service a bit of time to recover
 
   const results: BenchmarkResult[] = [];
-  var cpuTresholdReached = false;
   for (const rps of config.rps) {
-    console.log(`----------------- Benching: ${query.name} at ${rps} req/s -----------------`);
-    if (!cpuTresholdReached) {
-      const vegetaResult = runVegeta(url, graphqlQuery, rps, benchmarkDuration);
-      results.push({
-        rps: rps,
-        successes: vegetaResult.status_codes["200"],
-        failures: failures(vegetaResult),
-        avg: vegetaResult.latencies.mean,
-        p50: vegetaResult.latencies["50th"],
-        p95: vegetaResult.latencies["95th"],
-        p99: vegetaResult.latencies["99th"]
-      });
-
-      const loadLastMinute = loadavg()[0];
-      const numberOfCpus = cpus().length;
-      cpuTresholdReached = loadLastMinute > numberOfCpus * 1.5;
-      console.log(loadLastMinute, numberOfCpus);
-      if (cpuTresholdReached) {
-        console.log(`CPU treshold reached. Load was: ${loadLastMinute}`);
-      }
-    } else {
-      console.log(`Skipping ${rps} req/s because CPU treshold was reached.`);
+    if (cpuTresholdHasBeenReached) {
+      console.log(`CPU treshold reached. Skipping the remaining RPSes.`);
+      break;
     }
+    console.log(`----------------- Benching: ${query.name} at ${rps} req/s -----------------`);
+    const vegetaResult = runVegeta(url, graphqlQuery, rps, benchmarkDuration);
+    results.push({
+      rps: rps,
+      successes: vegetaResult.status_codes["200"],
+      failures: failures(vegetaResult),
+      avg: vegetaResult.latencies.mean,
+      p50: vegetaResult.latencies["50th"],
+      p95: vegetaResult.latencies["95th"],
+      p99: vegetaResult.latencies["99th"]
+    });
+
+    cpuTresholdHasBeenReached = isCpuTresholdReached();
   }
   const finishedAt = new Date();
 
@@ -167,4 +171,11 @@ function failures(vegetaResult: VegetaResult): number {
       return accumulator;
     }
   }, 0);
+}
+
+function isCpuTresholdReached(): boolean {
+  const loadLastMinute = loadavg()[0];
+  const numberOfCpus = cpus().length;
+  console.log(`CPU load is: ${loadLastMinute}`);
+  return loadLastMinute > numberOfCpus * 1.5;
 }
