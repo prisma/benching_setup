@@ -13,7 +13,7 @@ export async function createBenchmarkDroplets(version: string): Promise<void> {
 
   for (const connector of connectors) {
     for (const importFile of importFiles) {
-      await createBenchmarkDroplet(connector, version, importFile, test);
+      await createBenchmarkDroplet(connector, version, importFile, test, true);
     }
   }
 }
@@ -22,14 +22,15 @@ export async function createBenchmarkDroplet(
   connector: string,
   version: string,
   importFile: number,
-  test: string
+  test: string,
+  destroyDroplet: boolean
 ): Promise<IDroplet> {
   const cloudConfig = readFileSync("./droplet/benchmark_cloud_config_template", { encoding: "utf-8" })
     .replace("$CONNECTOR", connector)
     .replace("$VERSION", version)
     .replace("$IMPORT_FILE", importFile.toString())
-    .replace("$API_TOKEN", token!);
     .replace("$TEST", test)
+    .replace("$API_TOKEN", destroyDroplet ? token! : "invalid-secret-destroy-wont-work");
   const sshKey = await getSSHKey();
   const droplet = await digitalOcean.Droplet.create({
     name: `benchmark-${connector}-${version}-${importFile}-${test}`,
