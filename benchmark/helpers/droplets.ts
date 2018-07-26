@@ -9,7 +9,6 @@ export async function createBenchmarkDroplets(version: string): Promise<void> {
   const connectors = ["postgres", "mysql"];
   const importFiles = [1000, 10000];
   const test = "all";
-  const token = process.env["DIGITAL_OCEAN_ACCESS_TOKEN"];
 
   for (const connector of connectors) {
     for (const importFile of importFiles) {
