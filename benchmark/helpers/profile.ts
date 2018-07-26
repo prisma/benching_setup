@@ -36,7 +36,7 @@ function stopToProfileAndWriteFlamegraph(name: string) {
 
   const cleanedResult = profilerResult
     .split("\n")
-    .filter(line => !line.includes("sun.misc.Unsafe"))
+    .filter(line => !line.includes("sun/misc/Unsafe"))
     .join("\n");
 
   const flameGraph = execSync(`cd ${asyncProfilerPath}/Flamegraph && ./flamegraph.pl`, {
