@@ -1,0 +1,13 @@
+query {
+  albums(where: { Artist: { ArtistId: 127 } }) {
+    AlbumId
+    Title
+    Tracks {
+      TrackId
+      Name
+      Genre {
+        Name
+      }
+    }
+  }
+}
