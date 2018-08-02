@@ -1,6 +1,0 @@
-query {
-  tracks(where: { UnitPrice_gt: 4.98}) {
-    TrackId
-    Name
-  }
-}

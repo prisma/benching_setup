@@ -1,6 +1,6 @@
 query {
-  artists (first:10){
-    Albums(first:3){
+  artists (last:2){
+    Albums(first:2){
       AlbumId
       Title
       Tracks{

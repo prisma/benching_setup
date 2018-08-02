@@ -1,0 +1,6 @@
+query {
+  artists(where: { Name_ends_with: "11"}) {
+    ArtistId
+    Name
+  }
+}

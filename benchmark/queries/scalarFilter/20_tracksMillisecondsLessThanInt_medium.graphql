@@ -1,6 +1,0 @@
-query {
-  tracks(where: { Milliseconds_lt: 110000}) {
-    TrackId
-    Name
-  }
-}

@@ -1,5 +1,5 @@
 query {
-  artists(where: { Name_lt: "artist100"}) {
+  artists(where: { Name_lt: "artist6"}) {
     ArtistId
     Name
   }

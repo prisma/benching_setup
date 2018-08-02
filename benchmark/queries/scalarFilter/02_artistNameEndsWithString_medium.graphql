@@ -1,6 +1,0 @@
-query {
-  artists(where: { Name_ends_with: "1"}) {
-    ArtistId
-    Name
-  }
-}

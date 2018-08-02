@@ -1,9 +1,9 @@
 query {
-  artists (first:10){
-    Albums{
+  artists (last:2){
+    Albums(first:2){
       AlbumId
       Title
-      Tracks{
+      Tracks(last:5){
         TrackId
         Name
       }

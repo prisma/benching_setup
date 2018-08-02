@@ -14,7 +14,7 @@ import { benchmarkedServer } from "./constants";
 const benchmarkConfigs = {
   "very-slow": {
     warmup_duration: 900, // 15 minutes
-    rps: [20, 40, 60, 80, 100, 120, 140, 160, 180, 200]
+    rps: [25, 50, 75, 100, 125, 150, 175, 200, 225, 250]
   },
   slow: {
     warmup_duration: 480, // 8 minutes
@@ -28,11 +28,11 @@ const benchmarkConfigs = {
   },
   fast: {
     warmup_duration: 300, // 5 minutes
-    rps: [250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500]
+    rps: [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]
   },
   "very-fast": {
     warmup_duration: 300, // 5 minutes
-    rps: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+    rps: [400, 800, 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000]
   }
 };
 

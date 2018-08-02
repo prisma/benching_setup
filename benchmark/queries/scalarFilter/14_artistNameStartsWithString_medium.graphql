@@ -1,6 +1,6 @@
 
 query {
-  artists(where: { Name_starts_with: "artist1"}) {
+  artists(where: { Name_starts_with: "artist112"}) {
     ArtistId
     Name
   }

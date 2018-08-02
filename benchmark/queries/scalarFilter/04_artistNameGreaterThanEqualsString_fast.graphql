@@ -1,0 +1,6 @@
+query {
+  artists(where: { Name_gte: "artist995"}) {
+    ArtistId
+    Name
+  }
+}

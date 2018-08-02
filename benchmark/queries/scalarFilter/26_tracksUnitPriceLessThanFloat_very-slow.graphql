@@ -1,0 +1,6 @@
+query {
+  tracks(where: { UnitPrice_lt: 0.51}) {
+    TrackId
+    Name
+  }
+}
