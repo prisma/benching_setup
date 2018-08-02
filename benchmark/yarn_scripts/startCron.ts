@@ -9,7 +9,7 @@ const cron = new CronJob("00 00 19 * * 1-6", trigger, null, false, "Europe/Berli
 main().catch(console.error);
 
 async function main() {
-  console.log("cron started");
+  console.log(`[${new Date()}] cron started`);
   if (process.env["DIGITAL_OCEAN_ACCESS_TOKEN"] == undefined) {
     console.log("env var DIGITAL_OCEAN_ACCESS_TOKEN must bet set");
     process.exit(1);
@@ -18,8 +18,8 @@ async function main() {
 }
 
 async function trigger() {
-  console.log("Cron triggered. Will create the benchmark droplets now.");
+  console.log(`[${new Date()}] Cron triggered. Will create the benchmark droplets now.`);
   const version = await getLatestVersionFromDockerHub();
-  console.log(`Will benchmark version ${version}`);
+  console.log(`[${new Date()}] Will benchmark version ${version}`);
   await createBenchmarkDroplets(version);
 }
