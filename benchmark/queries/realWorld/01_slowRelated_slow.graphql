@@ -1,0 +1,14 @@
+query {
+  albums(
+    where: { Artist: { id: "cjjihpdg303gz0927g95hue7j" } }
+    first: 50
+    orderBy: Title_DESC
+  ) {
+    id
+    Title
+    AlbumId
+    Tracks {
+      id
+    }
+  }
+}
