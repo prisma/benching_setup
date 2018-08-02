@@ -3,3 +3,4 @@ target/
 body.json
 *.result
 *.svg
+.envrc
