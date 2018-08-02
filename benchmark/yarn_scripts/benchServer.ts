@@ -23,8 +23,6 @@ const benchmarkConfigs = {
   medium: {
     warmup_duration: 300, // 5 minutes
     rps: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
-    // warmup_duration: 3,
-    // rps: [100, 200]
   },
   fast: {
     warmup_duration: 300, // 5 minutes

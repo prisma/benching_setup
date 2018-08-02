@@ -1,0 +1,11 @@
+query {
+  artists (where:{ArtistId: 55} orderBy:Name_DESC){
+    Name
+    Albums{
+      Title
+      Tracks{
+        Name
+      }
+    }
+  }
+}
