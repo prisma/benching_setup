@@ -52,5 +52,11 @@ export function getQueryFiles(): QueryFile[] {
   };
 
   walkSync(testFolder, options);
-  return queryFiles;
+  return queryFiles.sort((one, two) => {
+    if (one.filePath > two.filePath) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
 }
