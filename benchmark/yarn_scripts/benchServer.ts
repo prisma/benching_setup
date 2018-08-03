@@ -54,6 +54,7 @@ async function main() {
     const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
     for (const queryFile of queryFiles) {
       await benchmarkAndStoreResults(benchmarkingSession.id, connector, queryFile, serverInfo, importFileSize);
+      await new Promise(r => setTimeout(r, 60000));
       await incrementQueriesRun(benchmarkingSession.id);
     }
     await markSessionAsFinished(benchmarkingSession.id);

@@ -21,8 +21,8 @@ export async function warmupAndBenchmark(
 ): Promise<BenchmarkQueryResult> {
   const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
   const startedAt = new Date();
-  var cpuTresholdHasBeenReached = await warmup(benchmarkedServer, query, warmupDuration, rpses);
-  const results: BenchmarkResult[] = !cpuTresholdHasBeenReached ? await benchmark(benchmarkedServer, query, rpses) : [];
+  await warmup(benchmarkedServer, query, warmupDuration, rpses);
+  const results: BenchmarkResult[] = await benchmark(benchmarkedServer, query, rpses);
   const finishedAt = new Date();
 
   return {
@@ -41,7 +41,6 @@ export async function warmup(
 ): Promise<boolean> {
   const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
 
-  var cpuTresholdHasBeenReached = false;
   var warmupRps = rpses[0];
   console.log("");
   console.log("");
@@ -50,19 +49,20 @@ export async function warmup(
   );
   const iterations = warmupDuration / 30;
   for (var i = 1; i <= iterations; i++) {
-    if (cpuTresholdHasBeenReached) {
-      console.log(`CPU treshold reached. Stopping the warmup.`);
-      break;
-    }
     const rps = (warmupRps / iterations) * i;
     const duration = 30;
     console.log(`Warm up step: ${rps}req/s for ${duration}s`);
     console.log(graphqlQuery);
     runVegeta(benchmarkedServer, graphqlQuery, rps, duration);
-    cpuTresholdHasBeenReached = isCpuTresholdReached();
   }
+  const cpuTresholdHasBeenReached = isCpuTresholdReached();
 
-  await new Promise(r => setTimeout(r, 10000)); // give the service a bit of time to recover
+  // give the service a bit of time to recover
+  if (cpuTresholdHasBeenReached) {
+    await new Promise(r => setTimeout(r, 60000));
+  } else {
+    await new Promise(r => setTimeout(r, 10000));
+  }
 
   return cpuTresholdHasBeenReached;
 }
@@ -71,10 +71,6 @@ export function benchmark(benchmarkedServer: string, query: QueryFile, rpses: nu
   const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
   const results: BenchmarkResult[] = [];
   for (const rps of rpses) {
-    if (isCpuTresholdReached()) {
-      console.log(`CPU treshold reached. Skipping the remaining RPSes.`);
-      break;
-    }
     console.log(`----------------- Benching: ${query.name} at ${rps} req/s -----------------`);
     const vegetaResult = runVegeta(benchmarkedServer, graphqlQuery, rps, benchmarkDuration);
     results.push({
@@ -86,6 +82,10 @@ export function benchmark(benchmarkedServer: string, query: QueryFile, rpses: nu
       p95: vegetaResult.latencies["95th"],
       p99: vegetaResult.latencies["99th"]
     });
+    if (isCpuTresholdReached()) {
+      console.log(`CPU treshold reached. Skipping the remaining RPSes.`);
+      break;
+    }
   }
 
   return results;
