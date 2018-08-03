@@ -1,5 +1,5 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Wed Jul 25 2018 14:15:40 GMT+0200 (CEST)
+# timestamp: Fri Aug 03 2018 17:50:06 GMT+0200 (CEST)
 
 type AggregateBenchmarkedQuery {
   count: Int!
@@ -600,6 +600,8 @@ type Latency implements Node {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 """A connection to a list of items."""
@@ -620,6 +622,8 @@ input LatencyCreateInput {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
   run: RunCreateOneWithoutLatenciesInput
 }
 
@@ -636,6 +640,8 @@ input LatencyCreateWithoutRunInput {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 """An edge in a connection."""
@@ -664,6 +670,10 @@ enum LatencyOrderByInput {
   successes_DESC
   failures_ASC
   failures_DESC
+  cpuLoad_ASC
+  cpuLoad_DESC
+  cpuCount_ASC
+  cpuCount_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -679,6 +689,8 @@ type LatencyPreviousValues {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 type LatencySubscriptionPayload {
@@ -728,6 +740,8 @@ input LatencyUpdateInput {
   p99: Float
   successes: Int
   failures: Int
+  cpuLoad: Float
+  cpuCount: Int
   run: RunUpdateOneWithoutLatenciesInput
 }
 
@@ -748,6 +762,8 @@ input LatencyUpdateWithoutRunDataInput {
   p99: Float
   successes: Int
   failures: Int
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 input LatencyUpdateWithWhereUniqueWithoutRunInput {
@@ -964,6 +980,50 @@ input LatencyWhereInput {
 
   """All values greater than or equal the given value."""
   failures_gte: Int
+  cpuLoad: Float
+
+  """All values that are not equal to given value."""
+  cpuLoad_not: Float
+
+  """All values that are contained in given list."""
+  cpuLoad_in: [Float!]
+
+  """All values that are not contained in given list."""
+  cpuLoad_not_in: [Float!]
+
+  """All values less than the given value."""
+  cpuLoad_lt: Float
+
+  """All values less than or equal the given value."""
+  cpuLoad_lte: Float
+
+  """All values greater than the given value."""
+  cpuLoad_gt: Float
+
+  """All values greater than or equal the given value."""
+  cpuLoad_gte: Float
+  cpuCount: Int
+
+  """All values that are not equal to given value."""
+  cpuCount_not: Int
+
+  """All values that are contained in given list."""
+  cpuCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  cpuCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  cpuCount_lt: Int
+
+  """All values less than or equal the given value."""
+  cpuCount_lte: Int
+
+  """All values greater than the given value."""
+  cpuCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  cpuCount_gte: Int
   run: RunWhereInput
 }
 

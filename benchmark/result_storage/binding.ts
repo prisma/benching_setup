@@ -692,6 +692,8 @@ type Latency implements Node {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 """A connection to a list of items."""
@@ -712,6 +714,8 @@ input LatencyCreateInput {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
   run: RunCreateOneWithoutLatenciesInput
 }
 
@@ -728,6 +732,8 @@ input LatencyCreateWithoutRunInput {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 """An edge in a connection."""
@@ -756,6 +762,10 @@ enum LatencyOrderByInput {
   successes_DESC
   failures_ASC
   failures_DESC
+  cpuLoad_ASC
+  cpuLoad_DESC
+  cpuCount_ASC
+  cpuCount_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -771,6 +781,8 @@ type LatencyPreviousValues {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 type LatencySubscriptionPayload {
@@ -820,6 +832,8 @@ input LatencyUpdateInput {
   p99: Float
   successes: Int
   failures: Int
+  cpuLoad: Float
+  cpuCount: Int
   run: RunUpdateOneWithoutLatenciesInput
 }
 
@@ -840,6 +854,8 @@ input LatencyUpdateWithoutRunDataInput {
   p99: Float
   successes: Int
   failures: Int
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 input LatencyUpdateWithWhereUniqueWithoutRunInput {
@@ -1056,6 +1072,50 @@ input LatencyWhereInput {
 
   """All values greater than or equal the given value."""
   failures_gte: Int
+  cpuLoad: Float
+
+  """All values that are not equal to given value."""
+  cpuLoad_not: Float
+
+  """All values that are contained in given list."""
+  cpuLoad_in: [Float!]
+
+  """All values that are not contained in given list."""
+  cpuLoad_not_in: [Float!]
+
+  """All values less than the given value."""
+  cpuLoad_lt: Float
+
+  """All values less than or equal the given value."""
+  cpuLoad_lte: Float
+
+  """All values greater than the given value."""
+  cpuLoad_gt: Float
+
+  """All values greater than or equal the given value."""
+  cpuLoad_gte: Float
+  cpuCount: Int
+
+  """All values that are not equal to given value."""
+  cpuCount_not: Int
+
+  """All values that are contained in given list."""
+  cpuCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  cpuCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  cpuCount_lt: Int
+
+  """All values less than or equal the given value."""
+  cpuCount_lte: Int
+
+  """All values greater than the given value."""
+  cpuCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  cpuCount_gte: Int
   run: RunWhereInput
 }
 
@@ -1901,6 +1961,10 @@ export type LatencyOrderByInput =   'id_ASC' |
   'successes_DESC' |
   'failures_ASC' |
   'failures_DESC' |
+  'cpuLoad_ASC' |
+  'cpuLoad_DESC' |
+  'cpuCount_ASC' |
+  'cpuCount_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -2024,6 +2088,8 @@ export interface LatencyCreateInput {
   p99: Float
   successes: Int
   failures: Int
+  cpuLoad?: Float
+  cpuCount?: Int
   run?: RunCreateOneWithoutLatenciesInput
 }
 
@@ -2145,6 +2211,8 @@ export interface LatencyCreateWithoutRunInput {
   p99: Float
   successes: Int
   failures: Int
+  cpuLoad?: Float
+  cpuCount?: Int
 }
 
 export interface RunWhereInput {
@@ -2251,6 +2319,8 @@ export interface LatencyUpdateInput {
   p99?: Float
   successes?: Int
   failures?: Int
+  cpuLoad?: Float
+  cpuCount?: Int
   run?: RunUpdateOneWithoutLatenciesInput
 }
 
@@ -2476,6 +2546,22 @@ export interface LatencyWhereInput {
   failures_lte?: Int
   failures_gt?: Int
   failures_gte?: Int
+  cpuLoad?: Float
+  cpuLoad_not?: Float
+  cpuLoad_in?: Float[] | Float
+  cpuLoad_not_in?: Float[] | Float
+  cpuLoad_lt?: Float
+  cpuLoad_lte?: Float
+  cpuLoad_gt?: Float
+  cpuLoad_gte?: Float
+  cpuCount?: Int
+  cpuCount_not?: Int
+  cpuCount_in?: Int[] | Int
+  cpuCount_not_in?: Int[] | Int
+  cpuCount_lt?: Int
+  cpuCount_lte?: Int
+  cpuCount_gt?: Int
+  cpuCount_gte?: Int
   run?: RunWhereInput
 }
 
@@ -2657,6 +2743,8 @@ export interface LatencyUpdateWithoutRunDataInput {
   p99?: Float
   successes?: Int
   failures?: Int
+  cpuLoad?: Float
+  cpuCount?: Int
 }
 
 export interface LatencyUpdateWithWhereUniqueWithoutRunInput {
@@ -2714,6 +2802,8 @@ export interface LatencyPreviousValues {
   p99: Float
   successes: Int
   failures: Int
+  cpuLoad?: Float
+  cpuCount?: Int
 }
 
 /*
@@ -2817,6 +2907,8 @@ export interface Latency extends Node {
   p99: Float
   successes: Int
   failures: Int
+  cpuLoad?: Float
+  cpuCount?: Int
 }
 
 /*

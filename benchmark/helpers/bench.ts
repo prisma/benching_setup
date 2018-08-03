@@ -80,7 +80,9 @@ export function benchmark(benchmarkedServer: string, query: QueryFile, rpses: nu
       avg: vegetaResult.latencies.mean,
       p50: vegetaResult.latencies["50th"],
       p95: vegetaResult.latencies["95th"],
-      p99: vegetaResult.latencies["99th"]
+      p99: vegetaResult.latencies["99th"],
+      cpuLoad: cpuLoad(),
+      cpuCount: cpuCount()
     });
     if (isCpuTresholdReached()) {
       console.log(`CPU treshold reached. Skipping the remaining RPSes.`);
@@ -92,10 +94,16 @@ export function benchmark(benchmarkedServer: string, query: QueryFile, rpses: nu
 }
 
 function isCpuTresholdReached(): boolean {
-  const loadLastMinute = loadavg()[0];
-  const numberOfCpus = cpus().length;
-  console.log(`CPU load is: ${loadLastMinute}`);
-  return loadLastMinute > numberOfCpus * 1.5;
+  console.log(`CPU load is: ${cpuLoad()}`);
+  return cpuLoad() > cpuCount() * 1.5;
+}
+
+function cpuLoad(): number {
+  return loadavg()[0];
+}
+
+function cpuCount(): number {
+  return cpus().length;
 }
 
 function failures(vegetaResult: VegetaResult): number {

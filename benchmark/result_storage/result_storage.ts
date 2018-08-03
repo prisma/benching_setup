@@ -63,6 +63,8 @@ export interface BenchmarkResult {
   p50: number;
   p95: number;
   p99: number;
+  cpuLoad: number;
+  cpuCount: number;
 }
 
 export async function storeBenchmarkResults(

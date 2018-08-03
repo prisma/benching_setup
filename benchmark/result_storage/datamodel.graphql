@@ -54,4 +54,6 @@ type Latency {
   p99: Float!
   successes: Int!
   failures: Int!
+  cpuLoad: Float
+  cpuCount: Int
 }
