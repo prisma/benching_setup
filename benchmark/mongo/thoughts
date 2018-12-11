@@ -1,0 +1,10 @@
+Mongo Differences that would be interesting to get a feeling for
+* direction plays a role in relations
+* filters might be using AF or find
+* types might be embedded or not
+
+Mongo Differences in Capabilities
+* there are no query arguments on embedded types
+* we do not have import available 
+* we can only start querying from top level types
+* not all directions are available for relations

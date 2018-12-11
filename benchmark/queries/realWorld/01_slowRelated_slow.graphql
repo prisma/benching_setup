@@ -1,3 +1,4 @@
+#Ignore Document
 query {
   albums(
     where: { Artist: { id: "cjjfvxe1100hm0927ifesrxy4" } }
