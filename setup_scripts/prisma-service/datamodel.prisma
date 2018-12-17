@@ -2,7 +2,7 @@ type Artist {
   id: ID! @id
   ArtistId: Int! @unique
   Name: String!
-  Albums: [Album!]! @relation(link:INLINE)
+  Albums: [Album!]! @relation(link: INLINE)
 }
 
 type Album {
@@ -13,11 +13,10 @@ type Album {
   Tracks: [Track!]!
 }
 
-type Track @embedded{
+type Track @embedded {
   id: ID! @id
-  TrackId: Int! 
+  TrackId: Int!
   Name: String!
-  Album: Album!
   MediaType: MediaType!
   Genre: Genre!
   Composer: String
@@ -37,4 +36,3 @@ type MediaType {
   MediaTypeId: Int! @unique
   Name: String!
 }
-

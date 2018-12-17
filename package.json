@@ -27,7 +27,7 @@
     "bench-debug": "inspect -r ts-node/register benchmark/bench.ts",
     "compile": "tsc",
     "start-server": "cd setup_scripts/prisma-server && ./start.sh",
-    "reset-server": "cd setup_scripts/prisma-service && ./reset_test_data.sh",
+    "reset-server": "ts-node benchmark/yarn_scripts/resetServer.ts",
     "bench-server": "ts-node benchmark/yarn_scripts/benchServer.ts",
     "profile-server": "ts-node benchmark/yarn_scripts/profileServer.ts",
     "start-cron": "ts-node benchmark/yarn_scripts/startCron.ts",

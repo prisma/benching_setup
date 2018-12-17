@@ -1,6 +1,9 @@
+const fetch = require("node-fetch");
+
 export interface PrismaServerInfo {
   version: string;
   commit: string;
+  primaryConnector: string;
 }
 export async function getServerInfo(server: string): Promise<PrismaServerInfo> {
   const query = `
@@ -8,6 +11,7 @@ export async function getServerInfo(server: string): Promise<PrismaServerInfo> {
       serverInfo {
         version
         commit
+        primaryConnector
       }
     }
     `;
