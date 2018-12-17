@@ -3,6 +3,7 @@ import { QueryFile } from "./query_files";
 import { getImportFileSize, getServerInfo, PrismaServerInfo } from "./server_info";
 
 export interface PrismaConnector {
+  name: string;
   serverInfo: PrismaServerInfo;
   dataModelFile: string;
   importData(size: number);
@@ -26,9 +27,11 @@ export async function getActiveConnector(server: string): Promise<PrismaConnecto
 class MongoConnector implements PrismaConnector {
   dataModelFile: string = "datamodel_mongo.prisma";
   serverInfo: PrismaServerInfo;
+  name: string;
 
   constructor(serverInfo: PrismaServerInfo) {
     this.serverInfo = serverInfo;
+    this.name = serverInfo.primaryConnector;
   }
 
   importData(size: number) {
@@ -43,9 +46,11 @@ class MongoConnector implements PrismaConnector {
 class SqlConnector implements PrismaConnector {
   dataModelFile: string = "datamodel_sql.prisma";
   serverInfo: PrismaServerInfo;
+  name: string;
 
   constructor(serverInfo: PrismaServerInfo) {
     this.serverInfo = serverInfo;
+    this.name = serverInfo.primaryConnector;
   }
 
   importData(size: number) {
