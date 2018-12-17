@@ -41,13 +41,7 @@ main().catch(console.error);
 async function main() {
   const args = process.argv.slice(2);
   const queryFiles = getQueryFiles();
-  // const connectorArg = args[0];
   const testToRun = args[0];
-  // if (connectorArg == null) {
-  //   console.log("You must provide the connector as the first argument");
-  //   process.exit();
-  // }
-  // const connector = getConnectorForArg(connectorArg);
   const activeConnector = await getActiveConnector(benchmarkedServer);
   await ensureVersionExists(activeConnector.serverInfo.version);
   const importFileSize = await getImportFileSize(benchmarkedServer);
