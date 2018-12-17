@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import { benchmarkedServer } from "./constants";
-import { getActiveConnector, PrismaConnector } from "../helpers/connector";
+import { getActiveConnector, PrismaConnector } from "../helpers/connectors";
 import { chdir } from "process";
 
 main().catch(console.error);

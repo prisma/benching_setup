@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import { QueryFile } from "./query_files";
-import { getImportFileSize, getServerInfo, PrismaServerInfo } from "./server_info";
+import { getServerInfo, PrismaServerInfo } from "./server_info";
 
 export interface PrismaConnector {
   name: string;
@@ -34,8 +34,12 @@ class MongoConnector implements PrismaConnector {
     this.name = serverInfo.primaryConnector;
   }
 
-  importData(size: number) {
+  importData(importFile: number) {
     console.log("Mongo does not support import yet.");
+    const result = execSync(
+      `mongorestore --host=localhost --port=27017 --username=prisma --password=prisma --authenticationDatabase=admin --archive=import_data/mongo_${importFile}`
+    ).toString();
+    console.log(result);
   }
 
   supportsQuery(query: QueryFile): boolean {

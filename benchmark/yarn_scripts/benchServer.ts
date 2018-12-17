@@ -1,7 +1,7 @@
 import { warmupAndBenchmark } from "../helpers/bench";
 import { getQueryFileForName, getQueryFiles, QueryFile } from "../helpers/query_files";
 import { getImportFileSize, getServerInfo, PrismaServerInfo } from "../helpers/server_info";
-import { getActiveConnector } from "../helpers/connector";
+import { getActiveConnector } from "../helpers/connectors";
 import { Connector } from "../result_storage/binding";
 import {
   createBenchmarkingSession,
@@ -11,7 +11,7 @@ import {
   storeBenchmarkResults
 } from "../result_storage/result_storage";
 import { benchmarkedServer } from "./constants";
-import { PrismaConnector } from "../helpers/connector";
+import { PrismaConnector } from "../helpers/connectors";
 // IMPORTANT: warmup_duration must be a multiple of 30!
 const benchmarkConfigs = {
   "very-slow": {
