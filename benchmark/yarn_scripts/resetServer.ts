@@ -21,9 +21,7 @@ async function main() {
 function runPrismaDeploy(connector: PrismaConnector) {
   chdir("setup_scripts/prisma-service");
   console.log(execSync(`cp ${connector.dataModelFile} datamodel.prisma`).toString());
-  const result = execSync(`prisma deploy --force --json`).toString();
-  console.log(`The result of prisma deploy:`);
-  console.log(result);
+  execSync(`prisma deploy --force --json`, { stdio: "inherit" });
 }
 
 function resetData() {
