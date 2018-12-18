@@ -41,7 +41,7 @@ export async function createBenchmarkDroplet(
     ],
     size: "8gb",
     region: "fra1",
-    image: "docker",
+    image: "docker-18-04",
     ssh_keys: [sshKey.fingerprint],
     user_data: cloudConfig
   }).toPromise();
