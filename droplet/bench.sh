@@ -8,7 +8,7 @@ echo "Starting benchmark for Connector $CONNECTOR with version $VERSION based on
 CURRENT_DIR=`pwd`
 cd ../setup_scripts/prisma-server && ./start.sh $CONNECTOR $VERSION && cd -
 yarn reset-server $IMPORT_FILE
-yarn bench-server $CONNECTOR $TEST
+yarn bench-server $TEST
 
 if [ -n "${API_TOKEN}" ]; then
   pwd

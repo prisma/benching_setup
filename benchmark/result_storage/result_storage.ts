@@ -69,7 +69,7 @@ export interface BenchmarkResult {
 
 export async function storeBenchmarkResults(
   sessionId: string,
-  connector: string,
+  connector: Connector,
   version: string,
   commit: string,
   importFile: number,
@@ -84,7 +84,7 @@ export async function storeBenchmarkResults(
   const nestedCreateRun: RunUpdateManyWithoutBenchmarkQueryInput | RunCreateManyWithoutBenchmarkQueryInput = {
     create: [
       {
-        connector: connector as Connector,
+        connector: connector,
         startedAt: startedAt,
         finishedAt: finishedAt,
         version: {

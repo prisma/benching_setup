@@ -1,5 +1,6 @@
 import { walkSync } from "walk";
 import { basename } from "path";
+import { readFileSync } from "fs";
 
 const testFolder = "./benchmark/queries";
 
@@ -7,6 +8,7 @@ export interface QueryFile {
   name: string;
   speed: string;
   filePath: string;
+  query: string;
 }
 
 export function getQueryFileForName(name): QueryFile {
@@ -34,10 +36,12 @@ export function getQueryFiles(): QueryFile[] {
           // console.log(fileStats.name);
           const fileName = basename(fileStats.name, ".graphql");
           const parts = fileName.split("_");
+          const filePath = root + "/" + fileStats.name;
           const query = {
             name: parts[parts.length - 2],
             speed: parts[parts.length - 1],
-            filePath: root + "/" + fileStats.name
+            filePath: filePath,
+            query: readFileSync(filePath, { encoding: "utf-8" })
           };
           queryFiles.push(query);
         }
