@@ -64,19 +64,6 @@ async function main() {
   }
 }
 
-function getConnectorForArg(connectorArg: string): Connector {
-  switch (connectorArg) {
-    case "postgres":
-      return "Postgres";
-    case "mysql":
-      return "MySQL";
-    case "mongo":
-      return "MongoDB";
-    default:
-      throw new Error(`${connectorArg} is not supported`);
-  }
-}
-
 async function benchmarkAndStoreResults(
   sessionId: string,
   connector: PrismaConnector,
@@ -89,7 +76,7 @@ async function benchmarkAndStoreResults(
 
     await storeBenchmarkResults(
       sessionId,
-      connector.name,
+      connector.typeEnumForStorage,
       connector.serverInfo.version,
       connector.serverInfo.commit,
       importFile,
