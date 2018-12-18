@@ -39,7 +39,7 @@ class MongoConnector implements PrismaConnector {
 
   importData(importFile: number) {
     execSync(
-      `mongorestore --host=localhost --port=27017 --username=prisma --password=prisma --authenticationDatabase=admin --archive=import_data/mongo_${importFile}`,
+      `mongorestore --host=localhost --port=27017 --username=prisma --password=prisma --authenticationDatabase=admin --gzip --archive=import_data/mongo_${importFile}`,
       { stdio: "inherit" }
     );
   }
