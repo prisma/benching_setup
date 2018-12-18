@@ -38,11 +38,10 @@ class MongoConnector implements PrismaConnector {
   }
 
   importData(importFile: number) {
-    console.log("Mongo does not support import yet.");
-    const result = execSync(
-      `mongorestore --host=localhost --port=27017 --username=prisma --password=prisma --authenticationDatabase=admin --archive=import_data/mongo_${importFile}`
-    ).toString();
-    console.log(result);
+    execSync(
+      `mongorestore --host=localhost --port=27017 --username=prisma --password=prisma --authenticationDatabase=admin --archive=import_data/mongo_${importFile}`,
+      { stdio: "inherit" }
+    );
   }
 
   supportsQuery(query: QueryFile): boolean {
@@ -63,8 +62,7 @@ class SqlConnector implements PrismaConnector {
   }
 
   importData(size: number) {
-    const result = execSync(`prisma import --data ./import_data/${size}import.zip`).toString();
-    console.log(result);
+    execSync(`prisma import --data ./import_data/import_${size}.zip`, { stdio: "inherit" });
   }
 
   supportsQuery(query: QueryFile): boolean {
