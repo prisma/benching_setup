@@ -716,9 +716,9 @@ dotenv@^5.0.0:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
 
-dots-wrapper@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/dots-wrapper/-/dots-wrapper-2.5.0.tgz#19bc5c17e878f50e521e08ac4dd243b83e3e78db"
+"dots-wrapper@https://github.com/prismagraphql/dots.git#add-dist":
+  version "2.2.0"
+  resolved "https://github.com/prismagraphql/dots.git#5eeb8dfb0e6392e6fb8497abf3eaadeddc9fad59"
   dependencies:
     axios "^0.16.2"
     rxjs "^6.2.1"

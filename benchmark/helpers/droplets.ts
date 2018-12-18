@@ -43,7 +43,7 @@ export async function createBenchmarkDroplet(
     region: "fra1",
     image: "docker",
     ssh_keys: [sshKey.fingerprint],
-    user_data: [cloudConfig]
+    user_data: cloudConfig
   }).toPromise();
   return droplet;
 }
@@ -58,7 +58,7 @@ export async function createCronDroplet(): Promise<IDroplet> {
     region: "fra1",
     image: "docker-16-04",
     ssh_keys: [sshKey.fingerprint],
-    user_data: [cloudConfig]
+    user_data: cloudConfig
   }).toPromise();
   return droplet;
 }
