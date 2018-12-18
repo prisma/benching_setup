@@ -7,7 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "cron": "1.3.0",
-    "dots-wrapper": "https://github.com/prismagraphql/dots.git#add-dist",
+    "dots-wrapper": "https://github.com/prisma/dots.git",
     "graphql-request": "^1.6.0",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
