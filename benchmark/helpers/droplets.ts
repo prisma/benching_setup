@@ -56,7 +56,7 @@ export async function createCronDroplet(): Promise<IDroplet> {
     tags: [`api_token:${token}`],
     size: "1gb",
     region: "fra1",
-    image: "docker-16-04",
+    image: "docker-18-04",
     ssh_keys: [sshKey.fingerprint],
     user_data: cloudConfig
   }).toPromise();
