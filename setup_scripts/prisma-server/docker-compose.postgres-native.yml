@@ -1,7 +1,7 @@
 version: "3"
 services:
   prisma:
-    image: prismagraphql/prisma:${PRISMA_VERSION}
+    image: prismagraphql/prisma-native:latest # must use actual version when available
     restart: always
     ports:
       - "4466:4466"
@@ -11,12 +11,14 @@ services:
         databases:
           default:
             connector: postgres
-            host: db
+            host: postgres
             port: 5432
             user: prisma
             password: prisma
             migrations: true
-  db:
+            rawAccess: true
+
+  postgres:
     image: postgres
     restart: always
     environment:

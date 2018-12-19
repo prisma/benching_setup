@@ -6,7 +6,7 @@ const token = process.env["DIGITAL_OCEAN_ACCESS_TOKEN"];
 const digitalOcean = new DigitalOcean(token as string);
 
 export async function createBenchmarkDroplets(version: string): Promise<void> {
-  const connectors = ["postgres", "mysql", "mongo"];
+  const connectors = ["postgres", "mysql", "mongo", "postgres-native"];
   const importFiles = [1000, 10000];
   const test = "all";
 
