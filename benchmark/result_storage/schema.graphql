@@ -1,5 +1,5 @@
 # source: https://benchmark-results_prisma-internal.prisma.sh/benchmark/dev
-# timestamp: Fri Aug 03 2018 17:50:06 GMT+0200 (CEST)
+# timestamp: Fri Dec 21 2018 15:42:31 GMT+0100 (CET)
 
 type AggregateBenchmarkedQuery {
   count: Int!
@@ -130,6 +130,11 @@ input BenchmarkedQueryUpdateInput {
   name: String
   query: String
   runs: RunUpdateManyWithoutBenchmarkQueryInput
+}
+
+input BenchmarkedQueryUpdateManyMutationInput {
+  name: String
+  query: String
 }
 
 input BenchmarkedQueryUpdateOneWithoutRunsInput {
@@ -410,6 +415,13 @@ input BenchmarkingSessionUpdateInput {
   runs: RunUpdateManyWithoutSessionInput
 }
 
+input BenchmarkingSessionUpdateManyMutationInput {
+  queriesToRun: Int
+  queriesRun: Int
+  started: DateTime
+  finished: DateTime
+}
+
 input BenchmarkingSessionUpdateOneWithoutRunsInput {
   create: BenchmarkingSessionCreateWithoutRunsInput
   connect: BenchmarkingSessionWhereUniqueInput
@@ -581,6 +593,7 @@ enum Connector {
   Postgres
   MySQL
   MongoDB
+  PostgresNative
 }
 
 scalar DateTime
@@ -592,7 +605,7 @@ enum ImportFileSize {
 
 type Latency implements Node {
   id: ID!
-  run(where: RunWhereInput): Run
+  run: Run
   rps: Int!
   avg: Float!
   p50: Float!
@@ -743,6 +756,18 @@ input LatencyUpdateInput {
   cpuLoad: Float
   cpuCount: Int
   run: RunUpdateOneWithoutLatenciesInput
+}
+
+input LatencyUpdateManyMutationInput {
+  rps: Int
+  avg: Float
+  p50: Float
+  p95: Float
+  p99: Float
+  successes: Int
+  failures: Int
+  cpuLoad: Float
+  cpuCount: Int
 }
 
 input LatencyUpdateManyWithoutRunInput {
@@ -1058,11 +1083,11 @@ type Mutation {
   upsertRun(where: RunWhereUniqueInput!, create: RunCreateInput!, update: RunUpdateInput!): Run!
   upsertVersion(where: VersionWhereUniqueInput!, create: VersionCreateInput!, update: VersionUpdateInput!): Version!
   upsertLatency(where: LatencyWhereUniqueInput!, create: LatencyCreateInput!, update: LatencyUpdateInput!): Latency!
-  updateManyBenchmarkingSessions(data: BenchmarkingSessionUpdateInput!, where: BenchmarkingSessionWhereInput): BatchPayload!
-  updateManyBenchmarkedQueries(data: BenchmarkedQueryUpdateInput!, where: BenchmarkedQueryWhereInput): BatchPayload!
-  updateManyRuns(data: RunUpdateInput!, where: RunWhereInput): BatchPayload!
-  updateManyVersions(data: VersionUpdateInput!, where: VersionWhereInput): BatchPayload!
-  updateManyLatencies(data: LatencyUpdateInput!, where: LatencyWhereInput): BatchPayload!
+  updateManyBenchmarkingSessions(data: BenchmarkingSessionUpdateManyMutationInput!, where: BenchmarkingSessionWhereInput): BatchPayload!
+  updateManyBenchmarkedQueries(data: BenchmarkedQueryUpdateManyMutationInput!, where: BenchmarkedQueryWhereInput): BatchPayload!
+  updateManyRuns(data: RunUpdateManyMutationInput!, where: RunWhereInput): BatchPayload!
+  updateManyVersions(data: VersionUpdateManyMutationInput!, where: VersionWhereInput): BatchPayload!
+  updateManyLatencies(data: LatencyUpdateManyMutationInput!, where: LatencyWhereInput): BatchPayload!
   deleteManyBenchmarkingSessions(where: BenchmarkingSessionWhereInput): BatchPayload!
   deleteManyBenchmarkedQueries(where: BenchmarkedQueryWhereInput): BatchPayload!
   deleteManyRuns(where: RunWhereInput): BatchPayload!
@@ -1123,11 +1148,11 @@ type Query {
 
 type Run implements Node {
   id: ID!
-  session(where: BenchmarkingSessionWhereInput): BenchmarkingSession
-  benchmarkQuery(where: BenchmarkedQueryWhereInput): BenchmarkedQuery
+  session: BenchmarkingSession
+  benchmarkQuery: BenchmarkedQuery
   latencies(where: LatencyWhereInput, orderBy: LatencyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Latency!]
   connector: Connector!
-  version(where: VersionWhereInput): Version!
+  version: Version!
   importFile: ImportFileSize!
   commit: String!
   startedAt: DateTime!
@@ -1305,7 +1330,15 @@ input RunUpdateInput {
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
-  version: VersionUpdateOneWithoutRunsInput
+  version: VersionUpdateOneRequiredWithoutRunsInput
+}
+
+input RunUpdateManyMutationInput {
+  connector: Connector
+  importFile: ImportFileSize
+  commit: String
+  startedAt: DateTime
+  finishedAt: DateTime
 }
 
 input RunUpdateManyWithoutBenchmarkQueryInput {
@@ -1352,7 +1385,7 @@ input RunUpdateWithoutBenchmarkQueryDataInput {
   finishedAt: DateTime
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
-  version: VersionUpdateOneWithoutRunsInput
+  version: VersionUpdateOneRequiredWithoutRunsInput
 }
 
 input RunUpdateWithoutLatenciesDataInput {
@@ -1363,7 +1396,7 @@ input RunUpdateWithoutLatenciesDataInput {
   finishedAt: DateTime
   session: BenchmarkingSessionUpdateOneWithoutRunsInput
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
-  version: VersionUpdateOneWithoutRunsInput
+  version: VersionUpdateOneRequiredWithoutRunsInput
 }
 
 input RunUpdateWithoutSessionDataInput {
@@ -1374,7 +1407,7 @@ input RunUpdateWithoutSessionDataInput {
   finishedAt: DateTime
   benchmarkQuery: BenchmarkedQueryUpdateOneWithoutRunsInput
   latencies: LatencyUpdateManyWithoutRunInput
-  version: VersionUpdateOneWithoutRunsInput
+  version: VersionUpdateOneRequiredWithoutRunsInput
 }
 
 input RunUpdateWithoutVersionDataInput {
@@ -1698,10 +1731,13 @@ input VersionUpdateInput {
   runs: RunUpdateManyWithoutVersionInput
 }
 
-input VersionUpdateOneWithoutRunsInput {
+input VersionUpdateManyMutationInput {
+  name: String
+}
+
+input VersionUpdateOneRequiredWithoutRunsInput {
   create: VersionCreateWithoutRunsInput
   connect: VersionWhereUniqueInput
-  delete: Boolean
   update: VersionUpdateWithoutRunsDataInput
   upsert: VersionUpsertWithoutRunsInput
 }

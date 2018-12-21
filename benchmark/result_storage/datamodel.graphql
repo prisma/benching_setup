@@ -2,6 +2,7 @@ enum Connector {
   Postgres
   MySQL
   MongoDB
+  PostgresNative
 }
 
 enum ImportFileSize {

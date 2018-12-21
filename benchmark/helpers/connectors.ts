@@ -13,6 +13,7 @@ export interface PrismaConnector {
 }
 
 export async function getActiveConnector(server: string): Promise<PrismaConnector> {
+  // TODO: add PostgresNativeConnector
   const serverInfo = await getServerInfo(server);
   switch (serverInfo.primaryConnector) {
     case "mongo":
@@ -21,6 +22,8 @@ export async function getActiveConnector(server: string): Promise<PrismaConnecto
       return new SqlConnector(serverInfo, "MySQL");
     case "postgres":
       return new SqlConnector(serverInfo, "Postgres");
+    case "postgres-native":
+      return new SqlConnector(serverInfo, "PostgresNative");
     default:
       throw new Error(`The connector '${serverInfo.primaryConnector}' is not supported here.`);
   }
