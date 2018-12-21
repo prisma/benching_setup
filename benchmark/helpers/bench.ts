@@ -70,11 +70,11 @@ export async function warmup(
 
 export function benchmark(benchmarkedServer: string, query: QueryFile, rpses: number[]): BenchmarkResult[] {
   const graphqlQuery = query.query;
-  const fullPath = benchmarkedServer + query.path();
+  const fullUri = benchmarkedServer + query.path();
   const results: BenchmarkResult[] = [];
   for (const rps of rpses) {
     console.log(`----------------- Benching: ${query.name} at ${rps} req/s -----------------`);
-    const vegetaResult = runVegeta(fullPath, graphqlQuery, rps, benchmarkDuration);
+    const vegetaResult = runVegeta(fullUri, graphqlQuery, rps, benchmarkDuration);
     results.push({
       rps: rps,
       successes: vegetaResult.status_codes["200"],
