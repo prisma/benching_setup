@@ -39,13 +39,14 @@ export async function warmup(
   warmupDuration: number,
   rpses: number[]
 ): Promise<boolean> {
-  const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
+  const graphqlQuery = query.query;
+  const fullPath = benchmarkedServer + query.path();
 
   var warmupRps = rpses[0];
   console.log("");
   console.log("");
   console.log(
-    `-------- Warmup: ${query.name} ${benchmarkedServer} warming up to ${warmupRps}req/s ${warmupDuration}s ---------`
+    `-------- Warmup: ${query.name} ${fullPath} warming up to ${warmupRps}req/s ${warmupDuration}s ---------`
   );
   const iterations = warmupDuration / 30;
   for (var i = 1; i <= iterations; i++) {
@@ -53,7 +54,7 @@ export async function warmup(
     const duration = 30;
     console.log(`Warm up step: ${rps}req/s for ${duration}s`);
     console.log(graphqlQuery);
-    runVegeta(benchmarkedServer, graphqlQuery, rps, duration);
+    runVegeta(fullPath, graphqlQuery, rps, duration);
   }
   const cpuTresholdHasBeenReached = isCpuTresholdReached();
 
@@ -68,11 +69,12 @@ export async function warmup(
 }
 
 export function benchmark(benchmarkedServer: string, query: QueryFile, rpses: number[]): BenchmarkResult[] {
-  const graphqlQuery = readFileSync(query.filePath, { encoding: "utf-8" });
+  const graphqlQuery = query.query;
+  const fullPath = benchmarkedServer + query.path();
   const results: BenchmarkResult[] = [];
   for (const rps of rpses) {
     console.log(`----------------- Benching: ${query.name} at ${rps} req/s -----------------`);
-    const vegetaResult = runVegeta(benchmarkedServer, graphqlQuery, rps, benchmarkDuration);
+    const vegetaResult = runVegeta(fullPath, graphqlQuery, rps, benchmarkDuration);
     results.push({
       rps: rps,
       successes: vegetaResult.status_codes["200"],

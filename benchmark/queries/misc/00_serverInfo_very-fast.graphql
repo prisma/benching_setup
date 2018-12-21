@@ -1,0 +1,7 @@
+#path:/management
+{
+  serverInfo {
+    version
+    commit
+  }
+}

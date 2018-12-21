@@ -4,11 +4,29 @@ import { readFileSync } from "fs";
 
 const testFolder = "./benchmark/queries";
 
-export interface QueryFile {
+export class QueryFile {
   name: string;
   speed: string;
   filePath: string;
   query: string;
+
+  constructor(name: string, speed: string, filePath: string, query: string) {
+    this.name = name;
+    this.speed = speed;
+    this.filePath = filePath;
+    this.query = query;
+  }
+
+  path(): string {
+    const pathFragment = "#path:";
+    const lines = this.query.split("\n");
+    const lineWithPath = lines.find(x => x.startsWith(pathFragment));
+    if (lineWithPath) {
+      return lineWithPath.replace(pathFragment, "").replace(" ", "");
+    } else {
+      return "/";
+    }
+  }
 }
 
 export function getQueryFileForName(name): QueryFile {
@@ -37,13 +55,10 @@ export function getQueryFiles(): QueryFile[] {
           const fileName = basename(fileStats.name, ".graphql");
           const parts = fileName.split("_");
           const filePath = root + "/" + fileStats.name;
-          const query = {
-            name: parts[parts.length - 2],
-            speed: parts[parts.length - 1],
-            filePath: filePath,
-            query: readFileSync(filePath, { encoding: "utf-8" })
-          };
-          queryFiles.push(query);
+          const name = parts[parts.length - 2];
+          const speed = parts[parts.length - 1];
+          const query = readFileSync(filePath, { encoding: "utf-8" });
+          queryFiles.push(new QueryFile(name, speed, filePath, query));
         }
         next();
       },
