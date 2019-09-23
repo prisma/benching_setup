@@ -27,7 +27,7 @@ export function runVegeta(url, graphqlQueryAsString, rps, duration): VegetaResul
         @body.json
       `;
   const result = execSync(
-    `vegeta attack -rate=${Math.round(rps)} -duration="${duration}s" -timeout="10s" | vegeta report -reporter=json`,
+    `vegeta attack -rate=${Math.round(rps)} -duration="${duration}s" -timeout="10s" | vegeta report --type=json`,
     { input: attack }
   ).toString();
   const vegetaResult: VegetaResult = JSON.parse(result);
