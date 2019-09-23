@@ -1,0 +1,317 @@
+{
+  "version": "0.2.55",
+  "steps": [
+    {
+      "stepType": "CreateModel",
+      "name": "Artist",
+      "embedded": false
+    },
+    {
+      "stepType": "CreateModel",
+      "name": "Album",
+      "embedded": false
+    },
+    {
+      "stepType": "CreateModel",
+      "name": "Track",
+      "embedded": false
+    },
+    {
+      "stepType": "CreateModel",
+      "name": "Genre",
+      "embedded": false
+    },
+    {
+      "stepType": "CreateModel",
+      "name": "MediaType",
+      "embedded": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Artist",
+      "name": "id",
+      "type": {
+        "Base": "Int"
+      },
+      "arity": "required",
+      "dbName": "ArtistId",
+      "isUnique": false,
+      "id": {
+        "strategy": "Auto",
+        "sequence": null
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Artist",
+      "name": "Name",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "optional",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Artist",
+      "name": "Albums",
+      "type": {
+        "Relation": {
+          "to": "Album",
+          "to_fields": [],
+          "name": "AlbumToArtist",
+          "on_delete": "None"
+        }
+      },
+      "arity": "list",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Album",
+      "name": "id",
+      "type": {
+        "Base": "Int"
+      },
+      "arity": "required",
+      "dbName": "AlbumId",
+      "isUnique": false,
+      "id": {
+        "strategy": "Auto",
+        "sequence": null
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Album",
+      "name": "Title",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "required",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Album",
+      "name": "Artist",
+      "type": {
+        "Relation": {
+          "to": "Artist",
+          "to_fields": [
+            "id"
+          ],
+          "name": "AlbumToArtist",
+          "on_delete": "None"
+        }
+      },
+      "arity": "required",
+      "dbName": "ArtistId",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Album",
+      "name": "Tracks",
+      "type": {
+        "Relation": {
+          "to": "Track",
+          "to_fields": [],
+          "name": "AlbumToTrack",
+          "on_delete": "None"
+        }
+      },
+      "arity": "list",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Track",
+      "name": "id",
+      "type": {
+        "Base": "Int"
+      },
+      "arity": "required",
+      "dbName": "TrackId",
+      "isUnique": false,
+      "id": {
+        "strategy": "Auto",
+        "sequence": null
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Track",
+      "name": "Name",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "required",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Track",
+      "name": "Album",
+      "type": {
+        "Relation": {
+          "to": "Album",
+          "to_fields": [
+            "id"
+          ],
+          "name": "AlbumToTrack",
+          "on_delete": "None"
+        }
+      },
+      "arity": "optional",
+      "dbName": "AlbumId",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Track",
+      "name": "MediaType",
+      "type": {
+        "Relation": {
+          "to": "MediaType",
+          "to_fields": [],
+          "name": "MediaTypeToTrack",
+          "on_delete": "None"
+        }
+      },
+      "arity": "required",
+      "dbName": "MediaTypeId",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Track",
+      "name": "Genre",
+      "type": {
+        "Relation": {
+          "to": "Genre",
+          "to_fields": [
+            "id"
+          ],
+          "name": "GenreToTrack",
+          "on_delete": "None"
+        }
+      },
+      "arity": "optional",
+      "dbName": "GenreId",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Track",
+      "name": "Composer",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "optional",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Track",
+      "name": "Milliseconds",
+      "type": {
+        "Base": "Int"
+      },
+      "arity": "required",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Track",
+      "name": "UnitPrice",
+      "type": {
+        "Base": "Float"
+      },
+      "arity": "required",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Genre",
+      "name": "id",
+      "type": {
+        "Base": "Int"
+      },
+      "arity": "required",
+      "dbName": "GenreId",
+      "isUnique": false,
+      "id": {
+        "strategy": "Auto",
+        "sequence": null
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Genre",
+      "name": "Name",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "optional",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Genre",
+      "name": "Tracks",
+      "type": {
+        "Relation": {
+          "to": "Track",
+          "to_fields": [],
+          "name": "GenreToTrack",
+          "on_delete": "None"
+        }
+      },
+      "arity": "list",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "MediaType",
+      "name": "id",
+      "type": {
+        "Base": "Int"
+      },
+      "arity": "required",
+      "dbName": "MediaTypeId",
+      "isUnique": false,
+      "id": {
+        "strategy": "Auto",
+        "sequence": null
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "MediaType",
+      "name": "Name",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "required",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "MediaType",
+      "name": "track",
+      "type": {
+        "Relation": {
+          "to": "Track",
+          "to_fields": [
+            "id"
+          ],
+          "name": "MediaTypeToTrack",
+          "on_delete": "None"
+        }
+      },
+      "arity": "optional",
+      "isUnique": false
+    }
+  ]
+}
