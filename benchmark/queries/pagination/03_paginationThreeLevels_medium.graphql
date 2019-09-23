@@ -1,11 +1,11 @@
 #Ignore Document
 query {
-  artists (last:2){
-    Albums(first:2){
-      AlbumId
+  findManyArtist(last: 2) {
+    Albums(first: 2){
+      id
       Title
-      Tracks(last:5){
-        TrackId
+      Tracks(last: 5) {
+        id
         Name
       }
     }

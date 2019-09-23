@@ -1,6 +1,6 @@
 query {
-  albums(where: { Tracks_none:{ Milliseconds_lt: 380000}}) {
-    AlbumId
+  findManyAlbum(where: { Tracks_none: { Milliseconds_lt: 380000}}) {
+    id
     Title
   }
 }

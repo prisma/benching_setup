@@ -1,8 +1,4 @@
 #Ignore Document
 query {
-tracksConnection {
-    aggregate {
-      count
-    }
-  }
+  aggregateTrack { count }
 }

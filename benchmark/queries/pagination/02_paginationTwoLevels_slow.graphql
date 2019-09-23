@@ -1,10 +1,10 @@
 query {
-  artists (last:2){
-    Albums(first:2){
-      AlbumId
+  findManyArtist(last: 2) {
+    Albums(first: 2){
+      id
       Title
-      Tracks{
-        TrackId
+      Tracks {
+        id
         Name
       }
     }

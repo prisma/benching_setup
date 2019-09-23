@@ -1,7 +1,3 @@
 query {
-albumsConnection {
-    aggregate {
-      count
-    }
-  }
+  aggregateAlbum { count }
 }

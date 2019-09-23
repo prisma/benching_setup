@@ -1,7 +1,3 @@
 query {
-artistsConnection {
-    aggregate {
-      count
-    }
-  }
+  aggregateArtist { count }
 }

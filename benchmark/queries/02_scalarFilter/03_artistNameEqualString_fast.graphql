@@ -1,6 +1,6 @@
 query equalString {
-  artists(where: { Name: "artist950"}) {
-    ArtistId
+  findManyArtist(where: { Name: "artist950"}) {
+    id
     Name
   }
 }

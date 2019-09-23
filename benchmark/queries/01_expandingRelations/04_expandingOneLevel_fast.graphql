@@ -1,6 +1,6 @@
 query {
-  artists (where:{ArtistId: 55}){
-    Albums{
+  findManyArtist(where: {id: 55}) {
+    Albums {
       Title
     }
   }

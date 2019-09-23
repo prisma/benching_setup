@@ -1,6 +1,6 @@
 query {
-  albums(where: { Artist:{ Name: "artist545"}}) {
-    AlbumId
+  findManyAlbum(where: { Artist: { Name: "artist545" } }) {
+    id
     Title
   }
 }

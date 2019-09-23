@@ -1,7 +1,7 @@
 #Ignore Document
 query {
-  artists(where: { Albums_every:{ Title_contains: "album125"}}) {
-    ArtistId
+  findManyArtist(where: { Albums_every: { Title_contains: "album125"}}) {
+    id
     Name
   }
 }

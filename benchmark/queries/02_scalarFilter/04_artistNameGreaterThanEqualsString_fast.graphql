@@ -1,6 +1,6 @@
 query {
-  artists(where: { Name_gte: "artist995"}) {
-    ArtistId
+  findManyArtist(where: { Name_gte: "artist995"}) {
+    id
     Name
   }
 }

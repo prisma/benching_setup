@@ -1,6 +1,6 @@
 datasource chinook {
   provider = "postgresql"
-  url = "postgresql://postgres:prisma@db:5432/postgres"
+  url = "postgresql://postgres:prisma@db:5432/postgres?schema=benchmark"
 }
 
 model Artist {

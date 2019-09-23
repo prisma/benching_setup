@@ -1,7 +1,7 @@
 #Ignore Document
 query {
-  tracks(where: { UnitPrice_gt: 4.99}) {
-    TrackId
+  findManyTrack(where: { UnitPrice_gt: 4.99}) {
+    id
     Name
   }
 }

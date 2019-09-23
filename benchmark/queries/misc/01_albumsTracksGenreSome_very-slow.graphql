@@ -1,9 +1,9 @@
 query {
-  albums(where: { Artist: { ArtistId: 127 } }) {
-    AlbumId
+  findManyAlbum(where: { Artist: { id: 127 }}) {
+    id
     Title
     Tracks {
-      TrackId
+      id
       Name
       Genre {
         Name

@@ -1,6 +1,6 @@
 query {
-  artists(where: { Name_not_ends_with: "2"}) {
-    ArtistId
+  findManyArtist(where: { Name_not_ends_with: "2"}) {
+    id
     Name
   }
 }

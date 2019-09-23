@@ -14,8 +14,8 @@ async function main() {
   }
   const connector = await getActiveConnector(benchmarkedServer);
   runPrismaDeploy(connector);
-  resetData();
-  importData(connector, importFile);
+  //resetData();
+  //importData(connector, importFile);
 }
 
 function runPrismaDeploy(connector: PrismaConnector) {

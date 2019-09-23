@@ -1,7 +1,7 @@
 #Ignore Document
 query {
-  tracks(where: { Milliseconds_gte: 999900}) {
-    TrackId
+  findManyTrack(where: { Milliseconds_gte: 999900}) {
+    id
     Name
   }
 }

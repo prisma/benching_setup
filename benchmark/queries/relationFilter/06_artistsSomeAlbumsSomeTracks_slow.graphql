@@ -1,6 +1,6 @@
 query {
-  artists(where: { Albums_some:{ Tracks_some: {TrackId: 3234}}}) {
-    ArtistId
+  findManyArtist(where: { Albums_some:{ Tracks_some: {TrackId: 3234}}}) {
+    id
     Name
   }
 }
