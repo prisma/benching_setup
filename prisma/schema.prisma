@@ -4,7 +4,7 @@ generator photon {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:prisma@localhost:5432/postgres?schema=benchmark"
+  url      = "postgresql://postgres:prisma@localhost:5432/postgres"
 }
 
 model Artist {

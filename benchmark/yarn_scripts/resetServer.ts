@@ -12,8 +12,8 @@ async function main() {
     console.log("Please provide the import file to use. Valid values: 1000|10000");
     process.exit();
   }
-  const connector = await getActiveConnector(benchmarkedServer);
-  runPrismaDeploy(connector);
+  //const connector = await getActiveConnector(benchmarkedServer);
+  //runPrismaDeploy(connector);
   //resetData();
   //importData(connector, importFile);
 }

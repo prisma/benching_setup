@@ -1,6 +1,6 @@
 #Ignore Document
 query {
-  findManyTrack(where: { Milliseconds_gt: 999910}) {
+  findManyTrack(where: { Milliseconds_gt: 343719}) {
     id
     Name
   }

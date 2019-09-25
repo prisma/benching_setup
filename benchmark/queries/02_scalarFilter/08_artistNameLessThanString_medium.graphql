@@ -1,5 +1,5 @@
 query {
-  findManyArtist(where: { Name_lt: "artist6"}) {
+  findManyArtist(where: { Name_lt: "Black Sabbath"}) {
     id
     Name
   }

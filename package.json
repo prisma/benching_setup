@@ -23,9 +23,10 @@
     "typescript": "^2.9.2"
   },
   "scripts": {
-    "fill": "ts-node scripts/bin.ts",
     "bench-debug": "inspect -r ts-node/register benchmark/bench.ts",
-    "compile": "tsc",
+    "tail-logs": "docker logs -f $(docker ps|grep prisma-server_prisma|cut -d\" \" -f1)",
+    "shell": "docker exec -it $(docker ps|grep prisma-server_prisma|cut -d\" \" -f1) /bin/bash",
+    "initialize": "./update_server.sh",
     "start-server": "cd setup_scripts/prisma-server && ./start.sh",
     "reset-server": "ts-node benchmark/yarn_scripts/resetServer.ts",
     "bench-server": "ts-node benchmark/yarn_scripts/benchServer.ts",

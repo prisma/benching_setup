@@ -1,6 +1,6 @@
 
 query {
-  findManyArtist(where: { Name_starts_with: "artist112"}) {
+  findManyArtist(where: { Name_starts_with: "Mi"}) {
     id
     Name
   }

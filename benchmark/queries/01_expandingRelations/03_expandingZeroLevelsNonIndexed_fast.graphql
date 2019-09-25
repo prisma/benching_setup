@@ -1,5 +1,5 @@
 query {
-  findManyArtist(where: { Name: "artist55"}) {
+  findManyArtist(where: { Name: "Miles Davis"}) {
     id
   }
 }

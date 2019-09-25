@@ -1,5 +1,5 @@
 query lessThanEqualString {
-  findManyArtist(where: { Name_lte: "artist5"}) {
+  findManyArtist(where: { Name_lte: "AC/DC"}) {
     id
     Name
   }

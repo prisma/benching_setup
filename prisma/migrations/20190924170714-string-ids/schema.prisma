@@ -1,23 +1,27 @@
-datasource chinook {
+generator photon {
+  provider = "photonjs"
+}
+
+datasource db {
   provider = "postgresql"
-  url = "postgresql://postgres:prisma@db:5432/postgres"
+  url      = "postgresql://postgres:prisma@localhost:5432/postgres?schema=benchmark"
 }
 
 model Artist {
-  id Int @id @map(name:"ArtistId")
+  id String @id @default(cuid()) @map(name:"ArtistId")
   Name String?
   Albums Album[]
 }
 
 model Album {
-  id Int @id @map(name:"AlbumId")
+  id String @id @default(cuid()) @map(name:"AlbumId")
   Title String
   Artist Artist @map(name:"ArtistId")
   Tracks Track[]
 }
 
 model Track {
-  id Int @id @map(name:"TrackId")
+  id String @id @default(cuid()) @map(name:"TrackId")
   Name String
   Album Album? @map(name: "AlbumId")
   MediaType MediaType @map(name: "MediaTypeId")
@@ -28,12 +32,12 @@ model Track {
 }
 
 model Genre {
-  id Int @id @map(name:"GenreId")
+  id String @id @default(cuid()) @map(name:"GenreId")
   Name String?
   Tracks Track[]
 }
 
 model MediaType {
-  id Int @id @map(name:"MediaTypeId")
+  id String @id @default(cuid()) @map(name:"MediaTypeId")
   Name String
 }

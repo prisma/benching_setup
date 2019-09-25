@@ -17,7 +17,8 @@ interface VegetaLantencies {
 
 export function runVegeta(url, graphqlQueryAsString, rps, duration): VegetaResult {
   const graphqlQuery = {
-    query: graphqlQueryAsString
+      query: graphqlQueryAsString,
+      variables: {}
   };
 
   writeFileSync("body.json", JSON.stringify(graphqlQuery));

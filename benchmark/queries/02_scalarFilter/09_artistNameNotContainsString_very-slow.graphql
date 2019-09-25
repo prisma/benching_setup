@@ -1,5 +1,5 @@
 query {
-  findManyArtist(where: { Name_not_contains: "1"}) {
+  findManyArtist(where: { Name_not_contains: "Be"}) {
     id
     Name
   }

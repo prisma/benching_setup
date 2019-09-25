@@ -1,5 +1,5 @@
 query {
-  findManyArtist(where: { Name_not_starts_with: "artist1"}) {
+  findManyArtist(where: { Name_not_starts_with: "AC"}) {
     id
     Name
   }

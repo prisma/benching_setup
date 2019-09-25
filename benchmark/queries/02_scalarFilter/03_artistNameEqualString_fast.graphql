@@ -1,5 +1,5 @@
 query equalString {
-  findManyArtist(where: { Name: "artist950"}) {
+  findManyArtist(where: { Name: "Queen"}) {
     id
     Name
   }
