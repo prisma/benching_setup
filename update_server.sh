@@ -3,7 +3,6 @@
 set -e
 CONNECTOR="${1:?Provide the connector you want to use for this test run}"
 
-git submodule update --init
 cd prisma-engine
 git pull
 cd ../setup_scripts/prisma-server

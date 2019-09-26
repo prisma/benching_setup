@@ -15,7 +15,7 @@ export interface PrismaConnector {
 export async function getActiveConnector(server: string): Promise<PrismaConnector> {
   // TODO: add PostgresNativeConnector
   const serverInfo = await getServerInfo(server);
-  switch (serverInfo.primaryConnector) {
+  switch (serverInfo.primary_connector) {
     case "mongo":
       return new MongoConnector(serverInfo);
     case "mysql":
@@ -25,7 +25,7 @@ export async function getActiveConnector(server: string): Promise<PrismaConnecto
     case "postgres-native":
       return new SqlConnector(serverInfo, "PostgresNative");
     default:
-      throw new Error(`The connector '${serverInfo.primaryConnector}' is not supported here.`);
+      throw new Error(`The connector '${serverInfo.primary_connector}' is not supported here.`);
   }
 }
 
@@ -37,7 +37,7 @@ class MongoConnector implements PrismaConnector {
 
   constructor(serverInfo: PrismaServerInfo) {
     this.serverInfo = serverInfo;
-    this.name = serverInfo.primaryConnector;
+    this.name = serverInfo.primary_connector;
   }
 
   importData(importFile: number) {
@@ -60,7 +60,7 @@ class SqlConnector implements PrismaConnector {
 
   constructor(serverInfo: PrismaServerInfo, typeEnumForStorage: Connector) {
     this.serverInfo = serverInfo;
-    this.name = serverInfo.primaryConnector;
+    this.name = serverInfo.primary_connector;
     this.typeEnumForStorage = typeEnumForStorage;
   }
 

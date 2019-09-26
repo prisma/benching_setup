@@ -51,7 +51,7 @@ export function getQueryFiles(): QueryFile[] {
         listeners: {
             file: function(root, fileStats, next) {
                 // console.log(fileStats.name);
-                if (fileStats.name.endsWith(".graphql")) {
+                if (fileStats.name.endsWith("_fast.graphql")) {
                     // console.log(root)
                     // console.log(fileStats.name);
                     const fileName = basename(fileStats.name, ".graphql");

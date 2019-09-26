@@ -9,8 +9,8 @@ RUN apt-get -y install libssl-dev build-essential
 ENV SERVER_ROOT=/usr/src/prisma-engine
 ENV RUST_LOG_FORMAT=devel
 ENV RUST_BACKTRACE=1
-ENV RUST_LOG=info
-ENV PRISMA_LOG_QUERIES=y
+#ENV RUST_LOG=error
+#ENV PRISMA_LOG_QUERIES=y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 ADD . /usr/src/benching-setup

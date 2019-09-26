@@ -1,6 +1,6 @@
 import { warmupAndBenchmark } from "../helpers/bench";
 import { getQueryFileForName, getQueryFiles, QueryFile } from "../helpers/query_files";
-import { getImportFileSize, getServerInfo, PrismaServerInfo } from "../helpers/server_info";
+import { getServerInfo, PrismaServerInfo } from "../helpers/server_info";
 import { getActiveConnector } from "../helpers/connectors";
 import { Connector } from "../result_storage/binding";
 import {
@@ -29,7 +29,7 @@ const benchmarkConfigs = {
     },
     fast: {
         warmup_duration: 300, // 5 minutes
-        rps: [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]
+        rps: [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 4000]
     },
     "very-fast": {
         warmup_duration: 300, // 5 minutes
@@ -45,52 +45,36 @@ async function main() {
     const testToRun = args[0];
     const activeConnector = await getActiveConnector(benchmarkedServer);
     await ensureVersionExists(activeConnector.serverInfo.version);
-    const importFileSize = await getImportFileSize(benchmarkedServer);
 
     if (testToRun == null || testToRun === "all") {
-        const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
         for (const queryFile of queryFiles) {
-            await benchmarkAndStoreResults(benchmarkingSession.id, activeConnector, queryFile, importFileSize);
-            await new Promise(r => setTimeout(r, 60000));
-            await incrementQueriesRun(benchmarkingSession.id);
+            await benchmarkAndStoreResults(activeConnector, queryFile);
         }
-        await markSessionAsFinished(benchmarkingSession.id);
     } else {
         console.log("running one test");
-        const benchmarkingSession = await createBenchmarkingSession(1);
         const queryFile = getQueryFileForName(testToRun);
-        await benchmarkAndStoreResults(benchmarkingSession.id, activeConnector, queryFile, importFileSize);
-        await incrementQueriesRun(benchmarkingSession.id);
-        await markSessionAsFinished(benchmarkingSession.id);
+        await benchmarkAndStoreResults(activeConnector, queryFile);
     }
 }
 
 async function benchmarkAndStoreResults(
-    sessionId: string,
     connector: PrismaConnector,
     query: QueryFile,
-    importFile: number
 ): Promise<void> {
     const config = benchmarkConfigs[query.speed];
 
     if (connector.supportsQuery(query)) {
         const result = await warmupAndBenchmark(benchmarkedServer, query, config.warmup_duration, config.rps);
-        console.log(result)
 
-        /*
         await storeBenchmarkResults(
-            sessionId,
             connector.typeEnumForStorage,
             connector.serverInfo.version,
             connector.serverInfo.commit,
-            importFile,
             query.name,
-            result.graphqlQuery,
             result.results,
             result.startedAt,
             result.finishedAt
-        );
-         */
+        )
     } else {
         console.log(`skipping query ${query.name} as it is marked as ignored for this connector`);
     }
