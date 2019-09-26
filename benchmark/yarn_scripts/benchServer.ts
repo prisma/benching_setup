@@ -28,7 +28,7 @@ const benchmarkConfigs = {
   },
   fast: {
     warmup_duration: 300, // 5 minutes
-    rps: [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]
+    rps: [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 4000]
   },
   "very-fast": {
     warmup_duration: 300, // 5 minutes
@@ -44,7 +44,8 @@ async function main() {
   const testToRun = args[0];
   const activeConnector = await getActiveConnector(benchmarkedServer);
   await ensureVersionExists(activeConnector.serverInfo.version);
-  const importFileSize = await getImportFileSize(benchmarkedServer);
+  //const importFileSize = await getImportFileSize(benchmarkedServer);
+  const importFileSize = 1000
 
   if (testToRun == null || testToRun === "all") {
     const benchmarkingSession = await createBenchmarkingSession(queryFiles.length);
@@ -75,13 +76,10 @@ async function benchmarkAndStoreResults(
     const result = await warmupAndBenchmark(benchmarkedServer, query, config.warmup_duration, config.rps);
 
     await storeBenchmarkResults(
-      sessionId,
       connector.typeEnumForStorage,
       connector.serverInfo.version,
       connector.serverInfo.commit,
-      importFile,
       query.name,
-      result.graphqlQuery,
       result.results,
       result.startedAt,
       result.finishedAt

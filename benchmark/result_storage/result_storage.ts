@@ -6,6 +6,8 @@ import {
   ImportFileSize
 } from "./binding";
 
+const os = require('os');
+const Influx = require('influx');
 const prismaServer = "https://benchmark-results_prisma-internal.prisma.sh";
 const resultStorageEndpoint = prismaServer + "/benchmark/dev";
 const resultStorage = new Prisma({
@@ -65,58 +67,81 @@ export interface BenchmarkResult {
   p99: number;
   cpuLoad: number;
   cpuCount: number;
+  memUsage: number;
 }
 
 export async function storeBenchmarkResults(
-  sessionId: string,
-  connector: Connector,
-  version: string,
-  commit: string,
-  importFile: number,
-  queryName: string,
-  query: string,
-  results: BenchmarkResult[],
-  startedAt: Date,
-  finishedAt: Date
+    connector: Connector,
+    version: string,
+    commit: string,
+    queryName: string,
+    results: BenchmarkResult[],
+    startedAt: Date,
+    finishedAt: Date
 ): Promise<void> {
-  console.log(`storing ${results.length} results`);
+    console.log(`storing ${results.length} results`);
 
-  const nestedCreateRun: RunUpdateManyWithoutBenchmarkQueryInput | RunCreateManyWithoutBenchmarkQueryInput = {
-    create: [
-      {
-        connector: connector,
-        startedAt: startedAt,
-        finishedAt: finishedAt,
-        version: {
-          connect: {
-            name: version
-          }
-        },
-        commit: commit,
-        importFile: getImportFileSize(importFile),
-        latencies: {
-          create: results
-        },
-        session: {
-          connect: {
-            id: sessionId
-          }
+    const points = results.map(function(result) {
+        return {
+            measurement: 'response_times',
+            fields: {
+                successes: result.successes,
+                failures: result.failures,
+                avg: result.avg,
+                p50: result.p50 * 1000000,
+                p95: result.p95 * 1000000,
+                p99: result.p99 * 1000000,
+                cpuLoad: result.cpuLoad,
+                memUsage: result.memUsage,
+            },
+            tags: {
+                version,
+                commit,
+                connector,
+                queryName,
+                host: os.hostname(),
+                startedAt: startedAt.toString(),
+                finishedAt: finishedAt.toString(),
+                rps: result.rps.toString(),
+                cpuCount: result.cpuCount.toString(),
+            }
         }
-      }
-    ]
-  };
-  const data = {
-    where: { name: queryName },
-    update: {
-      runs: nestedCreateRun
-    },
-    create: {
-      name: queryName,
-      query: query,
-      runs: nestedCreateRun
-    }
-  };
-  await resultStorage.mutation.upsertBenchmarkedQuery(data);
+    })
+
+    console.log(points)
+
+    let influx = new Influx.InfluxDB({
+        host: 'localhost',
+        database: 'benchmark',
+        schema: [
+            {
+                measurement: 'response_times',
+                fields: {
+                    successes: Influx.FieldType.INTEGER,
+                    failures: Influx.FieldType.INTEGER,
+                    avg: Influx.FieldType.INTEGER,
+                    p50: Influx.FieldType.INTEGER,
+                    p95: Influx.FieldType.INTEGER,
+                    p99: Influx.FieldType.INTEGER,
+                    cpuLoad: Influx.FieldType.INTEGER,
+                    memUsage: Influx.FieldType.INTEGER,
+                },
+                tags: [
+                    'host',
+                    'startedAt',
+                    'finishedAt',
+                    'rps',
+                    'queryName',
+                    'connector',
+                    'commit',
+                    'version',
+                    'cpuCount'
+                ]
+            }
+        ]
+    })
+
+    influx.writePoints(points)
 }
 
 function getImportFileSize(importFile: number): ImportFileSize {

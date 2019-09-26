@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { cpus, loadavg } from "os";
+import { cpus, loadavg, freemem, totalmem } from "os";
 import { BenchmarkResult } from "../result_storage/result_storage";
 import { QueryFile } from "./query_files";
 import { runVegeta, VegetaResult } from "./vegeta";
@@ -84,7 +84,8 @@ export function benchmark(benchmarkedServer: string, query: QueryFile, rpses: nu
       p95: vegetaResult.latencies["95th"],
       p99: vegetaResult.latencies["99th"],
       cpuLoad: cpuLoad(),
-      cpuCount: cpuCount()
+      cpuCount: cpuCount(),
+      memUsage: memUsage(),
     });
     if (isCpuTresholdReached()) {
       console.log(`CPU treshold reached. Skipping the remaining RPSes.`);
@@ -106,6 +107,10 @@ function cpuLoad(): number {
 
 function cpuCount(): number {
   return cpus().length;
+}
+
+function memUsage(): number {
+    return totalmem() - freemem();
 }
 
 function failures(vegetaResult: VegetaResult): number {

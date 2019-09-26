@@ -4,3 +4,5 @@ body.json
 *.result
 *.svg
 .envrc
+setup_scripts/prisma-server/grafana/
+setup_scripts/prisma-server/influxdb/
