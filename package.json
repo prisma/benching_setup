@@ -10,7 +10,7 @@
     "dots-wrapper": "prisma/dots#add-dist",
     "graphql-request": "^1.6.0",
     "lodash": "^4.17.10",
-    "node-fetch": "^2.1.2",
+    "node-fetch": "^2.6.1",
     "p-map": "^1.2.0",
     "prisma-binding": "^2.1.0",
     "walk": "2.3.14"
